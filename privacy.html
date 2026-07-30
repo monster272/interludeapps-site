@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · Sadhana Lock</title>
+<style>
+  :root { --ink:#2A2622; --soft:#5C544C; --bg:#FDF6EC; --card:#FFFCF7; --line:#E8DCCB; --accent:#B45309; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#F2E9DC; --soft:#B8AC9C; --bg:#1A1614; --card:#241E1A; --line:#3A322C; --accent:#E8A857; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:var(--bg); color:var(--ink);
+         font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  .wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+  h1 { font-size:2rem; line-height:1.2; margin:0 0 .35rem; }
+  h2 { font-size:1.2rem; margin:2.5rem 0 .6rem; }
+  h3 { font-size:1rem; margin:1.6rem 0 .4rem; }
+  .sub { color:var(--soft); margin:0 0 2rem; }
+  .lede { background:var(--card); border:1px solid var(--line); border-radius:14px;
+          padding:1.1rem 1.25rem; margin:0 0 2rem; }
+  .lede p { margin:0; }
+  ul { padding-left:1.25rem; }
+  li { margin:.4rem 0; }
+  a { color:var(--accent); }
+  code { background:var(--card); border:1px solid var(--line); border-radius:5px;
+         padding:.1em .35em; font-size:.88em; }
+  table { border-collapse:collapse; width:100%; font-size:.94rem; }
+  .scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:1rem 0; }
+  th,td { text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--soft); font-weight:600; white-space:nowrap; }
+  footer { margin-top:3.5rem; padding-top:1.25rem; border-top:1px solid var(--line); color:var(--soft); font-size:.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Privacy Policy</h1>
+<p class="sub">Sadhana Lock · Effective 30 July 2026</p>
+
+<div class="lede">
+<p><strong>Sadhana Lock does not collect your personal data.</strong> There is no account, no analytics, no advertising, and no server belonging to us. Everything the app records about your practice stays on your phone.</p>
+</div>
+
+<p>This policy explains what the app stores, what the permissions it asks for are used for, and the few places data can leave your device — all of which are services you already use, not us.</p>
+
+<h2>1. Who we are</h2>
+<p>Sadhana Lock is published by Interludeapps. You can reach us at <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
+
+<h2>2. What the app stores, and where</h2>
+<p>All of the following is written to private storage on your device only. None of it is transmitted to us, because we operate no server to transmit it to.</p>
+
+<div class="scroll">
+<table>
+  <tr><th>What</th><th>Why</th></tr>
+  <tr><td>Your name, and the answers you give during setup (age range, iṣṭa devatā, and similar)</td><td>To address you by name and choose which mantra and verses to show</td></tr>
+  <tr><td>Which apps you chose to guard, and your practice times</td><td>This is the app's core function</td></tr>
+  <tr><td>Your practice history — sittings, duration, japa bead counts, streaks</td><td>Your streak, your diya's growth, and the Insights screen</td></tr>
+  <tr><td>Your reading position in each scripture, and reading-plan progress</td><td>So a book reopens where you left it</td></tr>
+  <tr><td>Preferences — reminders on or off, English or Hindi</td><td>To honour your settings</td></tr>
+  <tr><td>Whether you have purchased Sadhana Plus</td><td>To unlock what you paid for, including when offline</td></tr>
+</table>
+</div>
+
+<h3>Google backup</h3>
+<p>Android's own backup service is enabled for this app. If you have device backup switched on in your Google account settings, Android may copy the data above to <em>your</em> Google Drive, where it is governed by <a href="https://policies.google.com/privacy">Google's privacy policy</a>. We have no access to it. You can turn this off in your phone's system settings. Two things are deliberately excluded from backup: your device-specific setup state, and the cached record of your purchase.</p>
+
+<h2>3. The accessibility service — what it can and cannot see</h2>
+
+<p>Sadhana Lock uses Android's Accessibility API for one purpose: to notice when an app you have chosen to guard comes to the foreground, so it can show your practice screen over it. Google requires apps using this API to explain exactly what they do with it, so here is the whole of it.</p>
+
+<p><strong>The service is technically incapable of reading your screen.</strong> It is declared with <code>canRetrieveWindowContent="false"</code>, which means Android does not give it access to window content at all. It subscribes to a single event type, <code>typeWindowStateChanged</code>, and from that event it reads exactly one value: the package name of the app now in front, for example <code>com.instagram.android</code>.</p>
+
+<p>It does not, and cannot:</p>
+<ul>
+  <li>read text on your screen, in any app</li>
+  <li>read passwords, messages, emails, or anything you type</li>
+  <li>see form fields, card numbers, or what you copy</li>
+  <li>record, screenshot, or log your activity</li>
+  <li>track which apps you open over time</li>
+</ul>
+
+<p>The package name is compared against your guarded list and then discarded. It is never written to disk, never kept in a history, and never transmitted anywhere.</p>
+
+<h2>4. The list of apps on your phone</h2>
+<p>To let you choose which apps to guard, the app asks Android for the list of apps that have a launcher icon. This list is shown to you and used to store your choices. It never leaves your device, and we never see it.</p>
+
+<h2>5. Other permissions</h2>
+<div class="scroll">
+<table>
+  <tr><th>Permission</th><th>Why it is needed</th></tr>
+  <tr><td>Display over other apps</td><td>To draw the practice screen above a guarded app</td></tr>
+  <tr><td>Alarms &amp; reminders</td><td>To begin your practice window at the exact time you set</td></tr>
+  <tr><td>Notifications</td><td>The gentle reminder when a practice time begins. Optional — you can switch it off in Settings</td></tr>
+  <tr><td>Run at startup</td><td>To restore your practice times after the phone reboots</td></tr>
+  <tr><td>Ignore battery optimisation</td><td>Optional. Some manufacturers stop the app while the phone sleeps, and the lock then silently fails</td></tr>
+  <tr><td>Vibration</td><td>The bead tick while counting japa</td></tr>
+  <tr><td>Network access</td><td>Declared by Google's billing library so it can reach the Play Store. The app itself makes no network requests of its own</td></tr>
+</table>
+</div>
+
+<h2>6. Payments</h2>
+<p>Sadhana Plus is a one-time purchase handled entirely by Google Play. We never see or receive your card, UPI ID, bank details, billing address, or any other payment information. Google tells the app only whether this Google account owns the purchase, and gives it a purchase token used to confirm it. Payments are subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the Google Play terms.</p>
+
+<h2>7. Sharing a verse</h2>
+<p>When you share a verse, the app draws an image into its own temporary storage and hands it to whichever app you pick from the Android share sheet. What happens next is governed by that app's privacy policy, not ours. Nothing is uploaded by Sadhana Lock.</p>
+
+<h2>8. Children</h2>
+<p>Sadhana Lock is not directed at children and we do not knowingly collect data from anyone — of any age — because we collect no personal data at all. Under India's Digital Personal Data Protection Act, 2023, a person under eighteen should use the app with the consent of a parent or guardian.</p>
+
+<h2>9. Your data, and deleting it</h2>
+<p>Because your data never reaches us, there is nothing for us to hand over, correct, or delete on your behalf. Everything is yours and sits on your phone. You can erase all of it at any time by clearing the app's storage in Android Settings, or by uninstalling the app. If you have Google backup enabled, remove the backup from your Google account settings as well.</p>
+
+<h2>10. Changes to this policy</h2>
+<p>If the app ever begins collecting data — it does not today — this page will be updated before that version is released, and the effective date above will change.</p>
+
+<h2>11. Contact</h2>
+<p>Questions about this policy: <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
+
+<footer>
+  Sadhana Lock · <a href="/terms.html">Terms of Service</a>
+</footer>
+
+</div>
+</body>
+</html>
