@@ -20,6 +20,7 @@
   .lede { background:var(--card); border:1px solid var(--line); border-radius:14px;
           padding:1.1rem 1.25rem; margin:0 0 2rem; }
   .lede p { margin:0; }
+  .lede p + p { margin-top:.7rem; }
   ul { padding-left:1.25rem; }
   li { margin:.4rem 0; }
   a { color:var(--accent); }
@@ -36,19 +37,20 @@
 <div class="wrap">
 
 <h1>Privacy Policy</h1>
-<p class="sub">Sadhana Lock · Effective 30 July 2026</p>
+<p class="sub">Sadhana Lock · Effective 2 August 2026</p>
 
 <div class="lede">
-<p><strong>Sadhana Lock does not collect your personal data.</strong> There is no account, no analytics, no advertising, and no server belonging to us. Everything the app records about your practice stays on your phone.</p>
+<p><strong>There is no account, no advertising, and no server belonging to us.</strong> Your practice — your name, your streak, your japa counts, your reading, and the list of apps you guard — stays on your phone. We cannot see it.</p>
+<p>The app does send <strong>anonymous diagnostics</strong> to Google Firebase: crash reports, and counts of things like "a lock appeared" or "a practice was completed". These carry no name and never say <em>which</em> app you opened. You can switch them off in <strong>Settings → Share anonymous diagnostics</strong>, and the app works identically with them off.</p>
 </div>
 
-<p>This policy explains what the app stores, what the permissions it asks for are used for, and the few places data can leave your device — all of which are services you already use, not us.</p>
+<p>This policy explains what the app stores, what the permissions it asks for are used for, and every place data can leave your device.</p>
 
 <h2>1. Who we are</h2>
 <p>Sadhana Lock is published by Interludeapps. You can reach us at <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
 
 <h2>2. What the app stores, and where</h2>
-<p>All of the following is written to private storage on your device only. None of it is transmitted to us, because we operate no server to transmit it to.</p>
+<p>All of the following is written to private storage on your device only. None of it is sent to us or to anyone else.</p>
 
 <div class="scroll">
 <table>
@@ -57,7 +59,7 @@
   <tr><td>Which apps you chose to guard, and your practice times</td><td>This is the app's core function</td></tr>
   <tr><td>Your practice history — sittings, duration, japa bead counts, streaks</td><td>Your streak, your diya's growth, and the Insights screen</td></tr>
   <tr><td>Your reading position in each scripture, and reading-plan progress</td><td>So a book reopens where you left it</td></tr>
-  <tr><td>Preferences — reminders on or off, English or Hindi</td><td>To honour your settings</td></tr>
+  <tr><td>Preferences — reminders on or off, your scripture language</td><td>To honour your settings</td></tr>
   <tr><td>Whether you have purchased Sadhana Plus</td><td>To unlock what you paid for, including when offline</td></tr>
 </table>
 </div>
@@ -65,7 +67,45 @@
 <h3>Google backup</h3>
 <p>Android's own backup service is enabled for this app. If you have device backup switched on in your Google account settings, Android may copy the data above to <em>your</em> Google Drive, where it is governed by <a href="https://policies.google.com/privacy">Google's privacy policy</a>. We have no access to it. You can turn this off in your phone's system settings. Two things are deliberately excluded from backup: your device-specific setup state, and the cached record of your purchase.</p>
 
-<h2>3. The accessibility service — what it can and cannot see</h2>
+<h2>3. Anonymous diagnostics</h2>
+
+<p>This is the one place where information about your use of the app leaves your device. It goes to Google Firebase — Analytics, Crashlytics and Remote Config — acting as our data processor, not to a server of ours.</p>
+
+<p><strong>Why it exists.</strong> This app's core mechanic depends on an Android accessibility service that several phone manufacturers shut down silently in the background. When that happens, the app looks fine and quietly stops guarding anything. Counting how often the service starts and stops across all installs is the only way we can see that failure at all — otherwise it reaches us only as a one-star review months later.</p>
+
+<h3>What is sent</h3>
+<div class="scroll">
+<table>
+  <tr><th>What</th><th>Detail</th></tr>
+  <tr><td>Crash and error reports</td><td>Stack traces, the app version, the device model and Android version, and whether the accessibility service was running at the time</td></tr>
+  <tr><td>That a lock appeared</td><td>A count only</td></tr>
+  <tr><td>That a practice was completed</td><td>Which practice mode, how many minutes, how many beads</td></tr>
+  <tr><td>That the emergency exit was used</td><td>How many seconds passed first, and how many times that week</td></tr>
+  <tr><td>Setup progress</td><td>Which setup step was reached, and whether each permission was granted or declined</td></tr>
+  <tr><td>Purchase funnel</td><td>That the purchase screen was shown, from where, and whether a purchase started, completed or failed</td></tr>
+  <tr><td>Accessibility service started / stopped</td><td>The reason this section exists</td></tr>
+  <tr><td>Coarse grouping</td><td>Whether you have purchased, your scripture language, and roughly how many apps you guard (as a band: 0, 1–3, 4–6, 7+)</td></tr>
+  <tr><td>Collected automatically by Firebase</td><td>App version, device model, Android version, country or region derived from your IP address, and a random per-install identifier Google generates. Your IP address is not stored by us</td></tr>
+</table>
+</div>
+
+<h3>What is never sent</h3>
+<ul>
+  <li><strong>Which apps you guard, or which app you opened.</strong> When a lock fires, the event records that it happened and nothing more. The package name is never included.</li>
+  <li><strong>Your name, your setup answers, or anything you typed.</strong></li>
+  <li><strong>Your practice history.</strong> Streaks, totals, session records and reading positions stay on the phone. The events above describe single moments, not your history.</li>
+  <li><strong>Any identifier we created for you.</strong> We set no user ID. We do not use an advertising ID, and the app removes the advertising-ID permission that Google's analytics library would otherwise add.</li>
+</ul>
+
+<h3>Switching it off</h3>
+<p>Diagnostics are <strong>on by default</strong>, and <strong>Settings → Share anonymous diagnostics</strong> turns them off at any time. Turning it off stops collection immediately, for the rest of that session and every session after. No feature of the app depends on it. Diagnostics are also never collected from development builds of the app.</p>
+
+<p>Data sent before you switched it off stays with Google for a limited retention period and is then deleted automatically. Firebase's handling is described in <a href="https://firebase.google.com/support/privacy">Firebase's privacy documentation</a> and Google's <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
+
+<h2>4. Notifications from us</h2>
+<p>The app can receive occasional announcements through Firebase Cloud Messaging — a new scripture translation, or word that a bug affecting the lock has been fixed. These are broadcasts: they are not addressed to you individually, and receiving one tells us nothing about you. We do not store any device token, and we do not send re-engagement or marketing notifications. Announcements arrive on their own notification channel, which you can silence in Android's settings without affecting your practice reminders.</p>
+
+<h2>5. The accessibility service — what it can and cannot see</h2>
 
 <p>Sadhana Lock uses Android's Accessibility API for one purpose: to notice when an app you have chosen to guard comes to the foreground, so it can show your practice screen over it. Google requires apps using this API to explain exactly what they do with it, so here is the whole of it.</p>
 
@@ -80,41 +120,42 @@
   <li>track which apps you open over time</li>
 </ul>
 
-<p>The package name is compared against your guarded list and then discarded. It is never written to disk, never kept in a history, and never transmitted anywhere.</p>
+<p>The package name is compared against your guarded list and then discarded. It is never written to disk, never kept in a history, and never transmitted anywhere — including in the diagnostics described in section 3.</p>
 
-<h2>4. The list of apps on your phone</h2>
+<h2>6. The list of apps on your phone</h2>
 <p>To let you choose which apps to guard, the app asks Android for the list of apps that have a launcher icon. This list is shown to you and used to store your choices. It never leaves your device, and we never see it.</p>
 
-<h2>5. Other permissions</h2>
+<h2>7. Other permissions</h2>
 <div class="scroll">
 <table>
   <tr><th>Permission</th><th>Why it is needed</th></tr>
   <tr><td>Display over other apps</td><td>To draw the practice screen above a guarded app</td></tr>
   <tr><td>Alarms &amp; reminders</td><td>To begin your practice window at the exact time you set</td></tr>
-  <tr><td>Notifications</td><td>The gentle reminder when a practice time begins. Optional — you can switch it off in Settings</td></tr>
+  <tr><td>Notifications</td><td>The gentle reminder when a practice time begins, and the announcements in section 4. Optional — you can switch it off in Settings</td></tr>
   <tr><td>Run at startup</td><td>To restore your practice times after the phone reboots</td></tr>
   <tr><td>Ignore battery optimisation</td><td>Optional. Some manufacturers stop the app while the phone sleeps, and the lock then silently fails</td></tr>
   <tr><td>Vibration</td><td>The bead tick while counting japa</td></tr>
-  <tr><td>Network access</td><td>Declared by Google's billing library so it can reach the Play Store. The app itself makes no network requests of its own</td></tr>
+  <tr><td>Network access</td><td>Used by Google's billing library to reach the Play Store, and to send the diagnostics in section 3. The app fetches no content of its own — every verse and translation is bundled inside the app</td></tr>
 </table>
 </div>
 
-<h2>6. Payments</h2>
-<p>Sadhana Plus is a one-time purchase handled entirely by Google Play. We never see or receive your card, UPI ID, bank details, billing address, or any other payment information. Google tells the app only whether this Google account owns the purchase, and gives it a purchase token used to confirm it. Payments are subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the Google Play terms.</p>
+<h2>8. Payments</h2>
+<p>Sadhana Plus is a one-time purchase handled entirely by Google Play. We never see or receive your card, UPI ID, bank details, billing address, or any other payment information. Google tells the app only whether this Google account owns the purchase, and gives it a purchase token used to confirm it. When you start a purchase, the app passes Google a random token generated on your device — it identifies the installation for Google's fraud checks and contains nothing about you. Payments are subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the Google Play terms.</p>
 
-<h2>7. Sharing a verse</h2>
+<h2>9. Sharing a verse</h2>
 <p>When you share a verse, the app draws an image into its own temporary storage and hands it to whichever app you pick from the Android share sheet. What happens next is governed by that app's privacy policy, not ours. Nothing is uploaded by Sadhana Lock.</p>
 
-<h2>8. Children</h2>
-<p>Sadhana Lock is not directed at children and we do not knowingly collect data from anyone — of any age — because we collect no personal data at all. Under India's Digital Personal Data Protection Act, 2023, a person under eighteen should use the app with the consent of a parent or guardian.</p>
+<h2>10. Children</h2>
+<p>Sadhana Lock is not directed at children. We collect no personal data from anyone of any age — the diagnostics in section 3 are anonymous and carry no identifier we created. Under India's Digital Personal Data Protection Act, 2023, a person under eighteen should use the app with the consent of a parent or guardian.</p>
 
-<h2>9. Your data, and deleting it</h2>
-<p>Because your data never reaches us, there is nothing for us to hand over, correct, or delete on your behalf. Everything is yours and sits on your phone. You can erase all of it at any time by clearing the app's storage in Android Settings, or by uninstalling the app. If you have Google backup enabled, remove the backup from your Google account settings as well.</p>
+<h2>11. Your data, and deleting it</h2>
+<p>Everything about your practice sits on your phone and is yours. You can erase all of it at any time by clearing the app's storage in Android Settings, or by uninstalling the app. If you have Google backup enabled, remove the backup from your Google account settings as well.</p>
+<p>Because the diagnostics in section 3 carry no identifier we created, we cannot look up, isolate, or delete "your" diagnostic data — there is nothing in it that points back to you. If you would rather send none of it, switch it off in Settings. If you have a question about any of this, write to us and we will answer.</p>
 
-<h2>10. Changes to this policy</h2>
-<p>If the app ever begins collecting data — it does not today — this page will be updated before that version is released, and the effective date above will change.</p>
+<h2>12. Changes to this policy</h2>
+<p>If what the app collects ever changes, this page will be updated before that version is released, and the effective date above will change.</p>
 
-<h2>11. Contact</h2>
+<h2>13. Contact</h2>
 <p>Questions about this policy: <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
 
 <footer>
