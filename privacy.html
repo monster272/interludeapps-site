@@ -37,7 +37,7 @@
 <div class="wrap">
 
 <h1>Privacy Policy</h1>
-<p class="sub">Sadhana Lock · Effective 2 August 2026</p>
+<p class="sub">Sadhana Lock · Effective 10 August 2026</p>
 
 <div class="lede">
 <p><strong>There is no account, no advertising, and no server belonging to us.</strong> Your practice — your name, your streak, your japa counts, your reading, and the list of apps you guard — stays on your phone. We cannot see it.</p>
@@ -122,8 +122,12 @@
 
 <p>The package name is compared against your guarded list and then discarded. It is never written to disk, never kept in a history, and never transmitted anywhere — including in the diagnostics described in section 3.</p>
 
-<h2>6. The list of apps on your phone</h2>
+<h2>6. The apps on your phone, and how long you use them</h2>
 <p>To let you choose which apps to guard, the app asks Android for the list of apps that have a launcher icon. This list is shown to you and used to store your choices. It never leaves your device, and we never see it.</p>
+<p>Sadhana Lock can also read Android's usage statistics — how long you have spent in each app today — but only if you grant Usage Access. <strong>This is optional.</strong> Without it the app works exactly as before; the only difference is that your guarded-app list is ordered alphabetically rather than by the apps that actually take your time, and the "Today's pull" card on the home screen stays hidden.</p>
+<p>We ask for it in two places only — on the guarded-app list, and as an invitation on the home screen. We never ask for it during setup.</p>
+<p><strong>These numbers never leave your device.</strong> They are read on demand to draw a list and a few bars, and they are not stored on a server, not included in the diagnostics in section 3, and not shared with anyone. There is no copy of them anywhere but your phone.</p>
+<p>You can withdraw Usage Access whenever you like, in Android Settings → Apps → Special app access → Usage access → Sadhana Lock. The app keeps working; it simply stops ordering by usage.</p>
 
 <h2>7. Other permissions</h2>
 <div class="scroll">
@@ -134,13 +138,14 @@
   <tr><td>Notifications</td><td>The gentle reminder when a practice time begins, and the announcements in section 4. Optional — you can switch it off in Settings</td></tr>
   <tr><td>Run at startup</td><td>To restore your practice times after the phone reboots</td></tr>
   <tr><td>Ignore battery optimisation</td><td>Optional. Some manufacturers stop the app while the phone sleeps, and the lock then silently fails</td></tr>
+  <tr><td>Usage access</td><td>Optional. To order your guarded-app list by the apps that actually take your time, and to show today's minutes. Read on the device, never uploaded — see section 6</td></tr>
   <tr><td>Vibration</td><td>The bead tick while counting japa</td></tr>
   <tr><td>Network access</td><td>Used by Google's billing library to reach the Play Store, and to send the diagnostics in section 3. The app fetches no content of its own — every verse and translation is bundled inside the app</td></tr>
 </table>
 </div>
 
 <h2>8. Payments</h2>
-<p>Sadhana Plus is a one-time purchase handled entirely by Google Play. We never see or receive your card, UPI ID, bank details, billing address, or any other payment information. Google tells the app only whether this Google account owns the purchase, and gives it a purchase token used to confirm it. When you start a purchase, the app passes Google a random token generated on your device — it identifies the installation for Google's fraud checks and contains nothing about you. Payments are subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the Google Play terms.</p>
+<p>Sadhana Plus is a subscription — monthly or yearly — handled entirely by Google Play. It renews automatically until you cancel, and you can cancel at any time in the Play Store; cancelling leaves you subscribed until the end of the period you have already paid for. We never see or receive your card, UPI ID, bank details, billing address, or any other payment information. Google tells the app only whether this Google account owns the purchase, and gives it a purchase token used to confirm it. When you start a purchase, the app passes Google a random token generated on your device — it identifies the installation for Google's fraud checks and contains nothing about you. Payments are subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the Google Play terms.</p>
 
 <h2>9. Sharing a verse</h2>
 <p>When you share a verse, the app draws an image into its own temporary storage and hands it to whichever app you pick from the Android share sheet. What happens next is governed by that app's privacy policy, not ours. Nothing is uploaded by Sadhana Lock.</p>
