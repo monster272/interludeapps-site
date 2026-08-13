@@ -38,11 +38,13 @@
 <p class="sub">Sadhana Lock · Interlude Apps</p>
 
 <div class="lede">
-  <p>Sadhana Lock only asks for an account if you choose to sign in with Google, and it stores
-  almost nothing when you do: <strong>your name, your email address, and an internal account
-  identifier</strong>. That is the whole of it.</p>
-  <p>Your practice — your sittings, your streak, the apps you guard, your place in the Bhagavad
-  Gītā — has never left your phone, so deleting your account does not touch it.</p>
+  <p>Sadhana Lock only asks for an account if you choose to sign in with Google. When you do, we
+  store <strong>your name, your email address, an internal account identifier</strong>, and a copy
+  of <strong>your practice</strong> — your sittings, your streak, your chosen deities and mantra,
+  your reminder times and your place in the Bhagavad Gītā — so that signing in on a new phone
+  brings it all back.</p>
+  <p><strong>The apps you guard are never sent.</strong> That list stays on your phone, always.</p>
+  <p>If you never sign in, nothing at all leaves your phone.</p>
 </div>
 
 <h2>Delete it from inside the app</h2>
@@ -69,8 +71,11 @@ your account — we hold nothing else that could identify you.</p>
   <tr><th>Data</th><th>Where it lives</th><th>On deletion</th></tr>
   <tr><td>Your name and email</td><td>Firebase Authentication</td><td><strong>Deleted</strong></td></tr>
   <tr><td>Account identifier</td><td>Firebase Authentication</td><td><strong>Deleted</strong></td></tr>
-  <tr><td>Sittings, streak, guarded apps, reading position</td><td>Only your phone</td>
-      <td>Untouched — it was never sent to us. Clear the app's storage or uninstall it to remove this.</td></tr>
+  <tr><td>Your practice: sittings, streak, deities, mantra, reminder times, reading position</td>
+      <td>Your phone, and — if you signed in — a copy saved with your account</td>
+      <td><strong>The saved copy is deleted.</strong> The copy on your phone stays; clear the app's storage or uninstall it to remove that too.</td></tr>
+  <tr><td>The apps you guard</td><td>Only your phone</td>
+      <td>Untouched, and never sent to us in the first place.</td></tr>
   <tr><td>Anonymous diagnostics and crash reports</td><td>Firebase Analytics &amp; Crashlytics</td>
       <td>Not linked to your account or to you, and cannot be traced back to it. You can switch these off at any time in
       <strong>Settings → Share anonymous diagnostics</strong>.</td></tr>
