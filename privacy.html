@@ -37,7 +37,7 @@
 <div class="wrap">
 
 <h1>Privacy Policy</h1>
-<p class="sub">Sadhana Lock · Effective 10 August 2026</p>
+<p class="sub">Sadhana Lock · Effective 14 August 2026</p>
 
 <div class="lede">
 <p><strong>There is no account, no advertising, and no server belonging to us.</strong> Your practice — your name, your streak, your japa counts, your reading, and the list of apps you guard — stays on your phone. We cannot see it.</p>
@@ -50,7 +50,7 @@
 <p>Sadhana Lock is published by Interludeapps. You can reach us at <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
 
 <h2>2. What the app stores, and where</h2>
-<p>All of the following is written to private storage on your device only. None of it is sent to us or to anyone else.</p>
+<p>All of the following is written to private storage on your device. <strong>If you never sign in, none of it is sent to us or to anyone else</strong> — signing in is optional and the app works fully without it. If you do sign in, most of it is also saved with your Google account so that a new phone can bring it back; section 3 sets out exactly what travels and what does not.</p>
 
 <div class="scroll">
 <table>
@@ -67,7 +67,36 @@
 <h3>Google backup</h3>
 <p>Android's own backup service is enabled for this app. If you have device backup switched on in your Google account settings, Android may copy the data above to <em>your</em> Google Drive, where it is governed by <a href="https://policies.google.com/privacy">Google's privacy policy</a>. We have no access to it. You can turn this off in your phone's system settings. Two things are deliberately excluded from backup: your device-specific setup state, and the cached record of your purchase.</p>
 
-<h2>3. Anonymous diagnostics</h2>
+<h2>3. Signing in with Google</h2>
+<p>Signing in is <strong>optional</strong>. The app is complete without it, and nothing in this section
+applies to you unless you choose it.</p>
+<p>It exists for one reason: so that your practice survives a new phone. When you sign in, we receive
+through Google and Firebase Authentication:</p>
+<ul>
+  <li>your name and email address, as held by your Google account</li>
+  <li>an account identifier that Firebase creates for you</li>
+</ul>
+<p>and a copy of your practice is then saved against that account in Google Cloud Firestore, readable
+only by that account:</p>
+<ul>
+  <li>your sittings — when, how long, which kind, japa bead counts</li>
+  <li>your practice times</li>
+  <li>your name and the answers you gave during setup, your chosen deities and mantra, and your language settings</li>
+  <li>your reading position in each scripture</li>
+</ul>
+
+<h3>What is never sent, even when you are signed in</h3>
+<p><strong>Which apps you have chosen to guard.</strong> That list stays on your phone and is never
+saved with your account. It is the most revealing thing this app holds, and we would rather not hold
+it — so when you set up a new phone you will be asked to choose those apps again. That is deliberate.</p>
+<p>Also never sent: your device setup state, and the cached record of your purchase.</p>
+
+<h3>Turning it off, and removing it</h3>
+<p>You can sign out at any time in <strong>Settings → Account</strong>; your practice stays on the phone.
+Deleting your account removes the saved copy along with your name and email — see section 12, or
+<a href="https://interludeapps.store/delete-account.html">the account deletion page</a>.</p>
+
+<h2>4. Anonymous diagnostics</h2>
 
 <p>This is the one place where information about your use of the app leaves your device. It goes to Google Firebase — Analytics, Crashlytics and Remote Config — acting as our data processor, not to a server of ours.</p>
 
@@ -102,10 +131,10 @@
 
 <p>Data sent before you switched it off stays with Google for a limited retention period and is then deleted automatically. Firebase's handling is described in <a href="https://firebase.google.com/support/privacy">Firebase's privacy documentation</a> and Google's <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
 
-<h2>4. Notifications from us</h2>
+<h2>5. Notifications from us</h2>
 <p>The app can receive occasional announcements through Firebase Cloud Messaging — a new scripture translation, or word that a bug affecting the lock has been fixed. These are broadcasts: they are not addressed to you individually, and receiving one tells us nothing about you. We do not store any device token, and we do not send re-engagement or marketing notifications. Announcements arrive on their own notification channel, which you can silence in Android's settings without affecting your practice reminders.</p>
 
-<h2>5. The accessibility service — what it can and cannot see</h2>
+<h2>6. The accessibility service — what it can and cannot see</h2>
 
 <p>Sadhana Lock uses Android's Accessibility API for one purpose: to notice when an app you have chosen to guard comes to the foreground, so it can show your practice screen over it. Google requires apps using this API to explain exactly what they do with it, so here is the whole of it.</p>
 
@@ -120,16 +149,16 @@
   <li>track which apps you open over time</li>
 </ul>
 
-<p>The package name is compared against your guarded list and then discarded. It is never written to disk, never kept in a history, and never transmitted anywhere — including in the diagnostics described in section 3.</p>
+<p>The package name is compared against your guarded list and then discarded. It is never written to disk, never kept in a history, and never transmitted anywhere — including in the diagnostics described in section 4.</p>
 
-<h2>6. The apps on your phone, and how long you use them</h2>
+<h2>7. The apps on your phone, and how long you use them</h2>
 <p>To let you choose which apps to guard, the app asks Android for the list of apps that have a launcher icon. This list is shown to you and used to store your choices. It never leaves your device, and we never see it.</p>
 <p>Sadhana Lock can also read Android's usage statistics — how long you have spent in each app today — but only if you grant Usage Access. <strong>This is optional.</strong> Without it the app works exactly as before; the only difference is that your guarded-app list is ordered alphabetically rather than by the apps that actually take your time, and the "Today's pull" card on the home screen stays hidden.</p>
 <p>We ask for it in two places only — on the guarded-app list, and as an invitation on the home screen. We never ask for it during setup.</p>
-<p><strong>These numbers never leave your device.</strong> They are read on demand to draw a list and a few bars, and they are not stored on a server, not included in the diagnostics in section 3, and not shared with anyone. There is no copy of them anywhere but your phone.</p>
+<p><strong>These numbers never leave your device.</strong> They are read on demand to draw a list and a few bars, and they are not stored on a server, not included in the diagnostics in section 4, and not shared with anyone. There is no copy of them anywhere but your phone.</p>
 <p>You can withdraw Usage Access whenever you like, in Android Settings → Apps → Special app access → Usage access → Sadhana Lock. The app keeps working; it simply stops ordering by usage.</p>
 
-<h2>7. Other permissions</h2>
+<h2>8. Other permissions</h2>
 <div class="scroll">
 <table>
   <tr><th>Permission</th><th>Why it is needed</th></tr>
@@ -140,27 +169,28 @@
   <tr><td>Ignore battery optimisation</td><td>Optional. Some manufacturers stop the app while the phone sleeps, and the lock then silently fails</td></tr>
   <tr><td>Usage access</td><td>Optional. To order your guarded-app list by the apps that actually take your time, and to show today's minutes. Read on the device, never uploaded — see section 6</td></tr>
   <tr><td>Vibration</td><td>The bead tick while counting japa</td></tr>
-  <tr><td>Network access</td><td>Used by Google's billing library to reach the Play Store, and to send the diagnostics in section 3. The app fetches no content of its own — every verse and translation is bundled inside the app</td></tr>
+  <tr><td>Network access</td><td>Used by Google's billing library to reach the Play Store, and to send the diagnostics in section 4. The app fetches no content of its own — every verse and translation is bundled inside the app</td></tr>
 </table>
 </div>
 
-<h2>8. Payments</h2>
+<h2>9. Payments</h2>
 <p>Sadhana Plus is a subscription — monthly or yearly — handled entirely by Google Play. It renews automatically until you cancel, and you can cancel at any time in the Play Store; cancelling leaves you subscribed until the end of the period you have already paid for. We never see or receive your card, UPI ID, bank details, billing address, or any other payment information. Google tells the app only whether this Google account owns the purchase, and gives it a purchase token used to confirm it. When you start a purchase, the app passes Google a random token generated on your device — it identifies the installation for Google's fraud checks and contains nothing about you. Payments are subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the Google Play terms.</p>
 
-<h2>9. Sharing a verse</h2>
+<h2>10. Sharing a verse</h2>
 <p>When you share a verse, the app draws an image into its own temporary storage and hands it to whichever app you pick from the Android share sheet. What happens next is governed by that app's privacy policy, not ours. Nothing is uploaded by Sadhana Lock.</p>
 
-<h2>10. Children</h2>
-<p>Sadhana Lock is not directed at children. We collect no personal data from anyone of any age — the diagnostics in section 3 are anonymous and carry no identifier we created. Under India's Digital Personal Data Protection Act, 2023, a person under eighteen should use the app with the consent of a parent or guardian.</p>
+<h2>11. Children</h2>
+<p>Sadhana Lock is not directed at children. Unless you sign in with Google — see section 3 — we collect no personal data from anyone of any age, and the diagnostics in section 4 are anonymous either way, carrying no identifier we created. Under India's Digital Personal Data Protection Act, 2023, a person under eighteen should use the app with the consent of a parent or guardian.</p>
 
-<h2>11. Your data, and deleting it</h2>
-<p>Everything about your practice sits on your phone and is yours. You can erase all of it at any time by clearing the app's storage in Android Settings, or by uninstalling the app. If you have Google backup enabled, remove the backup from your Google account settings as well.</p>
-<p>Because the diagnostics in section 3 carry no identifier we created, we cannot look up, isolate, or delete "your" diagnostic data — there is nothing in it that points back to you. If you would rather send none of it, switch it off in Settings. If you have a question about any of this, write to us and we will answer.</p>
+<h2>12. Your data, and deleting it</h2>
+<p><strong>On your phone.</strong> Everything about your practice sits on your phone and is yours. You can erase all of it at any time by clearing the app's storage in Android Settings, or by uninstalling the app. If you have Google backup enabled, remove the backup from your Google account settings as well.</p>
+<p><strong>The copy saved with your account,</strong> if you signed in. Open <strong>Settings → Account → Delete account</strong>. This erases your name, your email, the account identifier and the saved practice, and cannot be undone; the copy on your phone is untouched. If you have already uninstalled the app, or would rather we did it, the <a href="https://interludeapps.store/delete-account.html">account deletion page</a> explains how to ask — we reply within 7 days and complete deletion within 30.</p>
+<p>Because the diagnostics in section 4 carry no identifier we created, we cannot look up, isolate, or delete "your" diagnostic data — there is nothing in it that points back to you. If you would rather send none of it, switch it off in Settings. If you have a question about any of this, write to us and we will answer.</p>
 
-<h2>12. Changes to this policy</h2>
+<h2>13. Changes to this policy</h2>
 <p>If what the app collects ever changes, this page will be updated before that version is released, and the effective date above will change.</p>
 
-<h2>13. Contact</h2>
+<h2>14. Contact</h2>
 <p>Questions about this policy: <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
 
 <footer>
