@@ -5,1031 +5,355 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sadhana Lock — your apps rest, your practice opens them</title>
 <meta name="description" content="Sadhana Lock guards your distracting apps on a schedule. To open them, you sit for a moment: a Gītā shloka, a breath, or a round of japa. 765 verses in 9 languages. Optional sign-in, no advertising, no data sold.">
-<meta name="theme-color" content="#FAF4EA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1A1614" media="(prefers-color-scheme: dark)">
-
-<meta property="og:title" content="Sadhana Lock">
-<meta property="og:description" content="Your apps rest. Your practice opens them.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://interludeapps.store/">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..600;1,400..500&family=Mukta:wght@300;400;500;600;700&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
-
 <style>
-/* ─────────────────────────────────────────────────────────────
-   Tokens — lifted verbatim from the app's ui/theme/Color.kt so
-   the site and the product cannot drift apart. Contrast figures
-   in the comments are the measured ones from that file.
-   ───────────────────────────────────────────────────────────── */
 :root{
-  --cream:#FAF4EA;        /* screen background */
-  --sand:#E9E0D1;         /* outer canvas */
-  --panel:#F3EAD9;        /* info panels */
-  --glow:#FFF6E6;         /* radial highlight behind hero moments */
-  --card:#FFFFFF;
-  --card-selected:#FDF1E7;
-
-  --saffron:#A85117;      /* accent text — 4.98:1 on cream */
-  --saffron-btn:#B85E1E;  /* buttons — white on it is 4.51:1 */
-  --saffron-light:#E79A3E;/* gradient stop, fill only */
-  --saffron-shadow:#8F4715;
-  --on-saffron:#FFFFFF;
-
-  --ink:#2A2622;          /* 13.72:1 on cream */
-  --ink-soft:#3E382F;
-  --muted:#5F584D;        /* 6.42:1 on cream */
-  --muted-light:#6F675B;  /* 5.09:1 on cream */
-
-  --success:#2A7A64;
-  --success-soft:#E6F0E9;
-  --alert-surface:#FCE9DC;
-  --alert-edge:#C9633A;
-  --alert-ink:#8A3F1C;
-
-  --heat-empty:#EFE6D6;
-  --heat-low:#F0C99E;
-  --heat-mid:#E39A5B;
-  --heat-high:#B85E1E;
-  --bead-empty:#E3D7C2;
-
-  --hairline:rgba(42,38,34,.14);
-  --hairline-faint:rgba(42,38,34,.08);
-  --shadow-sm:0 1px 2px rgba(42,38,34,.06), 0 2px 8px rgba(42,38,34,.05);
-  --shadow-md:0 2px 6px rgba(42,38,34,.07), 0 12px 32px rgba(42,38,34,.08);
-  --shadow-lg:0 8px 24px rgba(42,38,34,.10), 0 32px 64px rgba(42,38,34,.12);
-
-  /* Spacious scale — this is a marketing page, not a dashboard */
-  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:3rem; --s6:4rem; --s7:6rem;
-  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-xl:32px;
-
-  --serif:'Lora',Georgia,'Times New Roman',serif;
-  --sans:'Mukta',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  --deva:'Tiro Devanagari Sanskrit','Noto Serif Devanagari',serif;
-
-  --maxw:76rem;
+  /* the app's own registers — sand by day, dusk after dark */
+  --sand:#F7F2EA; --sand-deep:#EFE7DA; --card:#FFFDF9; --paper:#FDFAF3;
+  --ink:#24201A; --ink-soft:#544C3D; --ink-dim:#7A705E;
+  --edge:#E4DACB; --edge-2:#D2C6B2;
+  --accent:#9C4221; --accent-hi:#B04A22;
+  --night:#1A100A; --night-2:#241811; --n-ink:#F3E7D0; --n-soft:#B9A585; --n-dim:#8A785C;
+  --gold:#F5C46A; --candle:#F6E3B4;
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+  --s1:.5rem; --s2:.85rem; --s3:1.4rem; --s4:2.2rem; --s5:3.6rem; --s6:5.5rem; --s7:8rem;
+  --shadow:0 30px 70px -40px rgba(50,32,16,.5);
 }
-
-/* The app ships light-only by design. The web has no such luxury — a phone
-   in dark mode at night would flash white. Warm dark, same hues, matching
-   the tokens already used by privacy.html and terms.html on this domain. */
-@media (prefers-color-scheme: dark){
-  :root{
-    --cream:#1A1614; --sand:#131010; --panel:#241E1A; --glow:#2A211A;
-    --card:#221C18; --card-selected:#2C231C;
-    --saffron:#E8A857; --saffron-btn:#E8A857; --saffron-light:#F2C689;
-    --saffron-shadow:#9A6A2E; --on-saffron:#241A10;
-    --ink:#F2E9DC; --ink-soft:#E4D9C9; --muted:#B8AC9C; --muted-light:#A79B8B;
-    --success:#6FCBAE; --success-soft:#1E2B27;
-    --alert-surface:#2E211A; --alert-edge:#C9633A; --alert-ink:#E8A87F;
-    --heat-empty:#2A2420; --heat-low:#5C4028; --heat-mid:#96602F; --heat-high:#E8A857;
-    --bead-empty:#3A322A;
-    --hairline:rgba(242,233,220,.16); --hairline-faint:rgba(242,233,220,.09);
-    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
-    --shadow-md:0 2px 6px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.35);
-    --shadow-lg:0 8px 24px rgba(0,0,0,.4), 0 32px 64px rgba(0,0,0,.45);
-  }
-}
-
-*,*::before,*::after{box-sizing:border-box}
+*{box-sizing:border-box}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--sand);color:var(--ink);
+  font:400 17px/1.65 Mukta,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:Lora,Georgia,serif;font-weight:600;letter-spacing:-.015em;text-wrap:balance;margin:0}
+a{color:inherit}
+.dev{font-family:'Tiro Devanagari Sanskrit',Lora,serif}
 
-body{
-  margin:0; background:var(--cream); color:var(--ink);
-  font-family:var(--sans); font-size:1.0625rem; line-height:1.65;
-  -webkit-font-smoothing:antialiased; overflow-x:hidden;
-}
-h1,h2,h3,h4{font-family:var(--serif); font-weight:600; line-height:1.18; letter-spacing:-.01em; margin:0}
-p{margin:0}
-a{color:var(--saffron); text-underline-offset:3px}
-img,svg{max-width:100%}
-:focus-visible{outline:3px solid var(--saffron); outline-offset:3px; border-radius:6px}
+/* floating pill nav — Open / Posh */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;
+  display:flex;align-items:center;gap:6px;padding:7px 8px 7px 16px;
+  background:rgba(255,253,249,.82);backdrop-filter:blur(14px) saturate(1.3);
+  border:1px solid var(--edge);border-radius:999px;box-shadow:0 10px 34px -20px rgba(50,32,16,.5);
+  max-width:calc(100vw - 28px)}
+.nav .brand{font-family:Lora,serif;font-weight:600;font-size:15px;margin-right:6px;white-space:nowrap}
+.nav a{font-size:13.5px;color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:999px;white-space:nowrap}
+.nav a:hover{background:var(--sand-deep);color:var(--ink)}
+.nav .cta{background:var(--ink);color:var(--paper);font-weight:600}
+.nav .cta:hover{background:var(--accent);color:#fff}
+@media(max-width:860px){.nav a:not(.cta){display:none}}
 
-.wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--s3)}
-.eyebrow{
-  font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--saffron); margin:0 0 var(--s2);
-}
-.lede{color:var(--muted); font-size:1.125rem; max-width:38rem}
-section{padding:var(--s7) 0}
-@media (max-width:640px){section{padding:var(--s6) 0}}
+/* ---------- HERO: a night panel resting on the sand ---------- */
+.hero{padding:118px 0 var(--s5)}
+.slab{position:relative;background:var(--night);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow);padding:clamp(2.2rem,5vw,4.4rem)}
+.slab::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 80% at 50% 108%,rgba(232,148,47,.30),transparent 62%);pointer-events:none}
+.slab-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
+@media(max-width:900px){.slab-grid{grid-template-columns:1fr;text-align:center}}
+.sloka{font-family:'Tiro Devanagari Sanskrit',serif;font-size:15px;color:var(--gold);opacity:.9;margin:0 0 var(--s3)}
+.slab h1{color:var(--n-ink);font-size:clamp(2.3rem,5.3vw,3.9rem);line-height:1.06}
+.slab h1 em{font-style:italic;color:var(--gold)}
+.slab .lede{color:var(--n-soft);font-size:clamp(1rem,1.4vw,1.12rem);max-width:34rem;margin:var(--s3) 0 var(--s4)}
+@media(max-width:900px){.slab .lede{margin-inline:auto}}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.cta-row{justify-content:center}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:999px;
+  font:600 15px Mukta,sans-serif;text-decoration:none;border:1px solid transparent;transition:transform .18s,background .18s}
+.btn:hover{transform:translateY(-1px)}
+.btn-candle{background:var(--candle);color:#241204}
+.btn-candle:hover{background:#FFF0CE}
+.btn-quiet{background:transparent;color:var(--n-soft);border-color:rgba(230,180,100,.28)}
+.btn-quiet:hover{color:var(--n-ink);border-color:rgba(230,180,100,.5)}
+.btn[aria-disabled=true]{opacity:.58;cursor:default}
+.btn[aria-disabled=true]:hover{transform:none}
+.hero-note{color:var(--n-dim);font-size:13.5px;margin:var(--s3) 0 0}
 
-/* ── Buttons ─────────────────────────────────────────────── */
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
-  min-height:48px; padding:.8rem 1.5rem; border-radius:999px; border:0;
-  font-family:var(--sans); font-size:1rem; font-weight:600; text-decoration:none;
-  cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
-}
-.btn-primary{
-  background:var(--saffron-btn); color:var(--on-saffron);
-  box-shadow:0 3px 0 var(--saffron-shadow), var(--shadow-sm);
-}
-.btn-primary:hover{transform:translateY(-2px); box-shadow:0 5px 0 var(--saffron-shadow), var(--shadow-md)}
-.btn-primary:active{transform:translateY(1px); box-shadow:0 1px 0 var(--saffron-shadow)}
-.btn-ghost{
-  background:transparent; color:var(--ink); border:1px solid var(--hairline);
-}
-.btn-ghost:hover{background:var(--panel); transform:translateY(-2px)}
-@media (prefers-reduced-motion:reduce){
-  .btn:hover,.btn:active{transform:none}
-}
+/* device frame — real screenshots drop straight in */
+.phone{justify-self:center;width:min(300px,78vw);aspect-ratio:1080/2340;border-radius:34px;
+  padding:9px;background:linear-gradient(160deg,#4a3c30,#181310);
+  box-shadow:0 50px 90px -40px rgba(0,0,0,.85);position:relative}
+.phone > .screen{width:100%;height:100%;border-radius:26px;overflow:hidden;background:var(--night-2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:26px;display:block}
+.lamp{width:96px;height:96px;border-radius:50%;
+  background:radial-gradient(circle at 50% 42%,#FFE9B0 0%,#E8942F 24%,rgba(138,58,24,.4) 52%,transparent 74%);
+  margin-bottom:20px}
+.ph-eyebrow{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--n-dim);margin:0 0 10px}
+.ph-title{font-family:Lora,serif;font-size:21px;color:var(--n-ink);margin:0 0 8px;line-height:1.25}
+.ph-sub{font-size:13px;color:var(--n-soft);margin:0 0 22px}
+.ph-btn{background:var(--candle);color:#241204;border-radius:999px;padding:12px 0;width:100%;font:600 14px Mukta,sans-serif}
+.ph-ghost{color:var(--n-dim);font-size:12px;margin-top:12px}
 
-/* ── Nav ─────────────────────────────────────────────────── */
-.nav{
-  position:sticky; top:0; z-index:50;
-  background:color-mix(in srgb, var(--cream) 88%, transparent);
-  backdrop-filter:saturate(1.4) blur(14px);
-  border-bottom:1px solid transparent; transition:border-color .25s ease;
-}
-.nav.scrolled{border-bottom-color:var(--hairline)}
-.nav-in{display:flex; align-items:center; gap:var(--s3); height:68px}
-.brand{display:flex; align-items:center; gap:.6rem; text-decoration:none; color:var(--ink); font-family:var(--serif); font-weight:600; font-size:1.0625rem}
-.nav-links{display:flex; gap:var(--s3); margin-left:auto; align-items:center}
-.nav-links a:not(.btn){color:var(--muted); text-decoration:none; font-size:.95rem; font-weight:500; padding:.4rem 0; transition:color .18s ease}
-.nav-links a:not(.btn):hover{color:var(--saffron)}
-.nav .btn{min-height:42px; padding:.5rem 1.1rem; font-size:.9rem; text-decoration:none}
-.nav .btn-primary{color:var(--on-saffron)}
-@media (max-width:900px){.nav-links a:not(.btn){display:none} .nav-links{margin-left:auto}}
+/* ---------- stat strip ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--edge);
+  border:1px solid var(--edge);border-radius:var(--r-md);overflow:hidden;margin-top:var(--s4)}
+@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);padding:22px 20px}
+.stat .n{font-family:Lora,serif;font-size:30px;font-weight:600;line-height:1;display:block}
+.stat .l{font-size:13px;color:var(--ink-dim);margin-top:6px;display:block;line-height:1.4}
 
-/* ── Hero ────────────────────────────────────────────────── */
-.hero{position:relative; padding:var(--s6) 0 var(--s7); overflow:hidden}
-.hero::before{
-  content:''; position:absolute; inset:-30% -10% auto -10%; height:120%;
-  background:radial-gradient(ellipse 60% 55% at 50% 22%, var(--glow) 0%, transparent 70%);
-  pointer-events:none;
-}
-.hero-grid{position:relative; display:grid; grid-template-columns:1.05fr .95fr; gap:var(--s6); align-items:center}
-.hero h1{font-size:clamp(2.4rem,5.4vw,4rem); letter-spacing:-.02em}
-.hero h1 em{font-style:normal; color:var(--saffron)}
-.hero .lede{margin-top:var(--s3); font-size:clamp(1.05rem,1.6vw,1.25rem)}
-.hero-cta{display:flex; flex-wrap:wrap; gap:var(--s2); margin-top:var(--s4)}
-.hero-note{margin-top:var(--s3); font-size:.9rem; color:var(--muted-light)}
-.hero-sanskrit{
-  font-family:var(--deva); font-size:1.05rem; color:var(--saffron);
-  margin-bottom:var(--s2); letter-spacing:.01em;
-}
-@media (max-width:880px){
-  .hero-grid{grid-template-columns:1fr; gap:var(--s5)}
-  /* The headline leads on narrow screens. A 288px mockup stacked above it eats
-     the whole first fold on a 375px phone, so the pitch arrives below the scroll. */
-  .hero-art{justify-self:center}
-}
-@media (max-width:420px){
-  .phone{width:252px; padding:9px; border-radius:32px}
-  .phone .screen{border-radius:24px}
-}
+/* ---------- sections ---------- */
+section{padding:var(--s6) 0}
+.eyebrow{font-size:11.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 var(--s2)}
+h2{font-size:clamp(1.85rem,3.6vw,2.65rem);line-height:1.14;max-width:22ch}
+.lede{color:var(--ink-soft);font-size:1.06rem;max-width:52ch;margin-top:var(--s3)}
 
-/* ── Phone mockups ───────────────────────────────────────── */
-.phone{
-  position:relative; width:288px; margin:0 auto;
-  border-radius:38px; padding:11px;
-  background:linear-gradient(160deg,#3A342C,#221E19);
-  box-shadow:var(--shadow-lg);
-}
-.phone::after{ /* speaker slit */
-  content:''; position:absolute; top:20px; left:50%; transform:translateX(-50%);
-  width:52px; height:5px; border-radius:3px; background:rgba(255,255,255,.14);
-}
-.phone .screen{
-  position:relative; border-radius:28px; overflow:hidden;
-  background:var(--cream-fixed,#FAF4EA); color:#2A2622;
-  aspect-ratio:9/19; display:flex; flex-direction:column;
-  font-size:11px; line-height:1.45;
-}
-/* Screens keep the app's true light palette even in dark mode — a screenshot
-   of a light-only app should not be recoloured, that would misrepresent it. */
-.screen{
-  --s-cream:#FAF4EA; --s-panel:#F3EAD9; --s-card:#FFFFFF;
-  --s-ink:#2A2622; --s-muted:#5F584D; --s-saffron:#A85117; --s-btn:#B85E1E;
-  --s-line:rgba(42,38,34,.12);
-  background:var(--s-cream); color:var(--s-ink);
-}
-.screen-pad{padding:16px 14px}
-.screen-top{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 14px 6px; font-size:9px; color:var(--s-muted); letter-spacing:.04em;
-}
-.screen h4{font-family:var(--serif); font-size:15px; line-height:1.25; margin:0}
-.screen .sm{font-size:9.5px; color:var(--s-muted)}
-.screen .deva{font-family:var(--deva); color:var(--s-ink)}
-.screen-card{background:var(--s-card); border:1px solid var(--s-line); border-radius:14px; padding:12px}
-.screen-btn{
-  display:block; text-align:center; background:var(--s-btn); color:#fff;
-  border-radius:999px; padding:9px; font-weight:600; font-size:11px;
-  box-shadow:0 2px 0 #8F4715;
-}
-.screen-tabs{
-  margin-top:auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
-  padding:8px 6px 12px; border-top:1px solid var(--s-line); background:var(--s-cream);
-  font-size:8px; text-align:center; color:var(--s-muted);
-}
-.screen-tabs .on{color:var(--s-saffron); font-weight:600}
-.tabicon{display:block; margin:0 auto 3px; width:16px; height:16px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{background:var(--card);border:1px solid var(--edge);border-radius:var(--r-md);padding:26px 24px}
+.step .num{width:30px;height:30px;border-radius:50%;background:var(--sand-deep);color:var(--accent);
+  font:600 14px Mukta,sans-serif;display:grid;place-items:center;margin-bottom:16px}
+.step h3{font-size:1.15rem;margin-bottom:8px}
+.step p{color:var(--ink-soft);font-size:15px;margin:0}
 
-/* diya flame */
-.diya{display:block; margin:0 auto}
-.flame{transform-origin:50% 92%; animation:flicker 3.2s ease-in-out infinite}
-@keyframes flicker{
-  0%,100%{transform:scaleY(1) scaleX(1); opacity:1}
-  38%{transform:scaleY(1.07) scaleX(.96); opacity:.94}
-  67%{transform:scaleY(.97) scaleX(1.03); opacity:1}
-}
-@media (prefers-reduced-motion:reduce){.flame{animation:none}}
+/* two-up: ritual + scripture, each a night card on sand */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s5)}
+@media(max-width:900px){.duo{grid-template-columns:1fr}}
+.panel{border-radius:var(--r-lg);padding:clamp(1.6rem,3vw,2.6rem);border:1px solid var(--edge);background:var(--card)}
+.panel.dark{background:var(--night);border-color:transparent;color:var(--n-ink);position:relative;overflow:hidden}
+.panel.dark::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(90% 60% at 50% 100%,rgba(232,148,47,.20),transparent 60%);pointer-events:none}
+.panel.dark h3,.panel.dark h2{color:var(--n-ink)}
+.panel.dark p,.panel.dark li{color:var(--n-soft)}
+.panel h3{font-size:1.35rem;margin-bottom:10px}
+.panel ul{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:11px}
+.panel li{font-size:15px;color:var(--ink-soft);display:grid;grid-template-columns:18px 1fr;gap:11px;align-items:start}
+.panel li b{color:var(--ink);font-weight:600}
+.panel.dark li b{color:var(--n-ink)}
+.tick{color:var(--accent);font-weight:700;line-height:1.5}
+.panel.dark .tick{color:var(--gold)}
+.verse-card{background:var(--paper);border-radius:var(--r-md);padding:24px;text-align:center;margin-top:var(--s3)}
+.verse-card .dev{font-size:19px;line-height:1.85;color:var(--ink)}
+.verse-card .tr{font-size:14.5px;color:var(--ink-soft);margin:12px 0 8px;font-style:italic}
+.verse-card .cite{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
 
-/* ── Steps ───────────────────────────────────────────────── */
-.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s4); margin-top:var(--s5)}
-.step{position:relative; padding-top:var(--s3); border-top:2px solid var(--hairline)}
-.step .n{
-  display:inline-flex; align-items:center; justify-content:center;
-  width:30px; height:30px; border-radius:50%; background:var(--saffron-btn); color:var(--on-saffron);
-  font-weight:700; font-size:.85rem; margin-bottom:var(--s2);
-}
-.step h3{font-size:1.2rem; margin-bottom:.4rem}
-.step p{color:var(--muted); font-size:1rem}
-@media (max-width:760px){.steps{grid-template-columns:1fr; gap:var(--s3)}}
+/* feature grid */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
+@media(max-width:980px){.feat{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.feat{grid-template-columns:1fr}}
+.f{background:var(--card);border:1px solid var(--edge);border-radius:var(--r-md);padding:22px}
+.f h4{font-family:Lora,serif;font-size:1.02rem;font-weight:600;margin:0 0 7px}
+.f p{margin:0;font-size:14.5px;color:var(--ink-soft)}
 
-/* ── Alternating feature blocks ──────────────────────────── */
-.split{display:grid; grid-template-columns:1fr 1fr; gap:var(--s6); align-items:center}
-.split + .split{margin-top:var(--s7)}
-.split.flip .split-art{order:-1}
-.split h2{font-size:clamp(1.8rem,3.2vw,2.5rem); margin-bottom:var(--s3)}
-.split ul{list-style:none; padding:0; margin:var(--s3) 0 0; display:grid; gap:.85rem}
-.split li{display:flex; gap:.75rem; align-items:flex-start; color:var(--muted)}
-.split li strong{color:var(--ink); font-weight:600}
-.tick{flex:0 0 20px; margin-top:5px; color:var(--saffron)}
-@media (max-width:880px){
-  .split{grid-template-columns:1fr; gap:var(--s4)}
-  .split.flip .split-art{order:0}
-  .split + .split{margin-top:var(--s6)}
-}
+/* pricing */
+.plans{display:grid;grid-template-columns:1fr 1.08fr;gap:var(--s3);margin-top:var(--s5)}
+@media(max-width:860px){.plans{grid-template-columns:1fr}}
+.plan{border:1px solid var(--edge);border-radius:var(--r-lg);padding:clamp(1.6rem,3vw,2.4rem);background:var(--card)}
+.plan.plus{background:var(--night);border-color:transparent;position:relative;overflow:hidden}
+.plan.plus::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 80% 0%,rgba(245,196,106,.14),transparent 60%);pointer-events:none}
+.plan.plus h3,.plan.plus .price{color:var(--n-ink)}
+.plan.plus p,.plan.plus li{color:var(--n-soft)}
+.plan h3{font-size:1.2rem}
+.price{font-family:Lora,serif;font-size:2.4rem;font-weight:600;margin:10px 0 2px;display:block}
+.price-sub{font-size:13.5px;color:var(--ink-dim);margin:0}
+.plan.plus .price-sub{color:var(--n-dim)}
+.plan ul{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:10px}
+.plan li{font-size:15px;display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--ink-soft)}
 
-/* ── Feature grid ────────────────────────────────────────── */
-.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s3); margin-top:var(--s5)}
-.f{
-  background:var(--card); border:1px solid var(--hairline-faint); border-radius:var(--r-lg);
-  padding:var(--s3); box-shadow:var(--shadow-sm);
-  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-}
-.f:hover{transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--hairline)}
-@media (prefers-reduced-motion:reduce){.f:hover{transform:none}}
-.f .ico{
-  display:flex; align-items:center; justify-content:center;
-  width:42px; height:42px; border-radius:12px; margin-bottom:var(--s2);
-  background:var(--card-selected); color:var(--saffron);
-}
-.f h3{font-size:1.0625rem; margin-bottom:.35rem}
-.f p{font-size:.95rem; color:var(--muted); line-height:1.55}
-@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:620px){.grid{grid-template-columns:1fr}}
+/* closing */
+.close{text-align:center;padding:var(--s6) 0 var(--s7)}
+.close h2{margin-inline:auto}
+footer{border-top:1px solid var(--edge);padding:var(--s4) 0;font-size:14px;color:var(--ink-dim)}
+.foot-row{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+footer a{color:var(--ink-soft)}
 
-/* ── Stat band ───────────────────────────────────────────── */
-.band{background:var(--panel); border-top:1px solid var(--hairline-faint); border-bottom:1px solid var(--hairline-faint)}
-.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s3); text-align:center}
-.stat .num{font-family:var(--serif); font-size:clamp(1.9rem,3.6vw,2.75rem); color:var(--saffron); line-height:1.1}
-.stat .lab{font-size:.9rem; color:var(--muted); margin-top:.25rem}
-@media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr); gap:var(--s4)}}
-
-/* ── Languages ───────────────────────────────────────────── */
-.langs{display:flex; flex-wrap:wrap; gap:.6rem; margin-top:var(--s3)}
-.lang{
-  background:var(--card); border:1px solid var(--hairline); border-radius:999px;
-  padding:.45rem 1rem; font-size:.95rem; color:var(--ink);
-}
-.lang span{color:var(--muted-light); font-size:.85rem; margin-left:.4rem}
-
-/* ── Privacy panel ───────────────────────────────────────── */
-.privacy-card{
-  background:var(--card); border:1px solid var(--hairline); border-radius:var(--r-xl);
-  padding:var(--s5); box-shadow:var(--shadow-md);
-}
-.claims{list-style:none; padding:0; margin:var(--s4) 0 0; display:grid; gap:var(--s2); grid-template-columns:repeat(2,1fr)}
-.claims li{display:flex; gap:.75rem; align-items:flex-start; color:var(--muted)}
-.claims .tick{color:var(--success)}
-@media (max-width:760px){.privacy-card{padding:var(--s4)} .claims{grid-template-columns:1fr}}
-
-/* ── Pricing ─────────────────────────────────────────────── */
-.plans{display:grid; grid-template-columns:1fr 1fr; gap:var(--s3); margin-top:var(--s5); align-items:start}
-.plan{
-  background:var(--card); border:1px solid var(--hairline); border-radius:var(--r-xl);
-  padding:var(--s4); box-shadow:var(--shadow-sm);
-}
-.plan.featured{border-color:var(--saffron-btn); box-shadow:var(--shadow-md); position:relative}
-.plan.featured::before{
-  content:'One payment. Yours for good.'; position:absolute; top:-13px; left:var(--s4);
-  background:var(--saffron-btn); color:var(--on-saffron); font-size:.72rem; font-weight:600;
-  letter-spacing:.06em; text-transform:uppercase; padding:.3rem .8rem; border-radius:999px;
-}
-.plan .price{font-family:var(--serif); font-size:2.5rem; line-height:1.1; margin:.4rem 0 .1rem}
-.plan .price small{font-size:.95rem; font-family:var(--sans); color:var(--muted); font-weight:400}
-.plan ul{list-style:none; padding:0; margin:var(--s3) 0 0; display:grid; gap:.7rem}
-.plan li{display:flex; gap:.65rem; align-items:flex-start; color:var(--muted); font-size:.98rem}
-.plan .btn{width:100%; margin-top:var(--s3)}
-.plan-note{margin-top:var(--s3); font-size:.9rem; color:var(--muted-light); text-align:center}
-@media (max-width:760px){.plans{grid-template-columns:1fr; gap:var(--s4)}}
-
-/* ── FAQ ─────────────────────────────────────────────────── */
-.faq{max-width:46rem; margin:var(--s5) auto 0}
-details{border-bottom:1px solid var(--hairline); padding:var(--s2) 0}
-summary{
-  cursor:pointer; list-style:none; font-family:var(--serif); font-weight:600; font-size:1.0625rem;
-  display:flex; align-items:center; justify-content:space-between; gap:var(--s2);
-  padding:.55rem 0; min-height:44px;
-}
-summary::-webkit-details-marker{display:none}
-summary::after{
-  content:''; flex:0 0 12px; height:12px; margin-right:2px;
-  border-right:2px solid var(--saffron); border-bottom:2px solid var(--saffron);
-  transform:rotate(45deg) translateY(-3px); transition:transform .22s ease;
-}
-details[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
-details p{color:var(--muted); padding-bottom:var(--s2); max-width:44rem}
-
-/* ── Closing CTA ─────────────────────────────────────────── */
-.close-cta{
-  text-align:center; background:
-    radial-gradient(ellipse 70% 90% at 50% 0%, var(--glow) 0%, transparent 65%), var(--panel);
-  border-radius:var(--r-xl); padding:var(--s6) var(--s3); margin:var(--s6) 0;
-  border:1px solid var(--hairline-faint);
-}
-.close-cta h2{font-size:clamp(1.9rem,4vw,2.75rem); margin:var(--s3) 0 var(--s2)}
-.close-cta p{color:var(--muted); max-width:34rem; margin:0 auto}
-.close-cta .btn{margin-top:var(--s4)}
-
-/* ── Footer ──────────────────────────────────────────────── */
-footer{border-top:1px solid var(--hairline); padding:var(--s5) 0 var(--s6); color:var(--muted); font-size:.95rem}
-.foot{display:flex; flex-wrap:wrap; gap:var(--s4); justify-content:space-between; align-items:flex-start}
-.foot nav{display:flex; flex-wrap:wrap; gap:var(--s3)}
-.foot a{color:var(--muted); text-decoration:none}
-.foot a:hover{color:var(--saffron); text-decoration:underline}
-.foot .fine{margin-top:var(--s3); font-size:.85rem; color:var(--muted-light); width:100%}
-
-/* ── Scroll reveal ───────────────────────────────────────── */
-.reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1)}
-.reveal.in{opacity:1; transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none}}
-
-.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
-.skip{position:absolute; left:-9999px; top:0; background:var(--saffron-btn); color:var(--on-saffron); padding:.7rem 1.1rem; border-radius:0 0 8px 0; z-index:100}
-.skip:focus{left:0}
+/* reveal on scroll */
+.rise{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rise{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
-
-<!-- ══ NAV ══════════════════════════════════════════════ -->
-<header class="nav" id="nav">
-  <div class="wrap nav-in">
-    <a class="brand" href="#top">
-      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
-        <defs>
-          <radialGradient id="brandFlame" cx="50%" cy="72%" r="62%">
-            <stop offset="0%" stop-color="#FFF3D0"/><stop offset="45%" stop-color="#F5B942"/>
-            <stop offset="100%" stop-color="#B85E1E"/>
-          </radialGradient>
-        </defs>
-        <path d="M16 4c2.6 3.4 4.2 6 4.2 8.4a4.2 4.2 0 1 1-8.4 0C11.8 10 13.4 7.4 16 4Z" fill="url(#brandFlame)"/>
-        <path d="M5 20h22c-1.4 5-5.8 7.6-11 7.6S6.4 25 5 20Z" fill="#B85E1E"/>
-        <path d="M5 20h22a1 1 0 0 0 0-2H5a1 1 0 0 0 0 2Z" fill="#8F4715"/>
-      </svg>
-      Sadhana Lock
-    </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="#how">How it works</a>
-      <a href="#ritual">The ritual</a>
-      <a href="#scripture">Scripture</a>
-      <a href="#features">Features</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#pricing">Pricing</a>
-      <a class="btn btn-primary" href="#get">Get the app</a>
-    </nav>
-  </div>
-</header>
+<nav class="nav" aria-label="Primary">
+  <span class="brand">Sādhana Lock</span>
+  <a href="#how">How it works</a>
+  <a href="#ritual">The ritual</a>
+  <a href="#scripture">Scripture</a>
+  <a href="#privacy">Privacy</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#get" class="cta">Get the app</a>
+</nav>
 
 <main id="main">
-<div id="top"></div>
 
-<!-- ══ HERO ═════════════════════════════════════════════ -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <p class="hero-sanskrit">योगः कर्मसु कौशलम्</p>
-      <h1>Your apps rest.<br>Your <em>practice</em> opens them.</h1>
-      <p class="lede">Sadhana Lock guards your most distracting apps on a schedule you set. When you reach for one, it doesn't scold you — it offers you a shloka, a breath, or a round of japa. Finish, and the app opens.</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="#get">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 3.5v17a1 1 0 0 0 1.5.87l12-8.5a1 1 0 0 0 0-1.74l-12-8.5A1 1 0 0 0 4 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-          </svg>
-          See the app
-        </a>
-        <a class="btn btn-ghost" href="#how">See how it works</a>
-      </div>
-      <p class="hero-note">Android · Free to use · Optional Plus from ₹99 a month · Works without an account</p>
-    </div>
-
-    <!-- Mockup: the lock ritual -->
-    <div class="hero-art split-art">
-      <div class="phone" role="img" aria-label="The Sadhana Lock practice screen: a Bhagavad Gita shloka with its meaning and a Begin practice button, shown over a blocked app.">
-        <div class="screen">
-          <div class="screen-top"><span>9:41</span><span>Instagram · resting</span></div>
-          <div class="screen-pad" style="text-align:center">
-            <svg class="diya" width="54" height="54" viewBox="0 0 32 32" aria-hidden="true">
-              <defs><radialGradient id="hf" cx="50%" cy="72%" r="62%">
-                <stop offset="0%" stop-color="#FFF3D0"/><stop offset="45%" stop-color="#F5B942"/><stop offset="100%" stop-color="#B85E1E"/>
-              </radialGradient></defs>
-              <g class="flame"><path d="M16 3c2.8 3.7 4.5 6.5 4.5 9a4.5 4.5 0 1 1-9 0C11.5 9.5 13.2 6.7 16 3Z" fill="url(#hf)"/></g>
-              <path d="M4 20h24c-1.5 5.4-6.3 8.2-12 8.2S5.5 25.4 4 20Z" fill="#B85E1E"/>
-              <path d="M4 20h24a1.1 1.1 0 0 0 0-2.2H4A1.1 1.1 0 0 0 4 20Z" fill="#8F4715"/>
-            </svg>
-            <h4 style="margin-top:12px">Your apps are resting</h4>
-            <p class="sm" style="margin-top:4px">Sit for a moment, and they open.</p>
-            <div class="screen-card" style="margin-top:14px; text-align:left">
-              <p class="deva" style="font-size:11.5px; line-height:1.7; margin:0">
-                योगस्थः कुरु कर्माणि<br>सङ्गं त्यक्त्वा धनञ्जय
-              </p>
-              <div style="height:1px; background:var(--s-line); margin:9px 0"></div>
-              <p style="font-size:10px; font-family:var(--serif); font-style:italic; color:#3E382F; margin:0">
-                Steadfast in yoga, do your work — letting go of attachment.
-              </p>
-              <p class="sm" style="margin-top:6px; font-size:8.5px; letter-spacing:.06em">BHAGAVAD GĪTĀ 2.48</p>
-            </div>
-            <div class="screen-btn" style="margin-top:14px">Begin practice</div>
-          </div>
-          <p class="sm" style="margin:auto 0 18px; text-align:center; font-size:8.5px">I need access now</p>
+<!-- HERO -->
+<div class="wrap hero">
+  <div class="slab">
+    <div class="slab-grid">
+      <div>
+        <p class="sloka">योगः कर्मसु कौशलम्</p>
+        <h1>Your apps rest.<br>Your <em>practice</em> opens them.</h1>
+        <p class="lede">Sadhana Lock guards your most distracting apps on a schedule you set. When you reach for one, it doesn't scold you — it offers you a shloka, a breath, or a round of japa. Finish, and the app opens.</p>
+        <div class="cta-row">
+          <a class="btn btn-candle" href="#get">See the app</a>
+          <a class="btn btn-quiet" href="#how">How it works</a>
         </div>
+        <p class="hero-note">Android · Free to use · Optional Plus from ₹99 a month · Works without an account</p>
       </div>
+      <!-- SCREENSHOT SLOT: replace .screen contents with <img src="shots/lock.png" alt="The lock face"> -->
+      <div class="phone"><div class="screen">
+        <div class="lamp"></div>
+        <p class="ph-eyebrow">Instagram is resting</p>
+        <p class="ph-title">One day lit.<br>This is day two.</p>
+        <p class="ph-sub">Sit, and the apps open after.</p>
+        <div class="ph-btn">Sit for three minutes</div>
+        <p class="ph-ghost">I need 10 minutes without practising</p>
+      </div></div>
     </div>
   </div>
-</section>
 
-<!-- ══ STAT BAND ════════════════════════════════════════ -->
-<div class="band">
-  <div class="wrap" style="padding-top:var(--s5); padding-bottom:var(--s5)">
-    <div class="stats reveal">
-      <div class="stat"><div class="num">765</div><div class="lab">verses, sourced and translated</div></div>
-      <div class="stat"><div class="num">701</div><div class="lab">of them the complete Bhagavad Gītā</div></div>
-      <div class="stat"><div class="num">9</div><div class="lab">languages to read them in</div></div>
-      <div class="stat"><div class="num">0</div><div class="lab">adverts, trackers or data sold</div></div>
-    </div>
+  <div class="stats rise">
+    <div class="stat"><span class="n">765</span><span class="l">verses, sourced and translated</span></div>
+    <div class="stat"><span class="n">701</span><span class="l">of them the complete Bhagavad Gītā</span></div>
+    <div class="stat"><span class="n">9</span><span class="l">languages to read them in</span></div>
+    <div class="stat"><span class="n">0</span><span class="l">adverts, trackers or data sold</span></div>
   </div>
 </div>
 
-<!-- ══ HOW IT WORKS ═════════════════════════════════════ -->
-<section id="how">
-  <div class="wrap">
-    <div class="reveal" style="max-width:40rem">
-      <p class="eyebrow">How it works</p>
-      <h2 style="font-size:clamp(1.9rem,3.6vw,2.6rem)">Three decisions, then it runs itself.</h2>
-      <p class="lede" style="margin-top:var(--s2)">No streak guilt, no shame screens, no counting how many hours you have wasted. Just a door that asks something small of you before it opens.</p>
-    </div>
-
-    <div class="steps reveal">
-      <div class="step">
-        <span class="n">1</span>
-        <h3>Choose what to guard</h3>
-        <p>Pick from your installed apps. The list puts the real time-sinks first — social, video, games — so you're not scrolling past Calendar to find Instagram.</p>
-      </div>
-      <div class="step">
-        <span class="n">2</span>
-        <h3>Set your practice times</h3>
-        <p>The three sandhya hours are offered by default. Add your own, choose which days each one repeats, and the lock arms itself — exactly, even while the phone sleeps.</p>
-      </div>
-      <div class="step">
-        <span class="n">3</span>
-        <h3>Practise to open</h3>
-        <p>When a guarded app is opened during a lock, the practice screen appears over it. Complete a sitting and every guarded app opens for as long as you chose.</p>
-      </div>
-    </div>
+<!-- HOW -->
+<section id="how"><div class="wrap">
+  <p class="eyebrow rise">How it works</p>
+  <h2 class="rise">Three decisions, then it runs itself.</h2>
+  <p class="lede rise">No streak guilt, no shame screens, no counting the hours you have wasted. Just a door that asks something small of you before it opens.</p>
+  <div class="steps">
+    <div class="step rise"><div class="num">1</div><h3>Choose what to guard</h3>
+      <p>Pick from your installed apps. Social, video and games float to the top, so you aren't scrolling past Calendar to find Instagram.</p></div>
+    <div class="step rise"><div class="num">2</div><h3>Set your practice times</h3>
+      <p>The three sandhya hours come ready. Add your own, choose which days each repeats, and the lock arms itself — exactly, even while the phone sleeps.</p></div>
+    <div class="step rise"><div class="num">3</div><h3>Practise to open</h3>
+      <p>Open a guarded app during a lock and the practice screen appears over it. Finish a sitting and every guarded app opens for as long as you chose.</p></div>
   </div>
-</section>
+</div></section>
 
-<!-- ══ THE RITUAL ═══════════════════════════════════════ -->
-<section id="ritual">
-  <div class="wrap">
-    <div class="split reveal">
-      <div>
-        <p class="eyebrow">The core loop</p>
-        <h2>Three ways to sit. All of them count.</h2>
-        <p class="lede">The unlock is never a puzzle, a maths problem or a punishment timer. It is a practice — and you choose which one you're in the mood for.</p>
-        <ul>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Guided.</strong> A shloka from the Gītā, in Devanagari with its meaning, rotating so you rarely meet the same one twice.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Your own.</strong> A breathing orb that expands and settles. Bring whatever practice is already yours.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Japa.</strong> A full 108-bead mala on screen, with a haptic tick per bead and a flourish at the guru bead.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>An honest way out.</strong> Need maps, or to take a call? One tap opens <em>that one app</em> for ten minutes — not all of them. No begging, no countdown.</span></li>
-        </ul>
-      </div>
-      <div class="split-art">
-        <!-- Mockup: japa -->
-        <div class="phone" role="img" aria-label="The japa screen: a 108-bead mala ring with 54 beads counted, the mantra Om Namah Shivaya above it.">
-          <div class="screen">
-            <div class="screen-top"><span>9:41</span><span>Japa</span></div>
-            <div class="screen-pad" style="text-align:center; display:flex; flex-direction:column; align-items:center">
-              <p class="deva" style="font-size:14px; margin:6px 0 2px">ॐ नमः शिवाय</p>
-              <p class="sm" style="font-size:8.5px; letter-spacing:.05em">OṀ NAMAḤ ŚIVĀYA</p>
-
-              <svg width="150" height="150" viewBox="0 0 160 160" style="margin:10px 0" aria-hidden="true">
-                <g id="mala"></g>
-                <circle cx="80" cy="80" r="34" fill="#FFF6E6"/>
-                <text x="80" y="76" text-anchor="middle" font-family="Lora,serif" font-size="26" font-weight="600" fill="#A85117">54</text>
-                <text x="80" y="92" text-anchor="middle" font-family="Mukta,sans-serif" font-size="9" fill="#5F584D">of 108</text>
-              </svg>
-
-              <p class="sm" style="font-size:9px">Tap anywhere to count a bead</p>
-              <div class="screen-btn" style="margin-top:12px; width:100%">Done</div>
-            </div>
-            <div class="screen-tabs">
-              <div><svg class="tabicon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Home</div>
-              <div class="on"><svg class="tabicon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="4" r="2" fill="currentColor"/></svg>Japa</div>
-              <div><svg class="tabicon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v14H6.5A1.5 1.5 0 0 0 5 19.5v-14Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5 19.5A1.5 1.5 0 0 1 6.5 18H19v2H6.5A1.5 1.5 0 0 1 5 19.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Scripture</div>
-              <div><svg class="tabicon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 10V7.5a3.5 3.5 0 1 1 7 0V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Lock</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ SCRIPTURE ════════════════════════════════════════ -->
-<section id="scripture" class="band">
-  <div class="wrap">
-    <div class="split flip reveal">
-      <div class="split-art">
-        <!-- Mockup: scripture reader -->
-        <div class="phone" role="img" aria-label="The scripture reader: a Sanskrit verse in Devanagari with an English and Hindi toggle for its meaning, showing verse 2 of 701.">
-          <div class="screen">
-            <div class="screen-top"><span>←</span><span>BHAGAVAD GĪTĀ</span><span></span></div>
-            <div class="screen-pad">
-              <div style="display:inline-block; background:#FDF1E7; border-radius:999px; padding:3px 9px; font-size:8px; color:#A85117; letter-spacing:.08em">अध्याय २ · सांख्ययोग</div>
-              <p class="deva" style="font-size:12.5px; line-height:1.85; margin:12px 0 0">
-                क्लैब्यं मा स्म गमः पार्थ<br>
-                नैतत्त्वय्युपपद्यते ।<br>
-                क्षुद्रं हृदयदौर्बल्यं<br>
-                त्यक्त्वोत्तिष्ठ परन्तप ॥
-              </p>
-              <div style="display:flex; align-items:center; justify-content:space-between; margin:14px 0 6px">
-                <span class="sm" style="font-size:8px; letter-spacing:.1em">MEANING</span>
-                <span style="display:inline-flex; background:#EFE6D6; border-radius:999px; padding:2px; font-size:8.5px">
-                  <span style="background:#fff; color:#A85117; border-radius:999px; padding:2px 8px; font-weight:600">EN</span>
-                  <span style="padding:2px 8px; color:#5F584D">हिं</span>
-                </span>
-              </div>
-              <p style="font-size:10px; font-family:var(--serif); font-style:italic; color:#3E382F; line-height:1.6; margin:0">
-                Yield not to unmanliness, Pārtha; it does not become you. Shake off this petty faintness of heart and rise, scorcher of foes.
-              </p>
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:10px; border-top:1px solid var(--s-line)">
-                <span style="border:1px solid var(--s-line); border-radius:50%; width:22px; height:22px; display:grid; place-items:center; font-size:10px">‹</span>
-                <span class="sm" style="font-size:9px">CHAPTER 2 · 2 OF 701</span>
-                <span style="border:1px solid var(--s-line); border-radius:50%; width:22px; height:22px; display:grid; place-items:center; font-size:10px">›</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p class="eyebrow">The library</p>
-        <h2>A real scripture library, not a quote generator.</h2>
-        <p class="lede">Four books, read verse by verse, each one remembering exactly where you left it. The Sanskrit is public-domain and unedited; every translation was written for this app.</p>
-        <ul>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Bhagavad Gītā</strong> — all 701 verses, all 18 chapters. Not a selection.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Īśha Upaniṣad</strong> (18 mantras), <strong>Āditya Hṛdayam</strong> (31), <strong>Śiva Tāṇḍava Stotram</strong> (15).</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Verse of the day</strong> on your home screen, and a beautifully typeset card you can share to WhatsApp or Instagram in one tap.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Reading plans</strong> — The Essential Gītā (18 days), Seven Days of Stillness, and Nine Days of Devotion for Navratri.</span></li>
-        </ul>
-
-        <p class="eyebrow" style="margin-top:var(--s4)">Read it in your own tongue</p>
-        <div class="langs">
-          <span class="lang">English</span>
-          <span class="lang">हिन्दी<span>Hindi</span></span>
-          <span class="lang">বাংলা<span>Bengali</span></span>
-          <span class="lang">मराठी<span>Marathi</span></span>
-          <span class="lang">తెలుగు<span>Telugu</span></span>
-          <span class="lang">தமிழ்<span>Tamil</span></span>
-          <span class="lang">ગુજરાતી<span>Gujarati</span></span>
-          <span class="lang">ಕನ್ನಡ<span>Kannada</span></span>
-          <span class="lang">ଓଡ଼ିଆ<span>Odia</span></span>
-        </div>
-        <p style="margin-top:var(--s2); font-size:.92rem; color:var(--muted-light)">Every language covers every verse — a book never drops you back into English halfway through. And the vernacular is free, always.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ INSIGHTS / DIYA ══════════════════════════════════ -->
-<section id="insights">
-  <div class="wrap">
-    <div class="split reveal">
-      <div>
-        <p class="eyebrow">What you get back</p>
-        <h2>A lamp that grows, and a ledger that never nags.</h2>
-        <p class="lede">Your companion diya is small and dim on day one. Keep sitting and it brightens through five states across ninety days. It is the only progress bar in the app that matters.</p>
-        <ul>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>A practice calendar</strong> — every day you sat, warmed by how long you sat for.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Streak, minutes, sittings and malas</strong>, each against the same stretch a week or a month ago.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Your rhythm</strong> — whether you are really a morning practitioner, or an evening one, and which mode you reach for.</span></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Distractions turned around</strong>, and the hours that bought you back.</span></li>
-        </ul>
-        <p style="margin-top:var(--s3); font-size:.92rem; color:var(--muted-light)">An empty week is shown as an empty week — warmly. There are no red numbers in this app.</p>
-      </div>
-      <div class="split-art">
-        <!-- Mockup: insights -->
-        <div class="phone" role="img" aria-label="The insights screen: a practice calendar heatmap, a 12-day streak, 340 minutes, and a practice mix bar.">
-          <div class="screen">
-            <div class="screen-top"><span>9:41</span><span>Insights</span></div>
-            <div class="screen-pad">
-              <div class="screen-card" style="display:flex; gap:9px; align-items:flex-start">
-                <span style="font-size:14px">🪔</span>
-                <p style="font-size:9.5px; margin:0; line-height:1.5; color:#3E382F">You've been steadiest in the mornings this month. Twelve days unbroken.</p>
-              </div>
-
-              <p class="sm" style="font-size:8px; letter-spacing:.1em; margin:14px 0 6px">PRACTICE CALENDAR</p>
-              <div id="heat" style="display:flex; gap:3px" aria-hidden="true"></div>
-              <div style="display:flex; align-items:center; gap:4px; margin-top:6px; font-size:7.5px; color:#5F584D">
-                <span>Less</span>
-                <i style="width:8px;height:8px;border-radius:2px;background:#EFE6D6;display:inline-block"></i>
-                <i style="width:8px;height:8px;border-radius:2px;background:#F0C99E;display:inline-block"></i>
-                <i style="width:8px;height:8px;border-radius:2px;background:#E39A5B;display:inline-block"></i>
-                <i style="width:8px;height:8px;border-radius:2px;background:#B85E1E;display:inline-block"></i>
-                <span>More</span>
-              </div>
-
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px">
-                <div class="screen-card" style="padding:9px">
-                  <div style="font-family:var(--serif); font-size:17px; color:#A85117">12</div>
-                  <div class="sm" style="font-size:8px">day streak</div>
-                </div>
-                <div class="screen-card" style="padding:9px">
-                  <div style="font-family:var(--serif); font-size:17px; color:#A85117">340<span style="font-size:9px"> min</span></div>
-                  <div class="sm" style="font-size:8px">this month ▲ 22%</div>
-                </div>
-              </div>
-
-              <p class="sm" style="font-size:8px; letter-spacing:.1em; margin:12px 0 6px">HOW YOU PRACTISE</p>
-              <div style="display:flex; height:9px; border-radius:999px; overflow:hidden">
-                <i style="flex:5; background:#B85E1E"></i><i style="flex:3; background:#E39A5B"></i><i style="flex:2; background:#F0C99E"></i>
-              </div>
-              <div class="sm" style="font-size:8px; margin-top:5px">Guided · Your own · Japa</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FEATURE GRID ═════════════════════════════════════ -->
-<section id="features" class="band">
-  <div class="wrap">
-    <div class="reveal" style="max-width:40rem">
-      <p class="eyebrow">Everything in the app</p>
-      <h2 style="font-size:clamp(1.9rem,3.6vw,2.6rem)">The full list, nothing held back.</h2>
-      <p class="lede" style="margin-top:var(--s2)">Built for Indian phones first — which means it survives the aggressive battery managers that quietly kill other blockers.</p>
-    </div>
-
-    <div class="grid reveal">
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Scheduled app guarding</h3>
-        <p>Guarded apps rest at the times you choose. The practice screen appears over the app in about a second — no notification you can swipe away.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Practice times, per day of week</h3>
-        <p>Set as many as you need and pick the days each repeats — weekdays only, weekends, or your own combination. Exact alarms fire even while the phone is asleep.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-        <h3>Distraction-first app list</h3>
-        <p>Social, video and games float to the top; Contacts, Phone and Gmail stay where they belong. Search by name, or filter to just what's already guarded.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5c2.9 3.9 4.6 6.8 4.6 9.3a4.6 4.6 0 1 1-9.2 0C7.4 10.3 9.1 7.4 12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>A diya that grows with you</h3>
-        <p>Seven states over ninety days of practice, each with its own name. It is never taken away from you, and it is never behind a paywall.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="3.5" r="2" fill="currentColor"/></svg></div>
-        <h3>108-bead japa counter</h3>
-        <p>A full mala on screen with a marked guru bead. Targets of 27, 54 or 108, a haptic tick per bead, and a flourish when the round closes. Your mantra follows your iṣṭa devatā.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H20v15H5.5A1.5 1.5 0 0 0 4 20.5v-15Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 20.5A1.5 1.5 0 0 1 5.5 19H20v2H5.5A1.5 1.5 0 0 1 4 20.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>765 verses across four books</h3>
-        <p>The complete Bhagavad Gītā, the Īśha Upaniṣad, Āditya Hṛdayam and Śiva Tāṇḍava Stotram — with Devanagari, IAST and a translation for each.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12h15M12 4.5c2.6 2.6 2.6 12.4 0 15M12 4.5c-2.6 2.6-2.6 12.4 0 15" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/></svg></div>
-        <h3>Nine languages, complete</h3>
-        <p>English plus Hindi, Bengali, Marathi, Telugu, Tamil, Gujarati, Kannada and Odia. Flip between English and your language on any verse with one tap.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6.5a2.5 2.5 0 1 0 0-.1M6.5 14.5a2.5 2.5 0 1 0 0-.1M15 20a2.5 2.5 0 1 0 0-.1M9 13.2l4-2.4M13 18l-4-2.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Shareable verse cards</h3>
-        <p>Any verse renders as a typeset image — the shloka, its meaning and the citation on warm cream — ready for WhatsApp Status or Instagram, in whichever language you're reading.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V9m5 10V5m5 14v-7m5 7V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h3>Insights that stay kind</h3>
-        <p>Practice calendar, streaks, minutes, malas, your daily rhythm, your practice mix, and how much time you've reclaimed — across a week, a month, a quarter or a year.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 4.5 6.5v5.2c0 4.4 3.1 8.1 7.5 9.3 4.4-1.2 7.5-4.9 7.5-9.3V6.5L12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.2 12.2 11.3 14.3 15 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Lock health</h3>
-        <p>One screen tells you whether the guard is actually standing — every permission it needs, green or amber, each tappable straight to the right system setting.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 5 7v5c0 4.2 2.9 7.8 7 9 4.1-1.2 7-4.8 7-9V7l-7-3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9v4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="15.8" r="1" fill="currentColor"/></svg></div>
-        <h3>Built to survive Indian phones</h3>
-        <p>Realme, Oppo, Xiaomi and Vivo kill background apps aggressively. Setup walks you through auto-launch and battery exemption on your exact skin — the step most blockers skip and then silently fail.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5c2.9 3.9 4.6 6.8 4.6 9.3a4.6 4.6 0 1 1-9.2 0C7.4 10.3 9.1 7.4 12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="1.6" fill="currentColor"/></svg></div>
-        <h3>Yours, personally</h3>
-        <p>Choose your iṣṭa devatā — Krishna, Shiva, Devī, Ganesha, Hanuman or Vishnu — and the emblem, the mantra and the verses follow. Or choose none: every form is one light.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 4.5 1.5 5.5 1.5 5.5h-15S6 13.5 6 9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 18a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>A gentle reminder, or none</h3>
-        <p>When a lock begins you get one quiet nudge — "your apps are resting". Turn it off in a single tap and the lock still works exactly the same.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 6.5h15M4.5 12h15M4.5 17.5h9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>
-        <h3>Reading plans with progress</h3>
-        <p>Work through the Gītā a chapter a day, or take a themed week. Days tick off as you finish them and the plan reopens where you stopped.</p>
-      </article>
-
-      <article class="f">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.5 3.5h7M12 3.5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M5.5 14a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0Z" stroke="currentColor" stroke-width="1.8"/></svg></div>
-        <h3>Works with the phone off the network</h3>
-        <p>Every verse, every translation and every font is bundled in the app. No connection is needed to practise, read or unlock — because the moment you need it most may be the moment you have no signal.</p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══ PRIVACY ══════════════════════════════════════════ -->
-<section id="privacy">
-  <div class="wrap">
-    <div class="privacy-card reveal">
-      <p class="eyebrow">Privacy</p>
-      <h2 style="font-size:clamp(1.7rem,3.2vw,2.3rem); max-width:24rem">An app that watches your screen, and tells no one.</h2>
-      <p class="lede" style="margin-top:var(--s3)">Sadhana Lock needs Android's accessibility service to know which app just came to the foreground. That is a serious permission, so here is exactly what it is allowed to do — every claim below is checkable in the app's manifest.</p>
-      <ul class="claims">
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>The service is declared <strong>unable to read window content</strong>. It cannot see your messages, your passwords or anything you type.</span></li>
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>It listens for <strong>one event</strong> — a window changing — and reads <strong>one thing</strong>: the package name of the app in front.</span></li>
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span><strong>An account is optional.</strong> The whole app works without one. Sign in with Google only if you want your practice carried to a new phone.</span></li>
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span><strong>The apps you guard never leave your phone.</strong> That list is the most revealing thing here, and it is excluded from the backup even when you are signed in. If you do sign in, your sittings, streak and reading positions are saved to your Google account so a new phone can find them — and deleting your account removes that copy.</span></li>
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span><strong>Anonymous diagnostics, and a switch to stop them.</strong> Crash reports and plain counts — <em>a lock appeared</em>, <em>a practice was completed</em> — go to Google Firebase, so we can catch the phones that silently kill the lock. They never say <em>which</em> app you opened. One tap in Settings turns them off for good.</span></li>
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span><strong>No advertising, no data sold</strong>, and nothing shared with a third party for their own purposes.</span></li>
-        <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Your practice data is <strong>yours to take with you</strong> — save it to a file, restore it on a new phone.</span></li>
+<!-- RITUAL + SCRIPTURE -->
+<section id="ritual"><div class="wrap">
+  <p class="eyebrow rise">The core loop</p>
+  <h2 class="rise">Three ways to sit. All of them count.</h2>
+  <div class="duo">
+    <div class="panel dark rise">
+      <h3>The unlock is a practice, not a puzzle</h3>
+      <ul>
+        <li><span class="tick">✳</span><span><b>Guided.</b> A shloka from the Gītā in Devanagari, with its meaning.</span></li>
+        <li><span class="tick">✳</span><span><b>Your own.</b> A breathing orb that expands and settles. Bring whatever practice is already yours.</span></li>
+        <li><span class="tick">✳</span><span><b>Japa.</b> A full 108-bead mala on screen, with a haptic tick per bead.</span></li>
+        <li><span class="tick">✳</span><span><b>An honest way out.</b> Need maps, or to take a call? One tap opens <em>that one app</em> for ten minutes — not all of them.</span></li>
       </ul>
-      <p style="margin-top:var(--s4)"><a href="privacy.html">Read the full privacy policy</a> · <a href="terms.html">Terms of use</a></p>
     </div>
-  </div>
-</section>
-
-<!-- ══ PRICING ══════════════════════════════════════════ -->
-<section id="pricing" class="band">
-  <div class="wrap">
-    <div class="reveal" style="max-width:40rem">
-      <p class="eyebrow">Pricing</p>
-      <h2 style="font-size:clamp(1.9rem,3.6vw,2.6rem)">The lock is free. Forever.</h2>
-      <p class="lede" style="margin-top:var(--s2)">Not a trial, and not a hostage situation: guarding your apps, the ritual, your japa and the whole Bhagavad Gītā cost nothing and never stop working. Plus opens the rest of the shelf, and you can cancel it in two taps.</p>
-    </div>
-
-    <div class="plans reveal">
-      <div class="plan">
-        <h3 style="font-size:1.3rem">Free</h3>
-        <div class="price">₹0</div>
-        <p class="sm" style="color:var(--muted); font-size:.92rem">A complete daily practice, not a demo.</p>
-        <ul>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guard up to 4 apps</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 practice times — the three sandhya hours</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> The complete Bhagavad Gītā, in every language</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Seven Days of Stillness reading plan</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> The full ritual, japa, the diya and verse sharing</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> A month of practice history</li>
-        </ul>
-        <a class="btn btn-ghost" href="#get">Start free</a>
+    <div class="panel rise" id="scripture">
+      <h3>A real scripture library, not a quote generator</h3>
+      <p style="color:var(--ink-soft);font-size:15px;margin:10px 0 0">Four books, read verse by verse, each remembering exactly where you left it. The Sanskrit is public domain and unedited; every translation was written for this app.</p>
+      <div class="verse-card">
+        <p class="dev" style="margin:0">योगस्थः कुरु कर्माणि<br>सङ्गं त्यक्त्वा धनञ्जय</p>
+        <p class="tr">Do your work steadied in yoga, letting go of attachment.</p>
+        <p class="cite">Bhagavad Gītā · 2.48</p>
       </div>
-
-      <div class="plan featured">
-        <h3 style="font-size:1.3rem">Sadhana Plus</h3>
-        <div class="price">₹499 <small>a year</small></div>
-        <p class="sm" style="color:var(--muted); font-size:.92rem; margin-top:calc(var(--s1) * -1)">or ₹99 a month · cancel any time</p>
-        <p class="sm" style="color:var(--muted); font-size:.92rem">Everything in Free, and then the whole shelf.</p>
-        <ul>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> <strong>Unlimited apps</strong> and <strong>unlimited practice times</strong></li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> The whole library — Īśha Upaniṣad, Āditya Hṛdayam, Śiva Tāṇḍava Stotram</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Every reading plan, including the 18-day Essential Gītā</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Your full history — a quarter, a year, all of it</li>
-          <li><svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Works on every phone you sign in to, and cancels in two taps</li>
-        </ul>
-        <a class="btn btn-primary" href="#get">Get Sadhana Lock</a>
-      </div>
-    </div>
-    <p class="plan-note reveal">Prices shown in ₹ for India. Google Play shows your own currency at checkout.</p>
-  </div>
-</section>
-
-<!-- ══ FAQ ══════════════════════════════════════════════ -->
-<section id="faq">
-  <div class="wrap">
-    <div class="reveal" style="max-width:40rem">
-      <p class="eyebrow">Questions</p>
-      <h2 style="font-size:clamp(1.9rem,3.6vw,2.6rem)">The things people ask first.</h2>
-    </div>
-
-    <div class="faq reveal">
-      <details>
-        <summary>Can I get around the lock if I really need to?</summary>
-        <p>Yes, and deliberately so. "I need access now" opens the one app you were reaching for, for ten minutes. Not all of them — so needing maps in traffic doesn't hand you back Instagram for the afternoon. There's no shaming, no countdown and no limit on how often you use it. A lock you can't escape is a hostage situation, not a practice.</p>
-      </details>
-      <details>
-        <summary>Do I have to be Hindu to use it?</summary>
-        <p>No. The "your own practice" mode is a breathing orb with no words at all — bring whatever settles you. But the app doesn't hide what it is: the verses are from the Gītā and the Upaniṣads, and the japa mala is a real one.</p>
-      </details>
-      <details>
-        <summary>Why does it need the accessibility permission?</summary>
-        <p>It is the only way on Android to know which app has just come to the foreground. Sadhana Lock's service is declared unable to read window content and subscribes to a single event type, so all it ever learns is the package name of the app in front of you. Nothing is recorded and nothing is sent anywhere.</p>
-      </details>
-      <details>
-        <summary>Will it keep working on my Realme, Oppo, Xiaomi or Vivo phone?</summary>
-        <p>That's exactly the case it was built and tested for. Those skins shut down background apps aggressively, which silently breaks most blockers. Setup detects your skin and walks you through auto-launch and battery exemption; afterwards, the Lock Health screen tells you at a glance if anything has come loose.</p>
-      </details>
-      <details>
-        <summary>Is my practice data safe if I change phones?</summary>
-        <p>Yes. Android's own backup carries it across, and you can also save your practice history to a file and restore it yourself. A restore merges into what's already there — it never wipes what you've done.</p>
-      </details>
-      <details>
-        <summary>Who wrote the translations?</summary>
-        <p>We did. The Sanskrit and its romanisation come from public-domain sources and are left untouched; every English translation was written for this app, and the eight Indian-language translations were written from that English. Nothing is lifted from a copyrighted edition.</p>
-      </details>
-      <details>
-        <summary>Is there an iPhone version?</summary>
-        <p>Not today. iOS doesn't give apps the ability to notice another app opening the way this depends on, so an honest iPhone version would be a different product. Android only, for now.</p>
-      </details>
+      <ul>
+        <li><span class="tick">✳</span><span><b>All 701 verses</b> of the Gītā, all 18 chapters. Not a selection.</span></li>
+        <li><span class="tick">✳</span><span>Īśha Upaniṣad, Āditya Hṛdayam, Śiva Tāṇḍava Stotram.</span></li>
+        <li><span class="tick">✳</span><span><b>Nine languages</b>, and a verse card you can share in one tap.</span></li>
+      </ul>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ══ CLOSING CTA ══════════════════════════════════════ -->
-<section id="get" style="padding-top:0">
-  <div class="wrap">
-    <div class="close-cta reveal">
-      <svg class="diya" width="56" height="56" viewBox="0 0 32 32" aria-hidden="true">
-        <defs><radialGradient id="cf" cx="50%" cy="72%" r="62%">
-          <stop offset="0%" stop-color="#FFF3D0"/><stop offset="45%" stop-color="#F5B942"/><stop offset="100%" stop-color="#B85E1E"/>
-        </radialGradient></defs>
-        <g class="flame"><path d="M16 3c2.8 3.7 4.5 6.5 4.5 9a4.5 4.5 0 1 1-9 0C11.5 9.5 13.2 6.7 16 3Z" fill="url(#cf)"/></g>
-        <path d="M4 20h24c-1.5 5.4-6.3 8.2-12 8.2S5.5 25.4 4 20Z" fill="#B85E1E"/>
-        <path d="M4 20h24a1.1 1.1 0 0 0 0-2.2H4A1.1 1.1 0 0 0 4 20Z" fill="#8F4715"/>
-      </svg>
-      <h2>Begin where you are.</h2>
-      <p>Guard four apps, keep the three sandhya hours, and read the whole Gītā — without paying anything.</p>
-      <!-- PRE-LAUNCH: the Play listing 404s until the app leaves Draft. At launch, restore the
-           link below and delete this span:
-           <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.sadhanalock.app"> ... Get it on Google Play </a> -->
-      <span class="btn btn-primary" aria-disabled="true" style="opacity:.6; cursor:default">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 3.5v17a1 1 0 0 0 1.5.87l12-8.5a1 1 0 0 0 0-1.74l-12-8.5A1 1 0 0 0 4 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-        </svg>
-        Coming to Google Play
-      </span>
-      <p style="margin-top:var(--s3); font-size:.88rem; color:var(--muted-light)">In closed testing now · Requires Android 8.0 or later · <a href="mailto:interludeapp.official@gmail.com?subject=Tell%20me%20when%20Sadhana%20Lock%20launches">ask to be told when it lands</a></p>
+<!-- FEATURES -->
+<section id="features"><div class="wrap">
+  <p class="eyebrow rise">Everything else</p>
+  <h2 class="rise">Built for the phone you actually own.</h2>
+  <div class="feat">
+    <div class="f rise"><h4>Exact times, any day of week</h4><p>Set as many as you need and pick the days each repeats. Exact alarms fire even while the phone is asleep.</p></div>
+    <div class="f rise"><h4>Survives Indian phones</h4><p>Realme, Oppo, Xiaomi and Vivo kill background apps aggressively. Setup walks you through auto-launch and battery exemption on your exact skin.</p></div>
+    <div class="f rise"><h4>A diya that grows with you</h4><p>Seven states over ninety days, each with its own name. Never taken away, and never behind a paywall.</p></div>
+    <div class="f rise"><h4>108-bead japa counter</h4><p>A full mala with a marked guru bead. Targets of 27, 54 or 108, a haptic tick per bead, and a flourish when the round closes.</p></div>
+    <div class="f rise"><h4>Insights that stay kind</h4><p>Practice calendar, streaks, minutes, malas and your daily rhythm — across a week, a month, a quarter or a year.</p></div>
+    <div class="f rise"><h4>Works with no signal</h4><p>Every verse, translation and font is bundled. The moment you need it most may be the moment you have none.</p></div>
+    <div class="f rise"><h4>Lock health</h4><p>One screen tells you whether the guard is actually standing — every permission, green or amber, each tappable to the right setting.</p></div>
+    <div class="f rise"><h4>Yours, personally</h4><p>Choose your iṣṭa devatā and the emblem, the mantra and the verses follow. Or choose none: every form is one light.</p></div>
+    <div class="f rise"><h4>Light and dark</h4><p>Sand by day, a quieter register after dark — following your phone, or pinned to whichever you prefer.</p></div>
+  </div>
+</div></section>
+
+<!-- PRIVACY -->
+<section id="privacy"><div class="wrap">
+  <p class="eyebrow rise">Privacy</p>
+  <h2 class="rise">An app that watches your screen, and tells no one.</h2>
+  <p class="lede rise">Sadhana Lock needs Android's accessibility service to know which app just came to the foreground. That is a serious permission, so here is exactly what it is allowed to do — every claim is checkable in the app's manifest.</p>
+  <div class="panel rise" style="margin-top:var(--s4)">
+    <ul>
+      <li><span class="tick">✓</span><span>The service is declared <b>unable to read window content</b>. It cannot see your messages, your passwords or anything you type.</span></li>
+      <li><span class="tick">✓</span><span>It listens for <b>one event</b> — a window changing — and reads <b>one thing</b>: the package name of the app in front.</span></li>
+      <li><span class="tick">✓</span><span><b>An account is optional.</b> The whole app works without one. Sign in with Google only if you want your practice carried to a new phone.</span></li>
+      <li><span class="tick">✓</span><span><b>The apps you guard never leave your phone.</b> That list is the most revealing thing here, and it is excluded from the backup even when you are signed in.</span></li>
+      <li><span class="tick">✓</span><span><b>Anonymous diagnostics, and a switch to stop them.</b> Crash reports and plain counts go to Firebase so we can catch phones that silently kill the lock. They never say <em>which</em> app you opened.</span></li>
+      <li><span class="tick">✓</span><span><b>No advertising, no data sold</b>, and nothing shared with a third party for their own purposes.</span></li>
+    </ul>
+    <p style="margin-top:var(--s3);font-size:14.5px"><a href="privacy.html">Read the full privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+  </div>
+</div></section>
+
+<!-- PRICING -->
+<section id="pricing"><div class="wrap">
+  <p class="eyebrow rise">Pricing</p>
+  <h2 class="rise">The lock is free. Forever.</h2>
+  <p class="lede rise">Not a trial, and not a hostage situation: guarding your apps, the ritual, your japa and the whole Bhagavad Gītā cost nothing and never stop working. Plus opens the rest of the shelf, and you can cancel it in two taps.</p>
+  <div class="plans">
+    <div class="plan rise">
+      <h3>Free</h3><span class="price">₹0</span>
+      <p class="price-sub">A complete daily practice, not a demo.</p>
+      <ul>
+        <li><span class="tick">✳</span><span>Guard up to 4 apps</span></li>
+        <li><span class="tick">✳</span><span>3 practice times — the three sandhya hours</span></li>
+        <li><span class="tick">✳</span><span>The complete Bhagavad Gītā, in every language</span></li>
+        <li><span class="tick">✳</span><span>The full ritual, japa, the diya and verse sharing</span></li>
+        <li><span class="tick">✳</span><span>A month of practice history</span></li>
+      </ul>
+    </div>
+    <div class="plan plus rise">
+      <h3>Sadhana Plus</h3><span class="price">₹499 <span style="font-size:1.1rem;font-weight:400">a year</span></span>
+      <p class="price-sub">or ₹99 a month · cancel any time</p>
+      <ul>
+        <li><span class="tick">✳</span><span>Unlimited apps and unlimited practice times</span></li>
+        <li><span class="tick">✳</span><span>Three more sacred books — 64 further verses</span></li>
+        <li><span class="tick">✳</span><span>Every reading plan, the nine Navratri days included</span></li>
+        <li><span class="tick">✳</span><span>Your whole practice history, not only the last month</span></li>
+      </ul>
     </div>
   </div>
-</section>
+</div></section>
+
+<!-- CLOSE -->
+<section id="get" class="close"><div class="wrap">
+  <p class="eyebrow rise">Get the app</p>
+  <h2 class="rise">Begin where you are.</h2>
+  <p class="lede rise" style="margin-inline:auto">Guard four apps, keep the three sandhya hours, and read the whole Gītā — without paying anything.</p>
+  <div style="margin-top:var(--s4)" class="rise">
+    <!-- PRE-LAUNCH: restore <a class="btn btn-candle" href="https://play.google.com/store/apps/details?id=com.sadhanalock.app"> at launch -->
+    <span class="btn btn-candle" aria-disabled="true" style="background:var(--ink);color:var(--paper)">Coming to Google Play</span>
+  </div>
+  <p style="margin-top:var(--s3);font-size:14px;color:var(--ink-dim)">In closed testing now · Requires Android 8.0 or later · <a href="mailto:interludeapp.official@gmail.com?subject=Tell%20me%20when%20Sadhana%20Lock%20launches">ask to be told when it lands</a></p>
+</div></section>
 
 </main>
 
-<!-- ══ FOOTER ═══════════════════════════════════════════ -->
-<footer>
-  <div class="wrap foot">
-    <div>
-      <a class="brand" href="#top" style="margin-bottom:.5rem">
-        <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
-          <path d="M16 4c2.6 3.4 4.2 6 4.2 8.4a4.2 4.2 0 1 1-8.4 0C11.8 10 13.4 7.4 16 4Z" fill="#E79A3E"/>
-          <path d="M5 20h22c-1.4 5-5.8 7.6-11 7.6S6.4 25 5 20Z" fill="#B85E1E"/>
-        </svg>
-        Sadhana Lock
-      </a>
-      <p style="max-width:22rem; font-size:.92rem">Published by Interludeapps. Made in India, for phones that are used in India.</p>
-    </div>
-    <nav aria-label="Footer">
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:interludeapp.official@gmail.com">Support</a>
-    </nav>
-    <p class="fine">Bhagavad Gītā, Īśha Upaniṣad, Āditya Hṛdayam and Śiva Tāṇḍava Stotram Sanskrit texts are in the public domain. All translations are original to this app. Google Play and the Google Play logo are trademarks of Google LLC.</p>
-  </div>
-</footer>
+<footer><div class="wrap foot-row">
+  <span>© 2026 Interlude Apps</span>
+  <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="delete-account.html">Delete your account</a> · <a href="mailto:interludeapp.official@gmail.com">Contact</a></span>
+</div></footer>
 
 <script>
 (function(){
-  'use strict';
-
-  // Sticky nav hairline
-  var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 8); };
-  onScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  // Scroll reveal — opt out entirely when the user asks for less motion
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var items = document.querySelectorAll('.reveal');
-  if (reduced || !('IntersectionObserver' in window)) {
-    items.forEach(function(el){ el.classList.add('in'); });
-  } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
-    items.forEach(function(el){ io.observe(el); });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.rise').forEach(function(e){ e.classList.add('in'); });
+    return;
   }
-
-  // Japa mala — 108 beads on a ring, 54 of them counted
-  var mala = document.getElementById('mala');
-  if (mala) {
-    var N = 108, COUNTED = 54, R = 64, CX = 80, CY = 80, ns = 'http://www.w3.org/2000/svg';
-    var frag = document.createDocumentFragment();
-    for (var i = 0; i < N; i++) {
-      var a = (i / N) * Math.PI * 2 - Math.PI / 2;
-      var c = document.createElementNS(ns, 'circle');
-      c.setAttribute('cx', (CX + R * Math.cos(a)).toFixed(2));
-      c.setAttribute('cy', (CY + R * Math.sin(a)).toFixed(2));
-      c.setAttribute('r', i === 0 ? '4.2' : '2.1');
-      c.setAttribute('fill', i === 0 ? '#A85117' : (i <= COUNTED ? '#B85E1E' : '#E3D7C2'));
-      frag.appendChild(c);
-    }
-    mala.appendChild(frag);
-  }
-
-  // Practice calendar — 16 weeks × 7 days, warmed by minutes practised
-  var heat = document.getElementById('heat');
-  if (heat) {
-    var shades = ['#EFE6D6','#F0C99E','#E39A5B','#B85E1E'];
-    // A fixed, hand-set pattern: a real practice month, not random noise.
-    var weeks = [
-      [0,1,0,1,0,0,1],[1,1,0,2,1,0,1],[1,2,1,2,1,1,0],[2,2,1,2,2,1,1],
-      [2,3,2,2,1,2,2],[3,2,2,3,2,2,1],[2,3,3,2,3,2,2],[3,3,2,3,3,2,3],
-      [3,2,3,3,2,3,3],[2,3,3,3,3,3,2],[3,3,3,2,3,3,3],[3,3,2,3,3,3,3],
-      [2,3,3,3,3,2,3],[3,3,3,3,2,3,3],[3,2,3,3,3,3,3],[3,3,3,2,3,3,0]
-    ];
-    var html = '';
-    for (var w = 0; w < weeks.length; w++) {
-      html += '<span style="display:grid;grid-template-rows:repeat(7,1fr);gap:3px">';
-      for (var d = 0; d < 7; d++) {
-        html += '<i style="width:6px;height:6px;border-radius:1.5px;display:block;background:' + shades[weeks[w][d]] + '"></i>';
-      }
-      html += '</span>';
-    }
-    heat.innerHTML = html;
-  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:.08});
+  document.querySelectorAll('.rise').forEach(function(e,i){ e.style.transitionDelay = (i%3)*70 + 'ms'; io.observe(e); });
 })();
 </script>
-
 </body>
 </html>
