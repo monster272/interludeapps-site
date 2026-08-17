@@ -129,6 +129,15 @@ h2{font-size:clamp(1.85rem,3.6vw,2.65rem);line-height:1.14;max-width:22ch}
 .verse-card .tr{font-size:14.5px;color:var(--ink-soft);margin:12px 0 8px;font-style:italic}
 .verse-card .cite{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
 
+/* real screenshots */
+.phone img{width:100%;height:auto;border-radius:26px;display:block}
+.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-top:var(--s4)}
+@media(max-width:900px){.shots{grid-template-columns:repeat(2,1fr)}}
+.shots figure{margin:0}
+.shots img{width:100%;height:auto;border-radius:20px;display:block;
+  border:1px solid var(--edge);box-shadow:0 24px 50px -34px rgba(50,32,16,.55)}
+.shots figcaption{font-size:13px;color:var(--ink-dim);margin-top:12px;line-height:1.45}
+
 /* feature grid */
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
 @media(max-width:980px){.feat{grid-template-columns:repeat(2,1fr)}}
@@ -193,15 +202,9 @@ footer a{color:var(--ink-soft)}
         </div>
         <p class="hero-note">Android · Free to use · Optional Plus from ₹99 a month · Works without an account</p>
       </div>
-      <!-- SCREENSHOT SLOT: replace .screen contents with <img src="shots/lock.png" alt="The lock face"> -->
-      <div class="phone"><div class="screen">
-        <div class="lamp"></div>
-        <p class="ph-eyebrow">Instagram is resting</p>
-        <p class="ph-title">One day lit.<br>This is day two.</p>
-        <p class="ph-sub">Sit, and the apps open after.</p>
-        <div class="ph-btn">Sit for three minutes</div>
-        <p class="ph-ghost">I need 10 minutes without practising</p>
-      </div></div>
+      <div class="phone">
+        <img src="shots/lock.webp" width="620" height="1288" alt="The lock face over a guarded app: Chrome is resting, 19 days, this is day 20, with a button to sit for three minutes." loading="eager" decoding="async">
+      </div>
     </div>
   </div>
 
@@ -256,6 +259,13 @@ footer a{color:var(--ink-soft)}
         <li><span class="tick">✳</span><span><b>Nine languages</b>, and a verse card you can share in one tap.</span></li>
       </ul>
     </div>
+  </div>
+
+  <div class="shots rise">
+    <figure><img src="shots/verse.webp" width="620" height="1288" loading="lazy" decoding="async" alt="A guided sitting showing Bhagavad Gita 2.47 in Devanagari with transliteration and meaning."><figcaption>Guided — the shloka, its sound, its meaning.</figcaption></figure>
+    <figure><img src="shots/japa.webp" width="620" height="1288" loading="lazy" decoding="async" alt="The japa counter, a 108-bead mala part way through a round."><figcaption>Japa — a full mala, a tick per bead.</figcaption></figure>
+    <figure><img src="shots/home.webp" width="620" height="1288" loading="lazy" decoding="async" alt="Today, showing the lamp, the devotion number and a thread of nineteen lit days."><figcaption>Today — the lamp, and the days behind it.</figcaption></figure>
+    <figure><img src="shots/home-dark.webp" width="620" height="1288" loading="lazy" decoding="async" alt="The same Today screen in the app's dark register."><figcaption>And the same, after dark.</figcaption></figure>
   </div>
 </div></section>
 
