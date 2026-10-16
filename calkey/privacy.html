@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calkey — Privacy Policy</title>
+<style>
+  :root {
+    --bg: #FBF6EF; --bg2: #F7F4F8; --ink: #1A1A1F; --soft: #55525C;
+    --faint: #85828C; --rule: #E2DDD6; --accent: #3A3EA8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17161A; --bg2: #141518; --ink: #EDEBF0; --soft: #AFACB6;
+      --faint: #7C7986; --rule: #2A2930; --accent: #9EA2F0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: linear-gradient(var(--bg), var(--bg2));
+    color: var(--ink); min-height: 100vh;
+    font: 16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 4rem 16px 6rem; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.02em; }
+  h2 { font-size: 1.1rem; margin: 2.6rem 0 .6rem; letter-spacing: -.01em; }
+  .sub { color: var(--faint); margin: 0 0 2.5rem; font-size: .95rem; }
+  p, li { color: var(--soft); }
+  li { margin: .35rem 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+  .note {
+    border-left: 3px solid var(--accent); padding: .1rem 0 .1rem 1rem;
+    margin: 1.5rem 0; color: var(--soft);
+  }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .94rem; }
+  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { color: var(--ink); font-weight: 600; }
+  td { color: var(--soft); }
+  code { font-size: .88em; color: var(--ink); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="sub">Calkey — AI calorie tracker · Last updated 16 October 2026</p>
+
+  <h2>Who we are</h2>
+  <p>Calkey is published by Interludeapps. For any question about this policy or
+  your data, contact <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.</p>
+
+  <h2>What we collect, and why</h2>
+  <table>
+    <tr><th>Data</th><th>Why</th><th>Where it goes</th></tr>
+    <tr>
+      <td>Your Google account identifier and email address</td>
+      <td>Signing in is required, so that your journal can be restored if you
+      lose or change your phone, and so your usage allowance is yours</td>
+      <td>Our database, scoped so only your account can read your rows</td>
+    </tr>
+    <tr>
+      <td>Your journal: the text you type for each meal, the calorie and
+      macronutrient figures, the time, water and weight entries, and your goals</td>
+      <td>It is the app</td>
+      <td>Stored on your phone first; backed up to our database</td>
+    </tr>
+    <tr>
+      <td><strong>Only if you pair with a partner:</strong> your daily totals —
+      calories, protein, carbs and fat, water, your goals and your current
+      streak — for today and the last few days</td>
+      <td>So the one person you chose can see how your day is going</td>
+      <td>Our database, readable only by you and your linked partner. <strong>Never
+      your meal text, the foods you logged, or anything you typed</strong></td>
+    </tr>
+    <tr>
+      <td>The text of a meal you log, at the moment you log it</td>
+      <td>To work out what you ate and what it contains</td>
+      <td>Sent to Google (Gemini) to be read, and — for foods our own tables do
+      not cover — a short search query derived from it is sent to Exa</td>
+    </tr>
+    <tr>
+      <td>Per-request technical records: your account id, which model answered,
+      the region setting, <strong>the number of characters you typed</strong>,
+      how many items came back, how long it took, and whether it succeeded</td>
+      <td>To find slow and failing requests</td>
+      <td>Our database. <strong>The meal text itself is not recorded here</strong> —
+      only its length</td>
+    </tr>
+    <tr>
+      <td>Individual words our food tables could not recognise, counted by word
+      and region</td>
+      <td>To decide which foods to add next</td>
+      <td>Our database, as a running tally with <strong>no account id and no
+      meal text</strong>. Two people typing the same word are indistinguishable
+      from one person typing it twice</td>
+    </tr>
+    <tr>
+      <td>When you correct an estimate: the food, the portion and the region</td>
+      <td>To find figures that are wrong for everyone and re-check them against
+      published nutrition data</td>
+      <td>Our database, as a tally with <strong>no account id and no meal
+      text</strong>. Your correction itself stays on your phone and is applied
+      only to your own journal — it never changes anyone else's figures</td>
+    </tr>
+    <tr>
+      <td>Anonymous usage events — that a meal was logged, how long it took,
+      whether a parse failed</td>
+      <td>To keep logging fast</td>
+      <td>Our analytics provider</td>
+    </tr>
+    <tr>
+      <td>Your subscription status: when your free day started, your plan,
+      whether it is in a trial, renewing or ended, its expiry date, and the
+      purchase reference Google Play gives us</td>
+      <td>To unlock the app for the time you have paid for, and to check with
+      Google Play that a purchase is real</td>
+      <td>Our database, linked to your account. We never see your card or
+      payment details; Google Play handles the payment</td>
+    </tr>
+  </table>
+
+  <h2>What we do not do</h2>
+  <ul>
+    <li>We do not sell your data, and we do not share it for advertising.</li>
+    <li>We do not build a profile of you for anyone else. The only person who
+    can see any of your figures is a partner you chose to pair with, and only
+    your daily totals.</li>
+    <li>We do not record your meal text in our technical logs, our food backlog
+    or our correction tallies.</li>
+    <li>We do not use your journal to train our own models.</li>
+  </ul>
+
+  <h2>Sharing with a partner</h2>
+  <p>Partner sharing is off unless you turn it on. To pair, one of you makes a
+  six-character code in <strong>Settings → Partner</strong> and the other types it
+  in; a code works once and expires after 48 hours. You can be paired with one
+  person at a time.</p>
+  <p>Once paired, you each see the other's totals for the day: calories eaten
+  and left against the goal, protein, carbs and fat, water, and the current
+  streak. Neither of you can see what the other ate, the text of any entry, or
+  any history beyond the last few days.</p>
+  <p>Your partner sees the name on your Google account (or the first part of
+  your email address if it has no name), and can rename you on their own
+  phone.</p>
+  <p>Either of you can stop at any time with <strong>Settings → Partner → Stop
+  sharing</strong>. It ends sharing in both directions immediately. Deleting
+  either account also ends it.</p>
+
+  <h2 id="waitlist">The pre-launch waitlist</h2>
+  <p>If you join the waitlist on our website, we store your email address, and
+  if you give them: what you mostly eat, your browser's language setting, the
+  site or link you came from, and whether you voted for an iPhone version. We
+  use them to send you one email when the app is ready for you, to honour the
+  first-month discount promised to everyone on the list, and, in aggregate, to
+  decide which cuisines and countries to support first.</p>
+  <p>The list is not shared, sold or used for advertising. The page shows only
+  how many people have joined. To be removed, write to <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>.
+  We delete the whole list within 90 days of the app's public launch, once the
+  launch invites and discounts have gone out.</p>
+
+  <h2>Who else processes your data</h2>
+  <ul>
+    <li><strong>Google</strong> — sign-in, the language model that reads
+    your meal text, and Google Play, which takes subscription payments and
+    tells us whether a subscription is active.</li>
+    <li><strong>Supabase</strong> — the database and server that hold your
+    backup, and the waitlist.</li>
+    <li><strong>Exa</strong> — web search, for foods our tables do not cover. It
+    receives a search query derived from your meal text, not your identity.</li>
+  </ul>
+
+  <h2>How long we keep it</h2>
+  <p>Your journal, goals, partner link and subscription status are kept until you
+  delete them or delete your account, and are removed with it. Our per-request
+  technical records (when a meal was parsed, how long it took, whether it
+  failed; never the meal text) lose any link to you when your account is
+  deleted. The anonymous tallies of corrections and unrecognised food words
+  never contained your identity, and are kept to improve accuracy.</p>
+
+  <h2>Deleting your data</h2>
+  <p>In the app, open <strong>Settings → Delete account</strong>. This removes
+  your account and everything in it, on the phone and on our servers, ends any
+  partner link, and cannot be undone. It does <strong>not</strong> cancel a
+  Google Play subscription, which Google bills, not us: cancel it first in
+  <strong>Google Play → Subscriptions</strong>. If you can no longer open the app,
+  follow the steps on our <a href="delete-account.html">account deletion page</a>
+  or write to <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a>; we reply within 7 days and complete deletion
+  within 30.</p>
+
+  <h2>Children</h2>
+  <p>Calkey is meant for adults and is not directed at anyone under 18. We do
+  not knowingly collect data from children; if you believe a child has created
+  an account, write to us and we will delete it.</p>
+
+  <h2>Your rights</h2>
+  <p>Depending on where you live, you may have the right to access, correct,
+  export or delete your personal data, and to object to some processing. Write
+  to <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a> and we will respond within 30 days.</p>
+
+  <h2>Not medical advice</h2>
+  <p>Calkey gives estimates. It does not provide medical advice, diagnosis or
+  treatment, and nothing in it should be used as a substitute for a qualified
+  professional.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes we will update the date at the top of this page, and
+  say so in the app when the change is significant.</p>
+
+  <hr>
+  <p class="sub"><a href="../">← Interludeapps</a></p>
+</main>
+</body>
+</html>

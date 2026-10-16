@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calkey — Delete your account</title>
+<style>
+  :root {
+    --bg: #FBF6EF; --bg2: #F7F4F8; --ink: #1A1A1F; --soft: #55525C;
+    --faint: #85828C; --rule: #E2DDD6; --accent: #3A3EA8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17161A; --bg2: #141518; --ink: #EDEBF0; --soft: #AFACB6;
+      --faint: #7C7986; --rule: #2A2930; --accent: #9EA2F0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: linear-gradient(var(--bg), var(--bg2));
+    color: var(--ink); min-height: 100vh;
+    font: 16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 4rem 16px 6rem; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.02em; }
+  h2 { font-size: 1.1rem; margin: 2.6rem 0 .6rem; letter-spacing: -.01em; }
+  .sub { color: var(--faint); margin: 0 0 2.5rem; font-size: .95rem; }
+  p, li { color: var(--soft); }
+  li { margin: .35rem 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+  .note {
+    border-left: 3px solid var(--accent); padding: .1rem 0 .1rem 1rem;
+    margin: 1.5rem 0; color: var(--soft);
+  }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .94rem; }
+  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { color: var(--ink); font-weight: 600; }
+  td { color: var(--soft); }
+  code { font-size: .88em; color: var(--ink); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Delete your account</h1>
+  <p class="sub">Calkey — AI calorie tracker · Interludeapps</p>
+
+  <p>Calkey needs a Google sign-in, and keeps a backup of your journal with that
+  account: your name and email address, an internal account identifier, the
+  meals you logged (the text you typed and the calorie and macronutrient
+  figures), water and weight entries, your goals and body details, your
+  partner link if you have one, and your subscription status. Deleting your
+  account removes all of it.</p>
+
+  <h2>Delete it from inside the app</h2>
+  <p>This is the quickest way, and it takes effect immediately.</p>
+  <ol>
+    <li>Open Calkey.</li>
+    <li>Tap the <strong>settings</strong> icon at the top right of the journal.</li>
+    <li>Scroll to <strong>Account</strong> and tap <strong>Delete account</strong>.</li>
+    <li>Confirm. Your account and everything in it is removed from our servers
+    and from the phone, and any partner link ends. This cannot be undone.</li>
+  </ol>
+
+  <h2>If you can't open the app</h2>
+  <p>Write to <a href="mailto:interludeapp.official@gmail.com?subject=Delete%20my%20Calkey%20account">interludeapp.official@gmail.com</a> from the email address you signed in with, and say you want
+  your Calkey account deleted. We reply within 7 days and complete deletion
+  within 30. We delete exactly what the in-app button deletes.</p>
+
+  <h2>What is deleted, and what is not</h2>
+  <table>
+    <tr><th>Deleted</th><th>Kept</th></tr>
+    <tr>
+      <td>Your account (name, email, identifier), journal, water and weight
+      entries, goals, body details, partner link and daily summaries, and
+      subscription status</td>
+      <td>Per-request technical records (when a meal was parsed, how long it
+      took), which never contained your meal text and lose any link to you; and
+      anonymous tallies that never contained your identity</td>
+    </tr>
+  </table>
+
+  <h2>Your subscription</h2>
+  <p>Deleting your account does <strong>not</strong> cancel a Google Play
+  subscription, because Google bills it, not us. Cancel it first in
+  <strong>Google Play → Profile → Payments and subscriptions → Subscriptions</strong>.</p>
+
+  <hr>
+  <p class="sub"><a href="privacy.html">Privacy policy</a> · <a href="../">← Interludeapps</a></p>
+</main>
+</body>
+</html>
