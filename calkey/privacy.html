@@ -118,6 +118,18 @@
       <td>Our database, linked to your account. We never see your card or
       payment details; Google Play handles the payment</td>
     </tr>
+    <tr>
+      <td>A notification token for your phone, your phone's time zone, language
+      setting and install country, the app version, and which kinds of
+      notification you have switched on</td>
+      <td>To send the notifications you allow: your partner's goal moments,
+      notices about your subscription, occasional news, and a single nudge
+      after a few quiet days. The time zone keeps them out of your night</td>
+      <td>Our database, linked to your account, and Google's Firebase Cloud
+      Messaging, which delivers them. Deleted when you sign out, when the app
+      is uninstalled and the token expires, or when you delete your
+      account</td>
+    </tr>
   </table>
 
   <h2>What we do not do</h2>
@@ -129,7 +141,20 @@
     <li>We do not record your meal text in our technical logs, our food backlog
     or our correction tallies.</li>
     <li>We do not use your journal to train our own models.</li>
+    <li>No notification ever contains what you, or your partner, ate.</li>
   </ul>
+
+  <h2>Notifications</h2>
+  <p>Calkey only sends notifications if you allow them when the app asks. Meal
+  reminders are made on your phone itself. Everything else comes from our server:
+  your partner's goal moments, notices about your subscription, occasional news
+  from us, and one gentle nudge if you have not logged for a few days (never
+  more than one a week). We hold them between 22:00 and 08:00 your time, except
+  a payment problem, and send no more than three a day.</p>
+  <p>You can switch partner updates, news and the nudge off in
+  <strong>Settings</strong>, and silence any kind in your phone's notification
+  settings. Subscription notices cannot be switched off in the app, because they
+  are about money you may be charged.</p>
 
   <h2>Sharing with a partner</h2>
   <p>Partner sharing is off unless you turn it on. To pair, one of you makes a
@@ -162,8 +187,9 @@
   <h2>Who else processes your data</h2>
   <ul>
     <li><strong>Google</strong> — sign-in, the language model that reads
-    your meal text, and Google Play, which takes subscription payments and
-    tells us whether a subscription is active.</li>
+    your meal text, Google Play, which takes subscription payments and
+    tells us whether a subscription is active, and Firebase Cloud Messaging,
+    which delivers notifications to your phone.</li>
     <li><strong>Supabase</strong> — the database and server that hold your
     backup, and the waitlist.</li>
     <li><strong>Exa</strong> — web search, for foods our tables do not cover. It
@@ -208,7 +234,7 @@
   say so in the app when the change is significant.</p>
 
   <hr>
-  <p class="sub"><a href="../">← Interludeapps</a></p>
+  <p class="sub"><a href="./index.html">← Calkey</a></p>
 </main>
 </body>
 </html>
