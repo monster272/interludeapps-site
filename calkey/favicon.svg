@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
-  <!-- The launcher icon: three journal entries with right-aligned figures. White is the
-       user's words, the paler violet is the figure the app supplies. Fill = accentFill. -->
-  <rect width="108" height="108" rx="24" fill="#5B4CE6"/>
-  <path fill="#FFFFFF" d="M32 40h24v4H32zM32 52h32v4H32zM32 64h20v4H32z"/>
-  <path fill="#C7C2FF" d="M60 40h16v4H60zM68 52h8v4h-8zM56 64h20v4H56z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="34" fill="#1C1917"/>
+  <path d="M26 66C26 62.686 28.686 60 32 60H96C99.314 60 102 62.686 102 66V68C102 91.196 83.196 108 64 108C44.804 108 26 91.196 26 68V66Z" fill="#FAF7F2"/>
+  <rect x="57" y="22" width="14" height="30" rx="7" fill="#E05A36"/>
+  <circle cx="85" cy="44" r="7" fill="#F59E0B"/>
 </svg>
