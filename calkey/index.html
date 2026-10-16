@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calkey — type what you ate, in your language</title>
+<meta name="description" content="Calkey counts calories and macros from one sentence, in any language, for your own cuisine — and shares today's totals with one person. Join the waitlist.">
+<meta property="og:title" content="Calkey — type what you ate, in your language">
+<meta property="og:description" content="2 roti, dal tadka. Done. Share today with one person. Join the waitlist for early access on Android.">
+<meta name="theme-color" content="#181818">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+/* ------------------------------------------------------------------ tokens
+   Mirrors the app's LedgerColors (docs/amy-ui-translation.md §1.1). Dark is
+   the default, as in the app; light follows the system. One system sans,
+   hierarchy by weight; radii 8 / 16 / 24 / pill; motion 150 / 300 / 400 ms. */
+:root{
+  --canvas:#181818; --canvas2:#161616; --floating:#202020; --sunken:#282828;
+  --ink:#FFFFFF; --inkSoft:#9A9A9A; --inkFaint:#6A6A6A; --rule:#2A2A2A;
+  --accent:#8A7DFF; --accentFill:#5B4CE6; --onAccentFill:#FFFFFF; --accentPressed:#4A3CD0; --accentSoft:#2A2550;
+  --amber:#FAC775; --amberInk:#633806; --amberSoft:#3A2A10;
+  --p:#F5C542; --c:#F85058; --f:#D96BFF; --good:#3DDC84; --over:#FF8A3D; --flame:#FF8A3D; --water:#4FB3FF;
+  --shadow:0 10px 30px -12px rgba(0,0,0,.7);
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --rs:8px; --rm:16px; --rl:24px;
+  --fast:150ms; --mid:300ms; --slow:400ms; --ease:cubic-bezier(.2,0,0,1);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root{
+    --canvas:#F6F6F8; --canvas2:#F2F2F5; --floating:#FFFFFF; --sunken:#EBEBF0;
+    --ink:#111113; --inkSoft:#6B6B72; --inkFaint:#9A9AA2; --rule:#E2E2E8;
+    --accent:#4F3FD9; --accentPressed:#3F31B8; --accentSoft:#E6E3FF;
+    --amberSoft:#FBEBD0;
+    --p:#C99A00; --c:#E03E48; --f:#B24FE0; --good:#2E9E5B; --over:#E8672A; --flame:#E8672A; --water:#2A8FE0;
+    --shadow:0 10px 30px -14px rgba(20,20,40,.3);
+    color-scheme:light;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,var(--canvas),var(--canvas2)) fixed;background-color:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+b,strong{font-weight:600}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.num{font-variant-numeric:tabular-nums}
+.ill{display:inline-block;width:1em;height:1em;color:inherit;vertical-align:middle}
+
+/* ------------------------------------------------------------------- nav */
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--canvas) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:700;font-size:22px;letter-spacing:-.02em;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.logo span{margin-left:-8px}
+.logo img{width:26px;height:26px;border-radius:7px}
+.logo span{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;background:var(--accentFill);color:var(--onAccentFill);font:600 15px var(--sans);padding:12px 22px;cursor:pointer;text-decoration:none;min-height:48px;transition:background var(--fast),transform .1s}
+.btn:hover{background:var(--accentPressed)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.6;cursor:wait}
+nav .btn{min-height:40px;padding:8px 18px}
+
+/* ------------------------------------------------------------------ hero */
+.hero{padding:64px 0 56px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+h1{font-size:clamp(40px,6.2vw,70px);line-height:1.02;letter-spacing:-.035em;margin:0 0 20px;font-weight:600}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:19px;color:var(--inkSoft);max-width:30em;margin:0 0 28px}
+.lede i{color:var(--ink);font-style:normal;font-weight:500}
+.counter{display:inline-flex;align-items:center;gap:10px;background:var(--accentSoft);color:var(--accent);border-radius:999px;padding:8px 16px 8px 12px;font-size:14px;font-weight:600;margin-bottom:24px}
+.counter[hidden]{display:none}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--accent);position:relative}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--accent);animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{to{transform:scale(2.6);opacity:0}}
+
+/* ------------------------------------------------------------------ form */
+.join{display:grid;grid-template-columns:1fr auto;gap:10px;max-width:520px}
+.join input,.join select{font:16px var(--sans);color:var(--ink);background:var(--floating);border:1px solid var(--rule);border-radius:var(--rm);padding:12px 16px;min-height:48px;width:100%}
+.join input:focus,.join select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.join select{grid-column:1/-1;color:var(--inkSoft)}
+.join .hp{position:absolute;left:-9999px}
+.fine{font-size:13px;color:var(--inkFaint);margin:12px 0 0}
+.msg{max-width:520px;border-radius:var(--rl);padding:18px 20px;margin-top:4px}
+.msg.ok{background:var(--accentSoft);color:var(--ink)}
+.msg.err{background:var(--amberSoft);color:var(--amber);margin-top:10px;padding:12px 16px;font-size:15px;border-radius:var(--rs)}
+.msg h3{margin:0 0 4px;font-size:20px;letter-spacing:-.02em;font-weight:600}
+.msg h3 .num{color:var(--accent)}
+.msg p{margin:0;color:var(--inkSoft)}
+.share{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.share a,.share button{font:600 14px var(--sans);background:var(--floating);color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:8px 14px;text-decoration:none;cursor:pointer}
+
+/* ----------------------------------------------------------------- phones
+   The app's journal, drawn as it is: labels in the margin, entries that wrap
+   with the figure on the first line, the input line as the last line of the
+   page, and the floating capsule plus three round buttons at the bottom. */
+.phone{position:relative;width:min(100%,340px);aspect-ratio:9/17.6;margin:0 auto;background:linear-gradient(180deg,var(--canvas),var(--canvas2));border:1px solid var(--rule);border-radius:40px;box-shadow:var(--shadow);overflow:hidden;color:var(--ink)}
+@media (prefers-color-scheme:light){.phone{border-color:#D8D8E0}}
+.screen{position:absolute;inset:0;padding:22px 20px 0;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.topbar .ill{width:28px;height:28px;color:var(--inkSoft)}
+.daypill{border:1px solid var(--rule);background:var(--floating);border-radius:999px;padding:6px 18px;font-size:14px;color:var(--inkSoft)}
+.gear{width:36px;height:36px;border-radius:50%;background:var(--floating);border:1px solid var(--rule);display:grid;place-items:center;color:var(--inkSoft)}
+.gear svg{width:18px;height:18px}
+.journal{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.journal .entries{flex:none}
+.label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--inkFaint);margin:10px 0 4px}
+.entry{display:flex;align-items:flex-start;gap:14px;padding:5px 0;font-size:16px;line-height:1.35}
+.entry .words{flex:1;font-weight:500}
+.entry .kcal{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink);transition:color .6s var(--ease)}
+.entry .kcal small{font-weight:400;font-size:12px;color:var(--inkSoft);margin-left:3px}
+.entry.fresh .kcal,.fresh .entry .kcal{color:var(--accent)}
+.entry.thinking .kcal{color:var(--inkSoft);font-weight:500;animation:think 1.1s ease-in-out infinite}
+@keyframes think{50%{opacity:.35}}
+.inputline{display:flex;align-items:center;padding:8px 0;font-size:16px;color:var(--inkFaint);min-height:34px}
+.inputline .typed{color:var(--ink);font-weight:500;white-space:pre-wrap}
+.inputline .caret{display:inline-block;width:2px;height:18px;background:var(--accent);margin-left:2px;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.water{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--inkSoft);padding:10px 0;border-top:1px solid var(--rule)}
+.water .drop{color:var(--water)}
+.water .ml{margin-left:auto;font-variant-numeric:tabular-nums}
+.chrome{display:flex;align-items:center;gap:8px;padding:8px 0 18px}
+.capsule{flex:1;min-width:0;display:flex;align-items:baseline;gap:5px;background:var(--floating);border:1px solid var(--rule);border-radius:999px;padding:11px 14px;box-shadow:var(--shadow);white-space:nowrap;overflow:hidden}
+.capsule .fire{color:var(--flame);font-size:14px;align-self:center}
+.capsule .big{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.capsule small{font-size:12px;color:var(--inkSoft)}
+.capsule .pm{font-size:12px;color:var(--inkSoft);font-variant-numeric:tabular-nums}
+.capsule .pm b{color:var(--p);font-weight:700}
+.rb{width:40px;height:40px;border-radius:50%;background:var(--floating);border:1px solid var(--rule);display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
+.rb svg{width:18px;height:18px}
+.rb.mic{color:var(--accent)}.rb.plus{color:var(--over)}.rb.kb{color:var(--inkSoft)}
+
+/* --------------------------------------------------------------- sections */
+section{padding:80px 0;border-top:1px solid var(--rule)}
+.kicker{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase}
+h2{font-size:clamp(30px,4.4vw,46px);line-height:1.08;letter-spacing:-.03em;margin:0 0 16px;font-weight:600}
+h2 em{font-style:normal;color:var(--accent)}
+.sub{color:var(--inkSoft);font-size:18px;max-width:36em;margin:0 0 36px}
+.sub b{color:var(--ink)}
+.reveal{opacity:0;transform:translateY(14px)}
+.reveal.in{opacity:1;transform:none;transition:opacity var(--slow) var(--ease),transform var(--slow) var(--ease)}
+
+/* --------------------------------------------------------------- partner */
+.partner{background:linear-gradient(180deg,color-mix(in srgb,var(--accentSoft) 35%,transparent),transparent 60%)}
+.pair{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;margin:40px 0 44px}
+.pair .who{text-align:center;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--inkSoft);margin:0 0 12px}
+.mini{width:min(100%,290px);aspect-ratio:9/14;margin:0 auto;background:linear-gradient(180deg,var(--canvas),var(--canvas2));border:1px solid var(--rule);border-radius:34px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.mini .screen{padding:18px 16px 14px}
+.card{background:var(--floating);border:1px solid var(--rule);border-radius:var(--rl);padding:14px 16px;box-shadow:var(--shadow)}
+.card .h{display:flex;align-items:baseline;gap:6px;margin-bottom:10px}
+.card .h .big{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.card .h small{font-size:12px;color:var(--inkSoft)}
+.bar{display:grid;grid-template-columns:14px 1fr 64px;align-items:center;gap:8px;font-size:12px;margin:6px 0}
+.bar .l{font-weight:700}
+.bar .track{height:6px;background:var(--sunken);border-radius:999px;overflow:hidden}
+.bar .fill{display:block;height:100%;border-radius:999px;background:var(--accent);width:var(--w,0%);transition:width .9s var(--ease)}
+.bar .v{text-align:right;color:var(--inkSoft);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px}
+.bar.p .l{color:var(--p)}.bar.c .l{color:var(--c)}.bar.f .l{color:var(--f)}
+.bar.p .fill{background:var(--p)}.bar.c .fill{background:var(--c)}.bar.f .fill{background:var(--f)}
+.pc{border-top:1px solid var(--rule);margin-top:12px;padding-top:12px}
+.pc .row1{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.pc .row1 svg{width:15px;height:15px;color:var(--accent)}
+.pc .row1 .cap{margin-left:auto;font-weight:400;font-size:11px;color:var(--inkFaint);transition:color var(--mid)}
+.pc.live .row1 .cap{color:var(--accent)}
+.pc .fig{display:flex;align-items:baseline;gap:5px;margin:8px 0 4px}
+.pc .fig .big{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.pc .fig small{font-size:12px;color:var(--inkSoft)}
+.pc .fig .m{margin-left:auto;font-size:12px;color:var(--inkSoft);font-variant-numeric:tabular-nums}
+.pc .fig .m b{font-weight:700}
+.pc .fig .m .p{color:var(--p)}.pc .fig .m .c{color:var(--c)}.pc .fig .m .f{color:var(--f)}
+.pc .foot{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--inkSoft);font-variant-numeric:tabular-nums}
+.pc .foot .drop{color:var(--water)}.pc .foot .fire{color:var(--flame);margin-left:auto}
+.pc.live .fig .big{color:var(--accent)}
+.mini .entry{font-size:14px;padding:4px 0}
+.mini .label{margin:12px 0 2px}
+.mini .group{opacity:0;transform:translateY(6px);transition:opacity var(--mid),transform var(--mid)}
+.mini .group.show{opacity:1;transform:none}
+.mini .inputline{font-size:14px;padding:6px 0}
+.link{position:relative;width:92px;height:2px;background:var(--rule);margin:0 8px;align-self:center}
+.link .dot{position:absolute;top:50%;left:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent);opacity:0}
+.link.go .dot{animation:travel .9s var(--ease) forwards}
+.link.back .dot{animation:travelBack .9s var(--ease) forwards}
+@keyframes travel{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes travelBack{0%{left:100%;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:0;opacity:0}}
+.sees{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 28px}
+.sees>div{background:var(--floating);border:1px solid var(--rule);border-radius:var(--rl);padding:22px 24px;box-shadow:var(--shadow)}
+.sees h3{margin:0 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--inkSoft);font-weight:600}
+.sees ul{list-style:none;margin:0;padding:0}
+.sees li{padding:7px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px}
+.sees li::before{content:"✓";color:var(--good);font-weight:700;flex:none}
+.sees .never li::before{content:"✕";color:var(--over)}
+.sees .never li{color:var(--ink);font-weight:500}
+.sees p{margin:10px 0 0;color:var(--inkSoft);font-size:15px}
+.code{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--floating);border:1px solid var(--rule);border-radius:var(--rl);padding:18px 22px;box-shadow:var(--shadow)}
+.code .k{font-size:40px;font-weight:600;letter-spacing:.18em;font-variant-numeric:tabular-nums;color:var(--accent);min-width:7.2ch}
+.code .k i{font-style:normal;opacity:0;animation:keyin .25s var(--ease) forwards}
+@keyframes keyin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.code .t{font-size:15px;color:var(--inkSoft)}
+.code .t b{color:var(--ink);display:block;font-size:16px}
+
+/* -------------------------------------------------------------- measures */
+.wheel{display:inline-block;vertical-align:bottom;perspective:600px;color:var(--accent);transition:width .45s var(--ease);white-space:nowrap;text-align:left}
+.wheel-word{display:inline-block;transform-origin:50% 50% -0.5em;backface-visibility:hidden}
+.wheel-word.out{animation:wheelOut .4s cubic-bezier(.55,0,.8,.4) forwards}
+.wheel-word.in{animation:wheelIn .5s cubic-bezier(.2,.8,.2,1.2) forwards}
+@keyframes wheelOut{to{transform:rotateX(90deg);opacity:0}}
+@keyframes wheelIn{from{transform:rotateX(-90deg);opacity:0}to{transform:none;opacity:1}}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+.filters button{font:600 14px var(--sans);color:var(--inkSoft);background:var(--floating);border:1px solid var(--rule);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
+.filters button[aria-pressed="true"]{background:var(--accentFill);color:var(--onAccentFill);border-color:transparent}
+.measures{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;height:210px}
+.flip[hidden]{display:none}
+.flip .inner{display:block;position:relative;width:100%;height:100%;transition:transform .6s var(--ease);transform-style:preserve-3d}
+.flip.on .inner{transform:rotateY(180deg)}
+@media (hover:hover){.flip:hover .inner{transform:rotateY(180deg)}}
+.flip:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--rl)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--rl);padding:18px 20px;display:flex;flex-direction:column}
+.front{background:var(--floating);border:1px solid var(--rule);box-shadow:var(--shadow)}
+.front .where{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--inkFaint)}
+.front .ill{position:absolute;right:16px;top:14px;width:64px;height:64px;color:var(--ink);opacity:.9}
+.front .word{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;margin:auto 0 2px;line-height:1.05}
+.front .gloss{color:var(--inkSoft);font-size:14px}
+.back{background:var(--accentSoft);color:var(--ink);transform:rotateY(180deg)}
+.back .w{display:block;font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;color:var(--accent)}
+.back .w small{font-size:16px;font-weight:500;margin-left:3px;color:var(--inkSoft)}
+.back .eg{display:block;margin-top:auto;font-size:14px;line-height:1.4;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent);padding-top:10px;color:var(--inkSoft)}
+.back .eg b{font-weight:600;color:var(--ink)}
+
+/* ---------------------------------------------------------------- versus */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.versus>div{border-radius:var(--rl);padding:28px}
+.versus .old{background:var(--sunken)}
+.versus .new{background:var(--floating);border:1px solid var(--rule);box-shadow:var(--shadow)}
+.versus h3{margin:0 0 14px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--inkSoft);font-weight:600}
+.versus ul{list-style:none;margin:0;padding:0}
+.versus li{padding:10px 0;border-top:1px solid var(--rule);font-size:17px}
+.versus .old li{color:var(--inkSoft);text-decoration:line-through;text-decoration-color:var(--inkFaint)}
+.versus .time{font-size:44px;font-weight:600;letter-spacing:-.03em;margin:4px 0 14px;font-variant-numeric:tabular-nums}
+.versus .new .time{color:var(--accent)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:var(--floating);border:1px solid var(--rule);border-radius:var(--rl);padding:24px;box-shadow:var(--shadow)}
+.step .i{color:var(--accent);font-weight:600;font-size:14px}
+.step h3{margin:8px 0 6px;font-size:21px;letter-spacing:-.02em;font-weight:600}
+.step p{margin:0;color:var(--inkSoft);font-size:16px}
+
+/* --------------------------------------------------------------- honest */
+.honest{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.sheet{background:var(--floating);border:1px solid var(--rule);border-radius:34px 34px var(--rl) var(--rl);padding:22px 22px 18px;box-shadow:var(--shadow);max-width:380px;margin:0 auto}
+.sheet .grab{width:36px;height:4px;border-radius:999px;background:var(--sunken);margin:0 auto 16px}
+.sheet .t{font-size:15px;font-weight:500;margin:0 0 6px}
+.sheet .hero{font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;padding:0}
+.sheet .hero small{font-size:14px;color:var(--inkSoft);margin-left:4px;font-weight:400}
+.sheet .trio{display:flex;gap:14px;margin:10px 0 16px;font-size:13px;color:var(--inkSoft);font-variant-numeric:tabular-nums}
+.sheet .trio b{font-weight:700}.sheet .trio .p{color:var(--p)}.sheet .trio .c{color:var(--c)}.sheet .trio .f{color:var(--f)}
+.sheet .item{display:flex;align-items:center;gap:10px;background:var(--sunken);border-radius:var(--rm);padding:10px 12px;margin:6px 0;font-size:14px}
+.sheet .item .k{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}
+.sheet .item .k small{font-weight:400;color:var(--inkSoft);font-size:11px;margin-left:2px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--amber);color:var(--amberInk);border-radius:var(--rs);padding:2px 8px;font-size:11px;font-weight:700}
+.sheet .fix{color:var(--accent);font-size:13px;font-weight:600;margin:12px 0 0}
+
+/* ------------------------------------------------------------------- ios */
+.ios-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.ios-stat{font-size:17px;margin:0 0 20px}
+.ios-stat b{font-variant-numeric:tabular-nums}
+.battery-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.battery{position:relative;width:min(100%,400px);aspect-ratio:2.2;border:6px solid var(--ink);border-radius:34px;padding:9px;margin-right:18px}
+.battery::after{content:"";position:absolute;right:-20px;top:33%;width:12px;height:34%;background:var(--ink);border-radius:0 8px 8px 0}
+.cell{height:100%;width:var(--pct,3%);min-width:22px;border-radius:22px;background:linear-gradient(90deg,var(--accentFill),var(--accent));transition:width 1.4s var(--ease);position:relative;overflow:hidden}
+.cell::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);transform:translateX(-100%);animation:shine 2.4s ease-in-out infinite}
+@keyframes shine{to{transform:translateX(100%)}}
+.bolt{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.bolt svg{width:22%;height:auto;fill:var(--ink);stroke:var(--canvas);stroke-width:1.5}
+.battery.zap{animation:zap .7s var(--ease)}
+.battery.zap .bolt svg{animation:boltflash .7s}
+@keyframes zap{30%{transform:scale(1.05)}}
+@keyframes boltflash{30%{fill:var(--amber);transform:scale(1.25) rotate(-8deg)}}
+.batt-label{font-size:15px;color:var(--inkSoft);display:flex;gap:10px;align-items:baseline}
+.batt-label b{font-size:28px;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.vote{display:flex;gap:10px;flex-wrap:wrap;max-width:520px}
+.vote input{flex:1 1 220px;font:16px var(--sans);color:var(--ink);background:var(--floating);border:1px solid var(--rule);border-radius:var(--rm);padding:12px 16px;min-height:48px}
+.vote input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.vote .btn{flex:none}
+.vote-done{font-weight:600;color:var(--ink);background:var(--accentSoft);border-radius:var(--rm);padding:12px 16px;max-width:520px}
+.phone-pick{grid-column:1/-1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--inkSoft)}
+.phone-pick label{position:relative;cursor:pointer}
+.phone-pick input{position:absolute;opacity:0;pointer-events:none}
+.phone-pick span.pill{display:inline-block;border:1px solid var(--rule);background:var(--floating);border-radius:999px;padding:7px 14px;font-weight:600;color:var(--inkSoft)}
+.phone-pick input:checked+span.pill{background:var(--accentFill);color:var(--onAccentFill);border-color:transparent}
+.phone-pick input:focus-visible+span.pill{outline:2px solid var(--accent);outline-offset:2px}
+.ios-nudge{display:flex;gap:12px;align-items:flex-start;max-width:520px;background:var(--floating);border:1px dashed var(--accent);border-radius:var(--rm);padding:12px 16px;margin:0 0 16px;font-size:15px}
+.ios-nudge[hidden]{display:none}
+.ios-nudge a{color:var(--accent);font-weight:600}
+
+/* ---------------------------------------------------------------- coupon */
+.coupon{display:flex;align-items:center;gap:12px;max-width:520px;margin:0 0 14px;border:1.5px dashed var(--accent);border-radius:var(--rm);padding:10px 14px;background:var(--floating);position:relative;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.coupon::before,.coupon::after{content:"";position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--canvas);border:1.5px dashed var(--accent);transform:translateY(-50%)}
+.coupon::before{left:-8px;clip-path:inset(0 0 0 50%)}
+.coupon::after{right:-8px;clip-path:inset(0 50% 0 0)}
+.coupon .off{font-weight:700;font-size:22px;color:var(--accent);letter-spacing:-.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.coupon .what{font-size:14px;line-height:1.35;color:var(--inkSoft)}
+.coupon .what b{color:var(--ink)}
+.final .coupon{margin-left:auto;margin-right:auto}
+.coupon:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.reels{display:inline-flex;align-items:baseline}
+.reel{display:inline-block;height:1.15em;overflow:hidden;line-height:1.15em;vertical-align:bottom}
+.strip{display:flex;flex-direction:column;transform:translateY(-11.5em);transition:transform .35s cubic-bezier(.2,1.4,.4,1)}
+.strip span{height:1.15em}
+.reel.spin .strip{transition:none;animation:reel .14s linear infinite;filter:blur(.6px)}
+@keyframes reel{from{transform:translateY(0)}to{transform:translateY(-11.5em)}}
+.coupon .lock{font-size:16px;margin-left:2px}
+.coupon.tease{animation:tease .45s}
+@keyframes tease{20%{transform:rotate(-2deg)}40%{transform:rotate(2deg)}60%{transform:rotate(-1deg)}80%{transform:rotate(1deg)}}
+
+/* ------------------------------------------------------------------- faq */
+.faq{max-width:760px}
+details{border-bottom:1px solid var(--rule);padding:18px 0}
+summary{font-weight:600;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent);font-size:22px;line-height:1;font-weight:400}
+details[open] summary::after{content:"–"}
+details p{color:var(--inkSoft);margin:10px 0 0}
+details a{color:var(--accent)}
+
+.final{text-align:center}
+.final .join,.final .msg{margin:0 auto;text-align:left}
+.final .counter{margin-bottom:20px}
+.final .bignum{font-size:clamp(56px,10vw,104px);font-weight:600;letter-spacing:-.04em;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+
+footer{border-top:1px solid var(--rule);padding:32px 0 48px;color:var(--inkFaint);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--inkSoft)}
+
+@media (max-width:900px){
+  .hero{padding:40px 0 32px}
+  .hero .wrap{grid-template-columns:1fr;gap:40px}
+  .pair{grid-template-columns:1fr;gap:0}
+  .link{width:2px;height:56px;margin:8px auto}
+  .link .dot{left:50%;top:0;margin:-5px 0 0 -5px}
+  .link.go .dot{animation-name:travelV}
+  .link.back .dot{animation-name:travelVBack}
+  @keyframes travelV{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+  @keyframes travelVBack{0%{top:100%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:0;opacity:0}}
+  .measures{grid-template-columns:1fr 1fr}
+  .front .word{font-size:22px}
+  .back .w{font-size:32px}
+  .versus,.steps,.ios-grid,.honest,.sees{grid-template-columns:1fr}
+  .ios-grid,.honest{gap:36px}
+  section{padding:56px 0}
+}
+@media (max-width:480px){
+  .front .ill{width:52px;height:52px;right:12px;top:12px}
+  .front .where{padding-right:64px}
+  .join{grid-template-columns:1fr}
+  .join .btn{width:100%}
+  .wrap{padding:0 16px}
+  .code .k{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .mini .group{opacity:1;transform:none}
+  .link .dot{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="#"><img src="favicon.svg" alt="">Calkey<span>.</span></a>
+  <a class="btn" href="#join">Join the waitlist</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div>
+    <div class="counter"><span class="pulse"></span><span data-pill>Early access is open — be one of the first</span></div>
+    <h1>Type what you ate.<br><em>In your language.</em></h1>
+    <p class="lede">Calkey counts calories and macros from one sentence — <i>2 eggs and a latte</i>, <i>dos tacos al pastor</i>, <i>2 roti, dal tadka</i>. No barcode. No scale. No scrolling through forty kinds of bread.</p>
+    <div class="ios-nudge" data-ios-nudge hidden>
+      <span aria-hidden="true">📱</span>
+      <span>Looks like you're on an iPhone. Calkey is Android first, but join below and your signup counts as an <b>iPhone vote</b>. <a href="#ios">See the iPhone battery ↓</a></span>
+    </div>
+    <div id="join" data-join></div>
+  </div>
+
+  <div class="phone" aria-hidden="true" data-hero>
+    <div class="screen">
+      <div class="topbar">
+        <svg class="ill" data-hero-ill><use href="ill.svg#bowl"/></svg>
+        <span class="daypill">Today</span>
+        <span class="gear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span>
+      </div>
+      <div class="journal"><div class="entries" data-journal></div>
+      <div class="inputline"><span class="typed" data-typed></span><span class="caret"></span><span data-placeholder>What did you eat?</span></div></div>
+      <div class="water"><span class="drop">💧</span>Water<span class="ml" data-water>0 ml</span></div>
+      <div class="chrome">
+        <div class="capsule"><span class="fire">🔥</span><span class="big num" data-left>1,840</span><small>left</small><span class="pm">· <b>P</b> <span data-p>0</span> g</span></div>
+        <span class="rb mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+        <span class="rb plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <span class="rb kb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg></span>
+      </div>
+    </div>
+  </div>
+</div></header>
+
+<section class="partner" id="partner"><div class="wrap">
+  <p class="kicker reveal">New — Partner sharing</p>
+  <h2 class="reveal">Share today with <em>one person</em>.</h2>
+  <p class="sub reveal">Pair with your partner, your trainer or your gym buddy, and you each see the other's day under your own goals: calories against the goal, protein, carbs and fat, water, and the streak. <b>Never what either of you ate.</b></p>
+
+  <div class="pair reveal" data-pair aria-hidden="true">
+    <div>
+      <p class="who">You</p>
+      <div class="mini"><div class="screen">
+        <div class="card">
+          <div class="h"><span class="big num" data-a-left>1,120</span><small>left</small></div>
+          <div class="bar p"><span class="l">P</span><span class="track"><span class="fill" data-a-pbar style="--w:38%"></span></span><span class="v num" data-a-p>50/130 g</span></div>
+          <div class="bar c"><span class="l">C</span><span class="track"><span class="fill" data-a-cbar style="--w:36%"></span></span><span class="v num" data-a-c>80/220 g</span></div>
+          <div class="bar f"><span class="l">F</span><span class="track"><span class="fill" data-a-fbar style="--w:40%"></span></span><span class="v num" data-a-f>26/65 g</span></div>
+          <div class="pc" data-a-pc>
+            <div class="row1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M15.5 20a5 5 0 0 1 6-4.8"/></svg>Priya<span class="cap" data-a-cap>Updated 4 min ago</span></div>
+            <div class="fig"><span class="big num" data-b-left-mirror>760</span><small>left</small><span class="m num"><b class="p">P</b> <span data-b-p-mirror>70</span> · <b class="c">C</b> <span data-b-c-mirror>150</span> · <b class="f">F</b> <span data-b-f-mirror>40</span></span></div>
+            <div class="foot"><span class="drop">💧</span><span class="num" data-b-water-mirror>1,500 ml</span><span class="fire">🔥</span><b class="num" data-b-streak-mirror>12</b></div>
+          </div>
+        </div>
+        <div class="label">Breakfast</div>
+        <div class="entry"><span class="words">poha aur chai</span><span class="kcal">350<small>cal</small></span></div>
+        <div class="group" data-a-entry><div class="label">Lunch</div>
+        <div class="entry"><span class="words">1 katori rajma chawal</span><span class="kcal">420<small>cal</small></span></div></div>
+        <div class="inputline">What did you eat?</div>
+      </div></div>
+    </div>
+
+    <div class="link" data-link><span class="dot"></span></div>
+
+    <div>
+      <p class="who">Priya</p>
+      <div class="mini"><div class="screen">
+        <div class="card">
+          <div class="h"><span class="big num" data-b-left>760</span><small>left</small></div>
+          <div class="bar p"><span class="l">P</span><span class="track"><span class="fill" data-b-pbar style="--w:54%"></span></span><span class="v num" data-b-p>70/130 g</span></div>
+          <div class="bar c"><span class="l">C</span><span class="track"><span class="fill" data-b-cbar style="--w:68%"></span></span><span class="v num" data-b-c>150/220 g</span></div>
+          <div class="bar f"><span class="l">F</span><span class="track"><span class="fill" data-b-fbar style="--w:62%"></span></span><span class="v num" data-b-f>40/65 g</span></div>
+          <div class="pc" data-b-pc>
+            <div class="row1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M15.5 20a5 5 0 0 1 6-4.8"/></svg>Sam<span class="cap" data-b-cap>Updated 2 min ago</span></div>
+            <div class="fig"><span class="big num" data-a-left-mirror>1,120</span><small>left</small><span class="m num"><b class="p">P</b> <span data-a-p-mirror>50</span> · <b class="c">C</b> <span data-a-c-mirror>80</span> · <b class="f">F</b> <span data-a-f-mirror>26</span></span></div>
+            <div class="foot"><span class="drop">💧</span><span class="num" data-a-water-mirror>750 ml</span><span class="fire">🔥</span><b class="num" data-a-streak-mirror>5</b></div>
+          </div>
+        </div>
+        <div class="label">Lunch</div>
+        <div class="entry"><span class="words">grilled chicken salad</span><span class="kcal">430<small>cal</small></span></div>
+        <div class="group" data-b-entry><div class="label">Snack</div>
+        <div class="entry"><span class="words">protein bar aur ek kela</span><span class="kcal">310<small>cal</small></span></div></div>
+        <div class="inputline">What did you eat?</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="sees reveal">
+    <div>
+      <h3>What they can see</h3>
+      <ul><li>Today's calories, against your goal</li><li>Protein, carbs and fat</li><li>Water</li><li>Your streak</li></ul>
+      <p>You see the same of theirs. It refreshes while the app is open.</p>
+    </div>
+    <div class="never">
+      <h3>What they never see</h3>
+      <ul><li>Never what you ate, or anything you typed</li><li>No history beyond today</li><li>No feed, no followers, no search</li></ul>
+      <p>Either of you can stop sharing at any time, and it stops for both.</p>
+    </div>
+  </div>
+
+  <div class="code reveal" data-code>
+    <span class="k" data-code-k aria-label="K7MZ4P"></span>
+    <span class="t"><b>Pair with a one-time code.</b>Settings › Partner › Make a code. Works once. Expires in 48 hours.</span>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal">Every kitchen's measures</p>
+  <h2 class="wheel-h reveal">It knows what <span class="wheel" data-wheel aria-live="off"><span class="wheel-word">a cup</span></span> holds.</h2>
+  <p class="sub reveal">Other trackers guess at food they've never seen. Calkey understands the bowls, ladles and cups people actually use — so "a cup of rice" and "1 katori dal" both mean the right thing. <b>Tap a card to flip it.</b></p>
+  <div class="filters reveal" role="group" aria-label="Filter by region" data-filters>
+    <button type="button" aria-pressed="true" data-region="all">All</button>
+    <button type="button" aria-pressed="false" data-region="us">US &amp; Western</button>
+    <button type="button" aria-pressed="false" data-region="in">India</button>
+    <button type="button" aria-pressed="false" data-region="sea">Southeast Asia</button>
+    <button type="button" aria-pressed="false" data-region="br">Brazil</button>
+  </div>
+  <div class="measures reveal" data-measures></div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal">Faster than finding the app</p>
+  <h2 class="reveal">Logging shouldn't feel like homework.</h2>
+  <p class="sub reveal">Search-and-scroll trackers take around 45 seconds a meal. That's why people quit by week two.</p>
+  <div class="versus reveal">
+    <div class="old">
+      <h3>The old apps</h3>
+      <div class="time num">~45s</div>
+      <ul><li>Search a database</li><li>Pick from forty near-matches</li><li>Weigh it on a scale</li><li>Your family recipe isn't in there</li></ul>
+    </div>
+    <div class="new">
+      <h3>Calkey</h3>
+      <div class="time num"><span data-countdown>&lt;5</span>s</div>
+      <ul><li>Type one sentence, any language</li><li>Every item shown with its estimate</li><li>Fix anything in two taps</li><li>Works offline for meals you repeat</li></ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal">How it works</p>
+  <h2 class="reveal">Three steps. The first one is typing.</h2>
+  <div class="steps reveal">
+    <div class="step"><span class="i">01</span><h3>Type it like a text</h3><p>English, Hindi, Hinglish, Spanish, Bahasa — whatever you'd send a friend. Or say it.</p></div>
+    <div class="step"><span class="i">02</span><h3>See the reasoning</h3><p>Each item, its portion and its calories, laid out line by line. Estimates are labelled as estimates.</p></div>
+    <div class="step"><span class="i">03</span><h3>Correct in two taps</h3><p>Wrong portion? Tap it, pick another. Calkey remembers your usual for next time.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap honest">
+  <div>
+    <p class="kicker reveal">Honest numbers</p>
+    <h2 class="reveal">Every figure says it's an estimate.</h2>
+    <p class="sub reveal" style="margin-bottom:0">Open any meal and you see the items behind the total, how the figure was reached, and an amber flag on anything Calkey wasn't sure about. Change a portion and the number changes with it — and that becomes your default next time.</p>
+  </div>
+  <div class="sheet reveal" aria-hidden="true">
+    <div class="grab"></div>
+    <p class="t">2 roti, dal tadka aur ek katori dahi</p>
+    <div class="hero num">510<small>cal · estimate</small></div>
+    <div class="trio num"><span><b class="p">P</b> 24 g</span><span><b class="c">C</b> 70 g</span><span><b class="f">F</b> 14 g</span></div>
+    <div class="item">Roti · 2<span class="k num">240<small>cal</small></span></div>
+    <div class="item">Dal tadka · 1 katori<span class="chip">check this</span><span class="k num">180<small>cal</small></span></div>
+    <div class="item">Dahi · 1 katori<span class="k num">90<small>cal</small></span></div>
+    <p class="fix">Something off? Tap an item to fix it.</p>
+  </div>
+</div></section>
+
+<section id="ios"><div class="wrap ios-grid">
+  <div>
+    <p class="kicker reveal">iPhone people</p>
+    <h2 class="reveal">Charge up Calkey for iPhone.</h2>
+    <p class="sub reveal" style="margin-bottom:20px">Calkey launches on Android. Every iPhone vote adds charge to this battery, and the fuller it gets, the higher iOS moves up our list. Everyone who charged it hears first when iOS is on the way.</p>
+    <p class="ios-stat reveal"><span data-ios-text>Early days. Be one of the first to plug in.</span></p>
+    <div data-vote class="reveal">
+      <button class="btn" type="button" data-vote-start>⚡ Plug in my iPhone vote</button>
+    </div>
+  </div>
+  <div class="battery-wrap reveal" aria-hidden="true">
+    <div class="battery" data-battery><div class="cell" data-cell></div><div class="bolt"><svg viewBox="0 0 24 24"><path d="M13.5 2 4 14h6.5L9 22l11-13h-6.8z"/></svg></div></div>
+    <div class="batt-label"><b data-pct hidden></b> ⚡ iOS · charging</div>
+  </div>
+</div></section>
+
+<section><div class="wrap faq">
+  <p class="kicker reveal">Questions</p>
+  <h2 class="reveal">Before you ask.</h2>
+  <details class="reveal"><summary>When does it launch?</summary><p>Android first, soon. Everyone on the waitlist gets an invite before the public launch, in the order they joined.</p></details>
+  <details class="reveal"><summary>Is it on iPhone?</summary><p>Not at launch. Calkey starts on Android. If you're on iPhone, <a href='#ios'>plug your vote into the iPhone battery</a>. Every vote moves iOS up our list.</p></details>
+  <details class="reveal"><summary>Which languages and cuisines?</summary><p>You can type in any language — the model reads it directly. US and Western food works out of the box, along with South Asian, Southeast Asian and Latin American home cooking, and we're adding regions based on what the waitlist eats. Pick yours when you sign up.</p></details>
+  <details class="reveal"><summary>Do I have to weigh my food?</summary><p>No. Say "a cup", "2 slices", "1 katori" — whatever you'd normally say. Close enough every day beats perfect for a week.</p></details>
+  <details class="reveal"><summary>What can my partner see?</summary><p>Only today's totals: calories against the goal, protein, carbs and fat, water, and the streak. Never the meals or the words you typed. You pair with a one-time code, one person at a time, and either of you can stop sharing whenever you like.</p></details>
+  <details class="reveal"><summary>What will it cost?</summary><p>Your first day is free, no card needed. After that Calkey is a subscription — yearly or monthly, starting with a 3-day free trial through Google Play. Everyone on the waitlist gets a mystery discount on their first month, revealed at launch.</p></details>
+  <details class="reveal"><summary>What do you do with my email?</summary><p>Send you a launch invite and the occasional update. Never sold, never shared. Reply to any email to be removed.</p></details>
+  <details class="reveal"><summary>Is this medical advice?</summary><p>No. Calkey gives estimates to help you track — it doesn't diagnose or treat anything. Talk to a doctor or dietitian for medical guidance.</p></details>
+</div></section>
+
+<section class="final" id="join-bottom"><div class="wrap">
+  <div data-counter hidden><div class="bignum" data-count>0</div><p class="sub" style="margin:8px auto 28px">people are waiting for Calkey. Be the next one.</p></div>
+  <h2 data-nocount class="reveal">Be first in line.</h2>
+  <div data-join></div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--ink)">Calkey.</b> Type what you ate.</span>
+  <span>© 2026 Interludeapps · Estimates, not medical advice · <a href="privacy.html">Privacy</a> · <a href="delete-account.html">Delete account</a></span>
+</div></footer>
+
+<template id="form-tpl">
+  <div class="coupon" data-coupon role="button" tabindex="0" aria-label="Mystery discount on your first month, revealed at launch"><span class="off"><span class="reels" aria-hidden="true"><span class="reel"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>?</span></span></span><span class="reel"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>?</span></span></span></span>% OFF<span class="lock" aria-hidden="true">🔒</span></span><span class="what" data-coupon-what><b>A mystery discount</b> on your first month for everyone who joins before launch. Revealed at launch.</span></div>
+  <form class="join" novalidate>
+    <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">
+    <button class="btn" type="submit">Join waitlist</button>
+    <select name="cuisine" aria-label="What do you mostly eat?">
+      <option value="">What do you mostly eat? (optional)</option>
+      <option value="north_american">North American</option>
+      <option value="european">European</option>
+      <option value="south_asian">Indian / South Asian</option>
+      <option value="southeast_asian">Southeast Asian</option>
+      <option value="latin_american">Latin American</option>
+      <option value="east_asian">East Asian</option>
+      <option value="middle_eastern">Middle Eastern / North African</option>
+      <option value="african">African</option>
+      <option value="mixed">A bit of everything</option>
+    </select>
+    <div class="phone-pick" role="radiogroup" aria-label="Your phone">My phone:
+      <label><input type="radio" name="platform" value="android" checked><span class="pill">Android</span></label>
+      <label><input type="radio" name="platform" value="ios"><span class="pill">iPhone</span></label>
+    </div>
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  </form>
+  <p class="fine">Android first. No spam — one email when it's your turn. <a href="privacy.html#waitlist">Privacy</a></p>
+</template>
+
+<script src="config.js"></script>
+<script>
+(() => {
+  const cfg = window.CALKEY || {};
+  const api = (fn, body) => fetch(`${cfg.supabaseUrl}/rest/v1/rpc/${fn}`, {
+    method: "POST",
+    headers: { apikey: cfg.publishableKey, Authorization: `Bearer ${cfg.publishableKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify(body || {})
+  }).then(async r => { const j = await r.json().catch(() => null); if (!r.ok) throw Object.assign(new Error(j?.message || r.status), { data: j }); return j; });
+
+  const fmt = n => n.toLocaleString("en-US");
+  const source = new URLSearchParams(location.search).get("ref") || document.referrer.replace(/^https?:\/\/([^/]+).*/, "$1") || null;
+  let shown = 0;
+
+  // Count animates up from the last shown value so a refresh after joining
+  // visibly ticks by one rather than jumping.
+  function setCount(n) {
+    // Real numbers only, and only once they are worth showing: below
+    // showCountsFrom the page uses words instead of a small number.
+    if (!Number.isFinite(n) || n < (cfg.showCountsFrom ?? 25)) return;
+    const pill = document.querySelector("[data-pill]");
+    if (!pill.querySelector("[data-count]")) pill.innerHTML = `<b data-count>${fmt(shown)}</b> people are already waiting`;
+    document.querySelectorAll("[data-counter]").forEach(el => el.hidden = false);
+    document.querySelectorAll("[data-nocount]").forEach(el => el.hidden = true);
+    const from = shown, t0 = performance.now(), dur = from ? 600 : 1200;
+    shown = n;
+    const step = t => {
+      const p = Math.min(1, (t - t0) / dur), v = Math.round(from + (n - from) * (1 - Math.pow(1 - p, 3)));
+      document.querySelectorAll("[data-count]").forEach(el => el.textContent = fmt(v));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // iPhone battery. IOS_GOAL only sets how full the battery looks; the page
+  // deliberately promises nothing at 100%, so the copy below must not either.
+  const IOS_GOAL = cfg.iosGoal || 1000;
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  let iosShown = -1;
+  function setIos(n, zap) {
+    if (!Number.isFinite(n)) return;
+    const pct = Math.min(100, (n / IOS_GOAL) * 100);
+    document.querySelector("[data-cell]").style.setProperty("--pct", Math.max(3, pct) + "%");
+    const show = n >= (cfg.showIosFrom ?? 10);
+    const pctEl = document.querySelector("[data-pct]");
+    pctEl.hidden = !show;
+    pctEl.textContent = Math.max(1, Math.floor(pct)) + "%";
+    document.querySelector("[data-ios-text]").innerHTML = show
+      ? `<b>${fmt(n)}</b> iPhone votes so far${pct >= 100 ? " — fully charged. We hear you, iPhone." : "."}`
+      : "Early days. Be one of the first to plug in.";
+    if (zap) {
+      const b = document.querySelector("[data-battery]");
+      b.classList.remove("zap"); void b.offsetWidth; b.classList.add("zap");
+    }
+    iosShown = n;
+  }
+
+  const refresh = () => api("waitlist_stats").then(([st]) => { setCount(st.total); setIos(st.ios); }).catch(() => {});
+  if (cfg.supabaseUrl) { refresh(); setInterval(() => document.hidden || refresh(), 30000); }
+
+  function success(host, res) {
+    const url = location.origin + location.pathname;
+    const text = "I just joined the Calkey waitlist — log calories by typing what you ate, in your own language. Waitlist gets a mystery discount, revealed at launch:";
+    host.innerHTML = `
+      <div class="msg ok">
+        <h3>${res.already ? "You're already in." : "You're in!"} You're <span class="num">#${fmt(res.position)}</span>.</h3>
+        <p><b>Your mystery discount is locked to this email.</b> We'll reveal it with your invite. 🔒</p>
+        <div class="share">
+          <a target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(text + " " + url + "?ref=whatsapp")}">WhatsApp</a>
+          <a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url + "?ref=x")}">Post on X</a>
+          <button type="button" data-copy>Copy link</button>
+        </div>
+      </div>`;
+    host.querySelector("[data-copy]").onclick = e => {
+      navigator.clipboard?.writeText(url + "?ref=link").then(() => e.target.textContent = "Copied ✓");
+    };
+  }
+
+  // One write path for both forms: the waitlist and the iPhone vote are the
+  // same row, the vote just sets platform = 'ios'.
+  async function join(email, platform, cuisine) {
+    const [res] = await api("join_waitlist", {
+      p_email: email, p_cuisine: cuisine, p_locale: navigator.language || null,
+      p_source: source, p_platform: platform
+    });
+    try { localStorage.setItem("calkey_joined", JSON.stringify({ ...res, email })); } catch {}
+    document.querySelectorAll("[data-join]").forEach(h => success(h, res));
+    setCount(res.total);
+    setIos(res.ios, platform === "ios");
+    return res;
+  }
+
+  const voteHost = document.querySelector("[data-vote]");
+  function votedIOS() {
+    try { localStorage.setItem("calkey_ios_vote", "1"); } catch {}
+    voteHost.innerHTML = `<div class="vote-done">⚡ Your vote is plugged in. We'll tell you the moment iOS is on the way.</div>`;
+  }
+  const stored = () => { try { return JSON.parse(localStorage.getItem("calkey_joined") || "null"); } catch { return null; } };
+
+  voteHost.addEventListener("click", async e => {
+    const start = e.target.closest("[data-vote-start]");
+    if (!start) return;
+    const prev = stored();
+    if (prev?.email) {
+      // Already on the list: one tap casts the vote, no retyping.
+      start.disabled = true; start.textContent = "Plugging in…";
+      try { await join(prev.email, "ios", null); votedIOS(); }
+      catch { start.disabled = false; start.textContent = "⚡ Plug in my iPhone vote"; }
+      return;
+    }
+    voteHost.innerHTML = `
+      <form class="vote" novalidate>
+        <input type="email" name="email" placeholder="you@example.com" autocomplete="email" aria-label="Email address" required>
+        <button class="btn" type="submit">⚡ Plug in</button>
+      </form>`;
+    const f = voteHost.querySelector("form");
+    f.email.focus();
+    f.addEventListener("submit", async ev => {
+      ev.preventDefault();
+      voteHost.querySelector(".msg.err")?.remove();
+      const email = f.email.value.trim();
+      const fail = m => f.insertAdjacentHTML("afterend", `<div class="msg err">${m}</div>`);
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("That email doesn't look right — check for typos?");
+      if (!cfg.supabaseUrl) return fail("Waitlist isn't connected yet (config.js missing).");
+      const b = f.querySelector("button"); b.disabled = true; b.textContent = "Plugging in…";
+      try { await join(email, "ios", null); votedIOS(); }
+      catch { b.disabled = false; b.textContent = "⚡ Plug in"; fail("Something went wrong on our side. Try again in a moment?"); }
+    });
+  });
+  try { if (localStorage.getItem("calkey_ios_vote")) votedIOS(); } catch {}
+  if (isIOS) document.querySelector("[data-ios-nudge]").hidden = false;
+
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Mystery coupon: the reels spin and always settle on "??". The real figure
+  // is announced at launch, so it must never appear anywhere on this page.
+  const TEASES = ["Nice try. It's a secret until launch.", "Still locked. Join to be there when it opens.", "Not telling. Yet.", "Patience. The reveal is worth it."];
+  let tease = 0;
+  function spinCoupon(c) {
+    const reels = c.querySelectorAll(".reel");
+    reels.forEach(r => r.classList.add("spin"));
+    reels.forEach((r, k) => setTimeout(() => r.classList.remove("spin"), 700 + k * 450));
+  }
+  function couponTap(c) {
+    spinCoupon(c);
+    c.classList.remove("tease"); void c.offsetWidth; c.classList.add("tease");
+    const what = c.querySelector("[data-coupon-what]");
+    what.dataset.orig ??= what.innerHTML;
+    what.innerHTML = `<b>${TEASES[tease++ % TEASES.length]}</b>`;
+    clearTimeout(c._t); c._t = setTimeout(() => what.innerHTML = what.dataset.orig, 2600);
+  }
+  function wireCoupon(c) {
+    c.addEventListener("click", () => couponTap(c));
+    c.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); couponTap(c); } });
+    if (!reduceMotion) setTimeout(() => spinCoupon(c), 600);
+  }
+  if (!reduceMotion) setInterval(() => {
+    if (!document.hidden) document.querySelectorAll("[data-coupon]").forEach(spinCoupon);
+  }, 6000);
+
+  const tpl = document.getElementById("form-tpl");
+  document.querySelectorAll("[data-join]").forEach(host => {
+    host.appendChild(tpl.content.cloneNode(true));
+    wireCoupon(host.querySelector("[data-coupon]"));
+    const form = host.querySelector("form");
+    if (isIOS) form.querySelector('[value="ios"]').checked = true;
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      host.querySelector(".msg.err")?.remove();
+      const email = form.email.value.trim();
+      const fail = m => form.insertAdjacentHTML("afterend", `<div class="msg err">${m}</div>`);
+      if (form.website.value) return; // bot filled the honeypot
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("That email doesn't look right — check for typos?");
+      if (!cfg.supabaseUrl) return fail("Waitlist isn't connected yet (config.js missing).");
+      const btn = form.querySelector("button"); btn.disabled = true; btn.textContent = "Joining…";
+      try {
+        const platform = form.platform.value;
+        await join(email, platform, form.cuisine.value || null);
+        if (platform === "ios") votedIOS();
+      } catch (err) {
+        btn.disabled = false; btn.textContent = "Join waitlist";
+        fail(/invalid email/.test(err.message) ? "That email doesn't look right — check for typos?" : "Something went wrong on our side. Try again in a moment?");
+      }
+    });
+  });
+
+  // Returning visitor: show their spot instead of the form again.
+  try {
+    const prev = JSON.parse(localStorage.getItem("calkey_joined") || "null");
+    if (prev?.position) document.querySelectorAll("[data-join]").forEach(h => success(h, { ...prev, already: true }));
+  } catch {}
+
+  // ------------------------------------------------------------ reveals
+  // Sections fade up as they arrive; with reduced motion the CSS shows them
+  // outright and this just keeps the class honest.
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  // The "<5s" figure counts down from the old apps' 45 when it comes into view.
+  const cd = document.querySelector("[data-countdown]");
+  const cdo = new IntersectionObserver(es => {
+    if (!es[0].isIntersecting) return; cdo.disconnect();
+    if (reduceMotion) return;
+    const t0 = performance.now();
+    const step = t => { const p = Math.min(1, (t - t0) / 1400); const v = Math.round(45 - 40 * (1 - Math.pow(1 - p, 3))); cd.textContent = p < 1 ? v : "<5"; if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  cdo.observe(cd);
+
+  // Headline wheel: the measure word rolls through every region's unit.
+  // The article lives inside the word because "an escumadeira" ≠ "a katori".
+  const WHEEL = ["a cup", "a tablespoon", "a stick of butter", "a katori", "a centong", "a concha", "a chai cup", "a piring", "a xícara", "a mangkok", "a tô", "an escumadeira", "a tusuk"];
+  const wheel = document.querySelector("[data-wheel]"), word = wheel.firstElementChild;
+  const measure = t => { const m = word.cloneNode(); m.textContent = t; m.style.cssText = "position:absolute;visibility:hidden"; wheel.appendChild(m); const w = m.getBoundingClientRect().width; m.remove(); return w; };
+  wheel.style.width = measure(WHEEL[0]) + "px";
+  let wi = 0;
+  setInterval(async () => {
+    if (document.hidden) return;
+    wi = (wi + 1) % WHEEL.length;
+    const next = WHEEL[wi];
+    if (reduceMotion) { word.textContent = next; wheel.style.width = measure(next) + "px"; return; }
+    word.className = "wheel-word out";
+    await new Promise(r => setTimeout(r, 380));
+    word.textContent = next;
+    wheel.style.width = measure(next) + "px";
+    word.className = "wheel-word in";
+  }, 2000);
+  const refit = () => wheel.style.width = measure(word.textContent) + "px";
+  addEventListener("resize", refit);
+  document.fonts?.ready.then(refit);
+
+  // Flip cards — figures mirror the household-measures blocks in
+  // supabase/functions/_shared/packs/*.ts; keep the two in step. The last
+  // column names the app's own drawing for the card (web/ill.svg).
+  const MEASURES = [
+    ["us", "US", "cup", "but of what?", "240", "ml", null, null, "cup"],
+    ["us", "US", "tablespoon", "peanut butter", "16", "g", "peanut butter", 95, "spoon"],
+    ["us", "US", "stick", "of butter", "113", "g", "of butter", 810, "plate"],
+    ["us", "US", "slice", "sandwich bread", "28", "g", "bread", 75, "plate"],
+    ["in", "India", "katori", "small steel bowl", "150", "g", "dal tadka", 150, "katori"],
+    ["in", "India", "chai cup", "not a US cup", "150", "ml", "masala chai", 80, "kulhad"],
+    ["in", "India", "plate", "one dish serving", "200", "g", "poha", 270, "thali"],
+    ["sea", "Indonesia", "centong", "rice ladle", "100", "g", "nasi putih", 180, "centong"],
+    ["sea", "Indonesia", "piring", "plate of rice", "200", "g", "nasi putih", 360, "plate"],
+    ["sea", "Indonesia", "tusuk", "one satay skewer", "20", "g", "10 tusuk sate ayam", 400, "spoon"],
+    ["sea", "Indonesia", "mangkok", "soup bowl", "350", "ml", "bakso", 320, "bowl"],
+    ["sea", "Vietnam", "tô", "big noodle bowl", "500", "ml", "phở bò", 400, "bowl"],
+    ["br", "Brazil", "concha", "bean ladle", "100", "g", "feijão carioca", 80, "concha"],
+    ["br", "Brazil", "escumadeira", "rice skimmer", "90", "g", "arroz branco", 115, "concha"],
+    ["br", "Brazil", "xícara", "Brazilian cup", "200", "ml", "café com leite", 60, "mug"]
+  ];
+  const grid = document.querySelector("[data-measures]");
+  grid.innerHTML = MEASURES.map(([r, where, word, gloss, w, unit, food, kcal, ill]) => `
+    <button type="button" class="flip" data-r="${r}" aria-label="${word}, ${where}: about ${w} ${unit}">
+      <span class="inner">
+        <span class="face front"><span class="where">${where}</span><svg class="ill" aria-hidden="true"><use href="ill.svg#${ill}"/></svg><span class="word">1 ${word}</span><span class="gloss">${gloss}</span></span>
+        <span class="face back"><span class="w">${w}<small>${unit}</small></span>
+          <span class="eg">${food ? `${/^\d/.test(food) ? food : `1 ${word} ${food}`}<br><b>${kcal}</b> cal` : `rice <b>158</b>g · milk <b>244</b>g<br>oats <b>80</b>g — Calkey knows`}</span></span>
+      </span>
+    </button>`).join("");
+  grid.addEventListener("click", e => {
+    const card = e.target.closest(".flip");
+    if (card) card.classList.toggle("on");
+  });
+  document.querySelector("[data-filters]").addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    document.querySelectorAll("[data-filters] button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    grid.querySelectorAll(".flip").forEach(c => c.hidden = b.dataset.region !== "all" && c.dataset.r !== b.dataset.region);
+  });
+
+  // ------------------------------------------------------------- hero
+  // The journal as the app draws it: a meal is typed into the last line of
+  // the page, becomes an entry whose figure thinks, counts up in violet, holds
+  // 1.2 s and settles white, while the capsule counts down. Four languages.
+  const $ = s => document.querySelector(s);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const DEMOS = [
+    { label: "Breakfast", text: "2 eggs, toast with peanut butter and a latte", kcal: 460, p: 22, ill: "mug" },
+    { label: "Lunch", text: "2 roti, dal tadka aur ek katori dahi", kcal: 510, p: 24, ill: "katori" },
+    { label: "Snack", text: "dos tacos al pastor y una horchata", kcal: 590, p: 26, ill: "plate" },
+    { label: "Dinner", text: "nasi goreng ayam, es teh manis", kcal: 670, p: 30, ill: "centong" }
+  ];
+  const BUDGET = 1840;
+  const heroEl = $("[data-hero]"), journal = $("[data-journal]"), typed = $("[data-typed]"), ph = $("[data-placeholder]"), leftEl = $("[data-left]"), pEl = $("[data-p]"), heroIll = $("[data-hero-ill] use");
+  const tween = (el, from, to, ms, f = v => fmt(Math.round(v))) => new Promise(res => {
+    const t0 = performance.now();
+    const step = t => { const p = Math.min(1, (t - t0) / ms); el.textContent = f(from + (to - from) * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); else res(); };
+    requestAnimationFrame(step);
+  });
+  async function heroLoop() {
+    for (let i = 0, sum = 0, prot = 0; ; i = (i + 1) % DEMOS.length) {
+      if (i === 0) { sum = 0; prot = 0; journal.innerHTML = ""; leftEl.textContent = fmt(BUDGET); pEl.textContent = "0"; }
+      const d = DEMOS[i];
+      heroIll.setAttribute("href", `ill.svg#${d.ill}`);
+      // type into the input line
+      ph.hidden = true; typed.textContent = "";
+      for (const ch of [...d.text]) { typed.textContent += ch; await wait(42 + Math.random() * 40); }
+      await wait(420);
+      // the line becomes an entry; the figure thinks, then counts up in violet
+      typed.textContent = ""; ph.hidden = false;
+      journal.insertAdjacentHTML("beforeend", `<div class="label">${d.label}</div><div class="entry thinking fresh"><span class="words">${d.text}</span><span class="kcal">Thinking</span></div>`);
+      const entry = journal.lastElementChild, k = entry.querySelector(".kcal");
+      await wait(1100);
+      entry.classList.remove("thinking");
+      k.innerHTML = `<span data-n>0</span><small>cal</small>`;
+      const n = k.querySelector("[data-n]");
+      const from = sum; sum += d.kcal;
+      await Promise.all([tween(n, 0, d.kcal, 650), tween(leftEl, BUDGET - from, BUDGET - sum, 650)]);
+      prot += d.p; pEl.textContent = prot;
+      await wait(1200);               // the accent hold
+      entry.classList.remove("fresh"); // settles to ink
+      await wait(i === DEMOS.length - 1 ? 2600 : 1500);
+    }
+  }
+  function heroStatic() {
+    journal.innerHTML = DEMOS.slice(0, 3).map(d => `<div class="label">${d.label}</div><div class="entry"><span class="words">${d.text}</span><span class="kcal">${d.kcal}<small>cal</small></span></div>`).join("");
+    const sum = DEMOS.slice(0, 3).reduce((a, d) => a + d.kcal, 0);
+    leftEl.textContent = fmt(BUDGET - sum); pEl.textContent = DEMOS.slice(0, 3).reduce((a, d) => a + d.p, 0);
+  }
+  if (reduceMotion) heroStatic();
+  else { const ho = new IntersectionObserver(es => { if (es[0].isIntersecting) { ho.disconnect(); heroLoop(); } }); ho.observe(heroEl); }
+
+  // ---------------------------------------------------------- partner
+  // Two phones. One logs a meal; a pulse crosses the link; the other's
+  // partner card updates. Then the direction swaps. The figures on each side
+  // are the same numbers the real PartnerCard shows: left, P/C/F, water, streak.
+  const GOAL = { k: 1880, p: 130, c: 220, f: 65 };
+  const A = { eaten: 760, p: 50, c: 80, f: 26, water: 750, streak: 5, meal: { label: "Lunch", words: "1 katori rajma chawal", k: 420, p: 14, c: 62, f: 9 } };
+  const B = { eaten: 1120, p: 70, c: 150, f: 40, water: 1500, streak: 12, meal: { label: "Snack", words: "protein bar aur ek kela", k: 310, p: 20, c: 42, f: 8 } };
+  const q = s => document.querySelector(`[data-${s}]`);
+  function paint(side, s, mirrorOnly) {
+    const left = GOAL.k - s.eaten;
+    if (!mirrorOnly) {
+      q(`${side}-left`).textContent = fmt(left);
+      q(`${side}-p`).textContent = `${s.p}/${GOAL.p} g`; q(`${side}-c`).textContent = `${s.c}/${GOAL.c} g`; q(`${side}-f`).textContent = `${s.f}/${GOAL.f} g`;
+      q(`${side}-pbar`).style.setProperty("--w", (100 * s.p / GOAL.p) + "%"); q(`${side}-cbar`).style.setProperty("--w", (100 * s.c / GOAL.c) + "%"); q(`${side}-fbar`).style.setProperty("--w", (100 * s.f / GOAL.f) + "%");
+    }
+    q(`${side}-left-mirror`).textContent = fmt(left);
+    q(`${side}-p-mirror`).textContent = s.p; q(`${side}-c-mirror`).textContent = s.c; q(`${side}-f-mirror`).textContent = s.f;
+    q(`${side}-water-mirror`).textContent = fmt(s.water) + " ml"; q(`${side}-streak-mirror`).textContent = s.streak;
+  }
+  const pairEl = document.querySelector("[data-pair]"), link = q("link");
+  async function partnerLoop() {
+    let aMeal = false, bMeal = false;
+    for (;;) {
+      for (const [side, other, s, dir] of [["a", "b", A, "go"], ["b", "a", B, "back"]]) {
+        // 1. this phone logs a meal
+        const entry = q(`${side}-entry`);
+        entry.classList.add("show", "fresh");
+        const m = s.meal; s.eaten += m.k; s.p += m.p; s.c += m.c; s.f += m.f;
+        paint(side, s, false);
+        await wait(1200); entry.classList.remove("fresh");
+        // 2. the pulse crosses to the partner
+        link.classList.remove("go", "back"); void link.offsetWidth; link.classList.add(dir);
+        await wait(900);
+        // 3. the partner's card updates
+        const pc = q(`${other}-pc`), cap = q(`${other}-cap`);
+        cap.textContent = "Updated just now"; pc.classList.add("live");
+        paint(side, s, true);
+        await wait(1400); pc.classList.remove("live");
+        await wait(1800);
+        cap.textContent = "Updated 1 min ago";
+        // undo the meal so the loop replays cleanly
+        s.eaten -= m.k; s.p -= m.p; s.c -= m.c; s.f -= m.f;
+        entry.classList.remove("show");
+        await wait(500);
+        paint(side, s, false);
+        await wait(600);
+      }
+    }
+  }
+  if (reduceMotion) {
+    paint("a", A, false); paint("b", B, false);
+    q("a-entry").classList.add("show"); q("b-entry").classList.add("show");
+  } else {
+    paint("a", A, false); paint("b", B, false);
+    const po = new IntersectionObserver(es => { if (es[0].isIntersecting) { po.disconnect(); partnerLoop(); } }, { threshold: .3 });
+    po.observe(pairEl);
+  }
+
+  // The one-time code types itself in when it scrolls into view.
+  const codeEl = q("code"), kEl = q("code-k");
+  const CODE = "K7MZ4P";
+  const co = new IntersectionObserver(es => {
+    if (!es[0].isIntersecting) return; co.disconnect();
+    if (reduceMotion) { kEl.textContent = CODE; return; }
+    [...CODE].forEach((ch, i) => { const s = document.createElement("i"); s.textContent = ch; s.style.animationDelay = (200 + i * 140) + "ms"; kEl.appendChild(s); });
+  }, { threshold: .5 });
+  co.observe(codeEl);
+})();
+</script>
+</body>
+</html>
