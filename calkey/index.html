@@ -569,7 +569,7 @@ h2 em{font-style:normal;color:var(--a)}
 .stat span{color:var(--soft)}
 
 /* ================================================================== pricing */
-.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;margin-top:10px}
+.plan{display:grid;grid-template-columns:repeat(2,1fr);gap:0;position:relative;margin-top:10px}
 .plan::before{content:"";position:absolute;left:14px;right:14px;top:14px;height:2px;background:var(--ruleP)}
 .plan .fillline{position:absolute;left:14px;top:14px;height:2px;width:calc(100% - 28px);background:var(--pen);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.6s var(--e) .2s}
 .plan.in .fillline{transform:scaleX(1)}
@@ -1102,13 +1102,12 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
 <!-- ================================================================ pricing -->
 <section class="paper" id="pricing"><div class="wrap">
   <p class="kick rv">Pricing</p>
-  <h2 class="split">Your first day is <em>on us</em>.</h2>
-  <p class="sub rv">Log real meals for a whole day before anything asks you to pay. No card, no catch.</p>
+  <h2 class="split">Try it properly, <em>then</em> decide.</h2>
+  <p class="sub rv">Three days of everything through Google Play before anything is charged.</p>
   <div class="plan rv" data-plan>
     <span class="fillline"></span>
-    <div class="pstep" style="--d:0"><small>Today</small><h3>A free day</h3><p>24 hours of everything, from the moment you start. No card needed.</p></div>
-    <div class="pstep" style="--d:1"><small>Then</small><h3>A 3-day free trial</h3><p>Started in Google Play, with nothing to pay until it ends.</p></div>
-    <div class="pstep" style="--d:2"><small>After that</small><h3>Yearly or monthly</h3><p>Cancel any time in Google Play. Your journal stays readable either way.</p></div>
+    <div class="pstep" style="--d:0"><small>Today</small><h3>A 3-day free trial</h3><p>Started in Google Play, with nothing to pay until it ends.</p></div>
+    <div class="pstep" style="--d:1"><small>After that</small><h3>Yearly or monthly</h3><p>Cancel any time in Google Play. Your journal stays readable either way.</p></div>
   </div>
 </div></section>
 
@@ -1137,7 +1136,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   <details class="rv"><summary>How does it know my country's measures?</summary><p>Calkey works out your country from your phone the first time you open it, and keeps that answer. It only decides what plain words like "cup" and "bowl" mean. Words such as katori, concha or centong mean the same thing everywhere, and a size you name, like "200 ml", always wins.</p></details>
   <details class="rv"><summary>Do I have to weigh my food?</summary><p>No. Say "a cup", "2 slices", "1 katori", whatever you'd normally say. If you do know the weight, type it and Calkey does the exact sum.</p></details>
   <details class="rv"><summary>What can my partner see?</summary><p>Only today's totals: calories against the goal, protein, carbs and fat, water and the streak. Never the meals or the words you typed. You pair with a one-time code, one person at a time, and either of you can stop sharing whenever you like. Notifications are for goal moments only, at most once a day each.</p></details>
-  <details class="rv"><summary>What will it cost?</summary><p>Your first day is free, no card needed. After that Calkey is a subscription, yearly or monthly, starting with a 3-day free trial through Google Play. Everyone on the waitlist gets a mystery discount on their first month, revealed at launch.</p></details>
+  <details class="rv"><summary>What will it cost?</summary><p>Calkey is a subscription, yearly or monthly, starting with a 3-day free trial through Google Play. Everyone on the waitlist gets a mystery discount on their first month, revealed at launch.</p></details>
   <details class="rv"><summary>What do you do with my email?</summary><p>Send you a launch invite and the occasional update. Never sold, never shared. Reply to any email to be removed. The full detail is in the <a href="privacy.html#waitlist">privacy policy</a>.</p></details>
   <details class="rv"><summary>Is this medical advice?</summary><p>No. Calkey gives estimates to help you track. It doesn't diagnose or treat anything. Talk to a doctor or dietitian for medical guidance.</p></details>
 </div></section>
