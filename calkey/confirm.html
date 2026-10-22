@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Calkey — Confirm your spot</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@600&display=swap" rel="stylesheet">
+<style>
+  /* The landing page's Night tokens (index.html), Saffron accent. */
+  :root {
+    --night: #16151A; --float: #201F25; --ink: #F4F3F7; --soft: #A3A1AD;
+    --faint: #6E6C78; --rule: #2E2D35; --a: #E8A00E; --as: #3F2903;
+    --display: "Outfit", "Inter", system-ui, sans-serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--night); color: var(--ink); min-height: 100vh; font: 16px/1.6 var(--sans); }
+  main { max-width: 34rem; margin: 0 auto; padding: 4rem 16px 6rem; }
+  .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; font: 600 20px var(--display); margin-bottom: 2.5rem; }
+  .brand img { width: 28px; height: 28px; border-radius: 8px; }
+  .msg { border-radius: 24px; padding: 22px 22px; background: var(--float); }
+  .msg.ok { background: var(--as); }
+  h1 { margin: 0 0 6px; font: 600 26px/1.25 var(--display); letter-spacing: -.02em; }
+  h1 .num { color: var(--a); }
+  p { margin: 0 0 10px; color: var(--soft); }
+  p:last-child { margin-bottom: 0; }
+  b { color: var(--ink); }
+  a { color: var(--ink); }
+  .share { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .share a, .share button { font: 600 14px var(--sans); background: var(--float); color: var(--ink); border: 1px solid var(--rule); border-radius: 999px; padding: 8px 16px; text-decoration: none; cursor: pointer; }
+  .fine { font-size: 13px; color: var(--faint); margin-top: 2rem; }
+  .fine a { color: var(--soft); }
+</style>
+</head>
+<body>
+<main>
+  <a class="brand" href="./"><img src="favicon.svg" alt="">calkey</a>
+  <div id="out" class="msg" aria-live="polite"><p>Confirming your spot…</p></div>
+  <p class="fine">Questions? <a href="mailto:support@calkey.app">support@calkey.app</a> · <a href="privacy.html#waitlist">Privacy</a></p>
+</main>
+<script src="config.js"></script>
+<script>
+(async () => {
+  const cfg = window.CALKEY || {}, out = document.getElementById("out");
+  const token = new URLSearchParams(location.search).get("t");
+  // The token is spent on first use; keep it out of history and screenshots.
+  history.replaceState(null, "", location.pathname);
+  const show = (cls, html) => { out.className = "msg " + cls; out.innerHTML = html; };
+  const home = new URL("./", location.href).href;
+  const bad = () => show("", `
+    <h1>This link has expired or was already used.</h1>
+    <p>If you tapped it before, you're already on the list: there's nothing more to do.</p>
+    <p>Otherwise, <a href="${home}#join-top">join again</a> and we'll send a fresh link.</p>`);
+  if (!token || !cfg.supabaseUrl) return bad();
+  let r, res;
+  try {
+    r = await fetch(`${cfg.supabaseUrl}/functions/v1/waitlist-join`, {
+      method: "POST",
+      headers: { apikey: cfg.publishableKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "confirm", token })
+    });
+    res = await r.json().catch(() => ({}));
+  } catch { r = { ok: false, status: 0 }; }
+  if (r.status === 404 || res?.status === "invalid") return bad();
+  if (!r.ok || res?.status !== "confirmed") {
+    // Not spent: the link still works, so say to tap it again.
+    history.replaceState(null, "", location.pathname + "?t=" + encodeURIComponent(token));
+    return show("", `<h1>We couldn't reach the server.</h1><p>Your link still works. Check your connection and <a href="">try again</a>.</p>`);
+  }
+  let email = null;
+  try {
+    email = JSON.parse(localStorage.getItem("calkey_pending") || "null")?.email || null;
+    localStorage.setItem("calkey_joined", JSON.stringify({ ...res, email }));
+    localStorage.removeItem("calkey_pending");
+  } catch {}
+  const text = "I just joined the Calkey waitlist: log calories by writing what you ate, in your own language. The waitlist gets a mystery discount, revealed at launch:";
+  show("ok", `
+    <h1>You're in. You're <span class="num">#${Number(res.position).toLocaleString()}</span>.</h1>
+    <p><b>Your mystery discount is locked to this email.</b> We'll email you once more, when it's your turn: your invite and the discount.</p>
+    <div class="share">
+      <a target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(text + " " + home + "?ref=whatsapp")}">WhatsApp</a>
+      <a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(home + "?ref=x")}">Post on X</a>
+      <button type="button" data-copy>Copy link</button>
+    </div>`);
+  out.querySelector("[data-copy]").onclick = e => navigator.clipboard?.writeText(home + "?ref=link").then(() => e.target.textContent = "Copied ✓");
+})();
+</script>
+</body>
+</html>

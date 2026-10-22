@@ -1137,7 +1137,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   <details class="rv"><summary>Do I have to weigh my food?</summary><p>No. Say "a cup", "2 slices", "1 katori", whatever you'd normally say. If you do know the weight, type it and Calkey does the exact sum.</p></details>
   <details class="rv"><summary>What can my partner see?</summary><p>Only today's totals: calories against the goal, protein, carbs and fat, water and the streak. Never the meals or the words you typed. You pair with a one-time code, one person at a time, and either of you can stop sharing whenever you like. Notifications are for goal moments only, at most once a day each.</p></details>
   <details class="rv"><summary>What will it cost?</summary><p>Calkey is a subscription, yearly or monthly, starting with a 3-day free trial through Google Play. Everyone on the waitlist gets a mystery discount on their first month, revealed at launch.</p></details>
-  <details class="rv"><summary>What do you do with my email?</summary><p>Send you one email when it's your turn: your invite and your discount. Nothing else. Never sold, never shared. Write to support@calkey.app to be removed. The full detail is in the <a href="privacy.html#waitlist">privacy policy</a>.</p></details>
+  <details class="rv"><summary>What do you do with my email?</summary><p>Send you a link to confirm it's really you, then one email when it's your turn: your invite and your discount. Nothing else. If you never confirm, we delete the address after 7 days. Never sold, never shared. Write to support@calkey.app to be removed. The full detail is in the <a href="privacy.html#waitlist">privacy policy</a>.</p></details>
   <details class="rv"><summary>Is this medical advice?</summary><p>No. Calkey gives estimates to help you track. It doesn't diagnose or treat anything. Talk to a doctor or dietitian for medical guidance.</p></details>
 </div></section>
 
@@ -1177,7 +1177,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
     </div>
     <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
   </form>
-  <p class="fine">Android first. No spam, one email when it's your turn. <a href="privacy.html#waitlist">Privacy</a></p>
+  <p class="fine">Android first. No spam: a link to confirm, then one email when it's your turn. <a href="privacy.html#waitlist">Privacy</a></p>
 </template>
 <script src="config.js"></script>
 <script>
@@ -1816,28 +1816,66 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
       </div>`;
     host.querySelector("[data-copy]").onclick = e => navigator.clipboard?.writeText(url + "?ref=link").then(() => e.target.textContent = "Copied ✓");
   }
+  // A join is confirmed by email (23 Oct 2026): the page posts to the
+  // waitlist-join function, which sends one link; only confirmed people count.
+  function pending(host, email) {
+    host.innerHTML = `
+      <div class="msg ok">
+        <h3>Check your inbox.</h3>
+        <p>We sent a link to <b class="em"></b>. Tap it to confirm your spot and lock in your discount. Not there in a minute? Look in spam or Promotions.</p>
+        <div class="share"><button type="button" data-again>Use a different email</button></div>
+      </div>`;
+    host.querySelector(".em").textContent = email;
+    host.querySelector("[data-again]").onclick = () => {
+      try { localStorage.removeItem("calkey_pending"); } catch {}
+      $$("[data-join]").forEach(mountForm);
+    };
+  }
+  const JOIN_ERRORS = {
+    400: "That email doesn't look right. Check for typos?",
+    429: "Too many tries from this connection. Try again in an hour?",
+    503: "We're sending a lot of emails right now. Try again a little later?"
+  };
   // One write path for both forms: the waitlist and the iPhone vote are the
   // same row, the vote just sets platform = 'ios'.
-  async function join(email, platform, cuisine) {
-    const [res] = await api("join_waitlist", { p_email: email, p_cuisine: cuisine, p_locale: navigator.language || null, p_source: source, p_platform: platform });
-    try { localStorage.setItem("calkey_joined", JSON.stringify({ ...res, email })); } catch {}
-    $$("[data-join]").forEach(h => success(h, res));
-    setCount(res.total); setIos(res.ios, platform === "ios");
+  async function join(email, platform, cuisine, website) {
+    const r = await fetch(`${cfg.supabaseUrl}/functions/v1/waitlist-join`, {
+      method: "POST",
+      headers: { apikey: cfg.publishableKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ email, cuisine, locale: navigator.language || null, source, platform, website: website || "" })
+    });
+    const res = await r.json().catch(() => ({}));
+    if (!r.ok) throw Object.assign(new Error(JOIN_ERRORS[r.status] || "Something went wrong on our side. Try again in a moment?"), { status: r.status });
+    if (res.status === "confirmed") {
+      try { localStorage.setItem("calkey_joined", JSON.stringify({ ...res, email })); localStorage.removeItem("calkey_pending"); } catch {}
+      $$("[data-join]").forEach(h => success(h, { ...res, already: true }));
+      setCount(res.total); setIos(res.ios, platform === "ios");
+    } else {
+      try { localStorage.setItem("calkey_pending", JSON.stringify({ email, platform })); } catch {}
+      $$("[data-join]").forEach(h => pending(h, email));
+    }
     return res;
   }
   const stored = () => { try { return JSON.parse(localStorage.getItem("calkey_joined") || "null"); } catch { return null; } };
+  const storedPending = () => { try { return JSON.parse(localStorage.getItem("calkey_pending") || "null"); } catch { return null; } };
   const voteHost = $("[data-vote]");
   function votedIOS() {
     try { localStorage.setItem("calkey_ios_vote", "1"); } catch {}
     voteHost.innerHTML = `<div class="vote-done">⚡ Your vote is plugged in. We'll tell you the moment iOS is on the way.</div>`;
   }
+  // A vote counts once its email is confirmed, like a join.
+  function voteDone(res, email) {
+    if (res.status === "confirmed") return votedIOS();
+    voteHost.innerHTML = `<div class="vote-done">⚡ Almost: tap the link we sent to <b class="em"></b> and your vote plugs in.</div>`;
+    voteHost.querySelector(".em").textContent = email;
+  }
   voteHost.addEventListener("click", async e => {
     const start = e.target.closest("[data-vote-start]");
     if (!start) return;
-    const prev = stored();
+    const prev = stored()?.email ? stored() : storedPending();
     if (prev?.email) {
       start.disabled = true; start.textContent = "Plugging in…";
-      try { await join(prev.email, "ios", null); votedIOS(); } catch { start.disabled = false; start.textContent = "⚡ Plug in my iPhone vote"; }
+      try { voteDone(await join(prev.email, "ios", null), prev.email); } catch { start.disabled = false; start.textContent = "⚡ Plug in my iPhone vote"; }
       return;
     }
     voteHost.innerHTML = `<form class="vote" novalidate><input type="email" name="email" placeholder="you@example.com" autocomplete="email" aria-label="Email address" required><button class="btn" type="submit">⚡ Plug in</button></form>`;
@@ -1850,7 +1888,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("That email doesn't look right. Check for typos?");
       if (!cfg.supabaseUrl) return fail("The waitlist isn't connected yet (config.js is missing).");
       const b = f.querySelector("button"); b.disabled = true; b.textContent = "Plugging in…";
-      try { await join(email, "ios", null); votedIOS(); } catch { b.disabled = false; b.textContent = "⚡ Plug in"; fail("Something went wrong on our side. Try again in a moment?"); }
+      try { voteDone(await join(email, "ios", null), email); } catch (err) { b.disabled = false; b.textContent = "⚡ Plug in"; fail(err.message); }
     });
   });
   try { if (localStorage.getItem("calkey_ios_vote")) votedIOS(); } catch {}
@@ -1877,8 +1915,8 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   if (!reduce) setInterval(() => { if (!document.hidden) $$("[data-coupon]").forEach(spinCoupon); }, 6000);
 
   const tpl = $("#form-tpl");
-  $$("[data-join]").forEach(host => {
-    host.appendChild(tpl.content.cloneNode(true));
+  function mountForm(host) {
+    host.replaceChildren(tpl.content.cloneNode(true));
     wireCoupon(host.querySelector("[data-coupon]"));
     const form = host.querySelector("form");
     if (isIOS) form.querySelector('[value="ios"]').checked = true;
@@ -1886,23 +1924,26 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
       e.preventDefault();
       host.querySelector(".msg.err")?.remove();
       const email = form.email.value.trim(), fail = m => form.insertAdjacentHTML("afterend", `<div class="msg err">${m}</div>`);
-      if (form.website.value) return; // a bot filled the honeypot
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("That email doesn't look right. Check for typos?");
       if (!cfg.supabaseUrl) return fail("The waitlist isn't connected yet (config.js is missing).");
       const btn = form.querySelector("button"); btn.disabled = true; btn.textContent = "Joining…";
       try {
         const platform = form.platform.value;
-        await join(email, platform, form.cuisine.value || null);
-        if (platform === "ios") votedIOS();
+        // The honeypot goes to the server, which answers a bot like a person.
+        const res = await join(email, platform, form.cuisine.value || null, form.website.value);
+        if (platform === "ios") voteDone(res, email);
       } catch (err) {
         btn.disabled = false; btn.textContent = "Join waitlist";
-        fail(/invalid email/.test(err.message) ? "That email doesn't look right. Check for typos?" : "Something went wrong on our side. Try again in a moment?");
+        fail(err.message);
       }
     });
-  });
-  // A returning visitor sees their spot instead of the form again.
-  const prev = stored();
+  }
+  $$("[data-join]").forEach(mountForm);
+  // A returning visitor sees their spot, or the email they still have to
+  // confirm, instead of the form again.
+  const prev = stored(), waiting = storedPending();
   if (prev?.position) $$("[data-join]").forEach(h => success(h, { ...prev, already: true }));
+  else if (waiting?.email) $$("[data-join]").forEach(h => pending(h, waiting.email));
 })();
 </script>
 </body>

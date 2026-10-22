@@ -1,6 +1,6 @@
 // Generated from gradle.properties — the same publishable key the APK ships.
-// It can only call waitlist_stats and join_waitlist; see
-// supabase/migrations/20261013120000_waitlist.sql.
+// It can only read waitlist_stats; joining goes through the waitlist-join
+// function, which confirms the email (20261023120000_waitlist_confirm.sql).
 window.CALKEY = {
   supabaseUrl: "https://rwqdcsklzbffqbffhfuj.supabase.co",
   publishableKey: "sb_publishable_ls7exjGRsDf7UJ_Q7aJjGw_ht-gHid8",
