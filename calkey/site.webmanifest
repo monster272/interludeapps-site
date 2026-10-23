@@ -1,0 +1,14 @@
+{
+  "name": "Calkey: AI calorie & macro tracker",
+  "short_name": "Calkey",
+  "description": "Track calories and macros by typing what you ate, in your own language.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#EAE9EE",
+  "theme_color": "#EAE9EE",
+  "icons": [
+    { "src": "favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}

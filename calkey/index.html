@@ -3,9 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calkey — write what you ate</title>
-<meta name="description" content="Calkey turns one sentence into calories and macros, in your own language, with the cups and bowls of the country you live in. Share today's totals with one person. Join the waitlist.">
-<meta property="og:title" content="Calkey — write what you ate">
+<title>Calkey: AI calorie &amp; macro tracker — write what you ate</title>
+<meta name="description" content="Track calories, protein, carbs and fat by typing what you ate, in your own language. Calkey knows your country's cups and bowls. Early access on Android.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<!-- One address for search engines: the same page is also served at interludeapps.store/calkey/. -->
+<link rel="canonical" href="https://calkey.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Calkey">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Calkey: AI calorie & macro tracker — write what you ate">
 <meta property="og:description" content="One sentence, any language, your country's cups and bowls. Share today with one person. Early access on Android.">
 <meta property="og:url" content="https://calkey.app/">
 <meta property="og:image" content="https://calkey.app/og-image.png">
@@ -13,8 +19,65 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Calkey: write what you ate, in any language. A journal with three meals and 440 calories left.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Calkey: AI calorie & macro tracker">
+<meta name="twitter:description" content="Log calories and macros by typing what you ate, in your own language. Early access on Android.">
+<meta name="twitter:image" content="https://calkey.app/og-image.png">
 <meta name="theme-color" content="#EAE9EE">
+<meta name="application-name" content="Calkey">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<!-- Structured data: who publishes Calkey, the site, and the app itself. The FAQ's
+     FAQPage is built at the bottom of the page from the questions on it, so the two
+     can never disagree. No price or rating here until Play has them. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://calkey.app/#publisher",
+      "name": "Interludeapps",
+      "url": "https://interludeapps.store/",
+      "email": "support@calkey.app"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://calkey.app/#website",
+      "name": "Calkey",
+      "url": "https://calkey.app/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://calkey.app/#publisher" }
+    },
+    {
+      "@type": "MobileApplication",
+      "@id": "https://calkey.app/#app",
+      "name": "Calkey",
+      "alternateName": "Calkey: AI Calorie Tracker",
+      "url": "https://calkey.app/",
+      "description": "An AI calorie and macro tracker for Android. Type what you ate the way you would say it, in your own language, and Calkey works out the calories, protein, carbs and fat, using the cups, bowls and household measures of the country you live in.",
+      "applicationCategory": "HealthApplication",
+      "applicationSubCategory": "Calorie counter",
+      "operatingSystem": "Android",
+      "image": "https://calkey.app/og-image.png",
+      "screenshot": "https://calkey.app/og-image.png",
+      "inLanguage": ["en", "hi", "pt-BR", "es", "id", "de"],
+      "featureList": [
+        "Log meals by typing or speaking, in any language",
+        "Calories, protein, carbs and fat for every item",
+        "Household measures such as a katori, a concha, a centong or a US cup",
+        "Fix any estimate in two taps; your correction becomes your default",
+        "Water and weight tracking",
+        "Streaks, reminders and a home-screen widget",
+        "Share today's totals with one partner, never what you ate",
+        "Works offline, backed up to your account"
+      ],
+      "publisher": { "@id": "https://calkey.app/#publisher" }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2073,6 +2136,20 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   if (prev?.position) $$("[data-join]").forEach(h => success(h, { ...prev, already: true }));
   else if (waiting?.email) $$("[data-join]").forEach(h => pending(h, waiting.email));
 })();
+</script>
+<script>
+  // FAQPage structured data, read from the FAQ itself so the two never disagree.
+  (() => {
+    const qa = [...document.querySelectorAll("#faq details")].map(d => ({
+      "@type": "Question",
+      name: d.querySelector("summary").textContent.trim(),
+      acceptedAnswer: { "@type": "Answer", text: d.querySelector("p").textContent.replace(/\s+/g, " ").trim() }
+    }));
+    const s = document.createElement("script");
+    s.type = "application/ld+json";
+    s.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": qa });
+    document.head.appendChild(s);
+  })();
 </script>
 </body>
 </html>
