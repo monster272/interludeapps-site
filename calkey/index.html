@@ -8,6 +8,12 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <!-- One address for search engines: the same page is also served at interludeapps.store/calkey/. -->
 <link rel="canonical" href="https://calkey.app/">
+<!-- The launch languages, written by langs.py; each lists the same four. -->
+<link rel="alternate" hreflang="en" href="https://calkey.app/">
+<link rel="alternate" hreflang="hi" href="https://calkey.app/hi/">
+<link rel="alternate" hreflang="pt-BR" href="https://calkey.app/pt/">
+<link rel="alternate" hreflang="id" href="https://calkey.app/id/">
+<link rel="alternate" hreflang="x-default" href="https://calkey.app/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Calkey">
 <meta property="og:locale" content="en_US">
@@ -80,7 +86,9 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- The fonts load without holding up the first paint: text shows at once in the fallback and swaps. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
 <script>
   // The intro plays once per visit, never with reduced motion. Decided before
   // first paint so the page never flashes underneath it.
@@ -298,7 +306,7 @@ h1 .l2{display:block;color:var(--a)}
 .grab{width:34px;height:4px;border-radius:999px;background:var(--sunk);margin:0 auto 14px}
 .gl-h{display:flex;align-items:baseline;justify-content:space-between;font-size:13px;color:var(--soft);margin-bottom:10px}
 .gl-h b{color:var(--ink);font-size:15px}
-.gl-h a{color:var(--a);font-weight:600;text-decoration:none}
+.gl-h .eg{color:var(--a);font-weight:600}
 .glance{display:flex;gap:14px;align-items:center}
 .rings{position:relative;width:96px;height:96px;flex:none}
 .rings svg{width:100%;height:100%;transform:rotate(-90deg)}
@@ -885,7 +893,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
           </div>
           <div class="sheet" data-hsheet>
             <div class="grab"></div>
-            <div class="gl-h"><b>Today</b><a>Edit goals ›</a></div>
+            <div class="gl-h"><b>Today</b><span class="eg">Edit goals ›</span></div>
             <div class="glance">
               <div class="rings"><svg viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="42" stroke-width="9"/><circle class="v" data-ring cx="50" cy="50" r="42" stroke-width="9" style="stroke:var(--a)" stroke-dasharray="263.9" stroke-dashoffset="263.9"/></svg><div class="mid"><div><b data-gk>0</b><small>of 2,000 cal</small></div></div></div>
               <div class="bars">
@@ -981,7 +989,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
             </div>
             <div class="sheet">
               <div class="grab"></div>
-              <div class="gl-h"><b>Today</b><a>Edit goals ›</a></div>
+              <div class="gl-h"><b>Today</b><span class="eg">Edit goals ›</span></div>
               <div class="glance">
                 <div class="rings"><svg viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="42" stroke-width="10"/><circle class="v" data-a-ring cx="50" cy="50" r="42" stroke-width="10" style="stroke:var(--a)" stroke-dasharray="263.9" stroke-dashoffset="263.9"/></svg><div class="mid"><div><b data-a-kcal>310</b><small>of 2,100</small></div></div></div>
                 <div class="bars">
@@ -1024,7 +1032,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
             </div>
             <div class="sheet">
               <div class="grab"></div>
-              <div class="gl-h"><b>Today</b><a>Edit goals ›</a></div>
+              <div class="gl-h"><b>Today</b><span class="eg">Edit goals ›</span></div>
               <div class="glance">
                 <div class="rings"><svg viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="42" stroke-width="10"/><circle class="v" data-b-ring cx="50" cy="50" r="42" stroke-width="10" style="stroke:var(--a)" stroke-dasharray="263.9" stroke-dashoffset="263.9"/></svg><div class="mid"><div><b data-b-kcal>1,040</b><small>of 1,800</small></div></div></div>
                 <div class="bars">
@@ -1124,7 +1132,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
         <div class="lines"><div style="width:30%"></div><div style="width:80%"></div><div style="width:64%"></div><div style="width:28%"></div><div style="width:72%"></div></div>
         <div class="sheet">
           <div class="grab"></div>
-          <div class="gl-h"><b>Today</b><a>Edit goals ›</a></div>
+          <div class="gl-h"><b>Today</b><span class="eg">Edit goals ›</span></div>
           <div class="glance"><div class="rings" style="width:84px;height:84px"><svg viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="42" stroke-width="10"/><circle cx="50" cy="50" r="42" stroke-width="10" style="stroke:var(--a)" stroke-dasharray="263.9" stroke-dashoffset="100"/></svg><div class="mid"><div><b>1,240</b><small>of 2,000</small></div></div></div>
             <div class="bars"><div class="bar"><i class="P">P</i><span class="trk P"><span style="--w:72%"></span></span></div><div class="bar"><i class="C">C</i><span class="trk C"><span style="--w:55%"></span></span></div><div class="bar"><i class="F">F</i><span class="trk F"><span style="--w:61%"></span></span></div></div></div>
           <div class="wat"><svg><use href="#i-drop"/></svg>Water<b>1,250 / 2,000 ml</b></div>
@@ -1203,12 +1211,12 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   <p class="sub rv">Calkey starts in Periwinkle. Log every day and new colours unlock, one letter at a time: Pistachio at 3 days, Beet at 7, Chai at 14, Saffron at 30. The last letter is a secret. Everyone earns them, nobody can buy them, and an earned colour is yours for good. <b>Scroll to run the streak, or tap a letter to try it on this page.</b></p>
 
   <div class="spell" data-spell>
-    <button class="lt" data-wear="periwinkle" data-at="0" style="--c:#B9B4F2" aria-label="Wear Periwinkle, everyone's from day one">C<span class="fill" aria-hidden="true">C</span><span class="tip" aria-hidden="true"><b>Periwinkle</b>Day 1</span></button>
-    <button class="lt" data-wear="pistachio" data-at="3" style="--c:#7DB24A" aria-label="Wear Pistachio, unlocked at a 3-day streak">A<span class="fill" aria-hidden="true">A</span><span class="tip" aria-hidden="true"><b>Pistachio</b>3 days</span></button>
-    <button class="lt" data-wear="beet" data-at="7" style="--c:#EC779F" aria-label="Wear Beet, unlocked at a 7-day streak">L<span class="fill" aria-hidden="true">L</span><span class="tip" aria-hidden="true"><b>Beet</b>7 days</span></button>
-    <button class="lt" data-wear="chai" data-at="14" style="--c:#D9A877" aria-label="Wear Chai, unlocked at a 14-day streak">K<span class="fill" aria-hidden="true">K</span><span class="tip" aria-hidden="true"><b>Chai</b>14 days</span></button>
-    <button class="lt" data-wear="saffron" data-at="30" style="--c:#E8A00E" aria-label="Wear Saffron, unlocked at a 30-day streak">E<span class="fill" aria-hidden="true">E</span><span class="tip" aria-hidden="true"><b>Saffron</b>30 days</span></button>
-    <button class="lt secret" data-secret aria-label="A secret colour, at a 60-day streak">Y<span class="tip" aria-hidden="true"><b>A secret</b>60 days</span></button>
+    <button class="lt" data-wear="periwinkle" data-at="0" style="--c:#B9B4F2" aria-label="C: wear Periwinkle, everyone's from day one">C<span class="fill" aria-hidden="true">C</span><span class="tip" aria-hidden="true"><b>Periwinkle</b>Day 1</span></button>
+    <button class="lt" data-wear="pistachio" data-at="3" style="--c:#7DB24A" aria-label="A: wear Pistachio, unlocked at a 3-day streak">A<span class="fill" aria-hidden="true">A</span><span class="tip" aria-hidden="true"><b>Pistachio</b>3 days</span></button>
+    <button class="lt" data-wear="beet" data-at="7" style="--c:#EC779F" aria-label="L: wear Beet, unlocked at a 7-day streak">L<span class="fill" aria-hidden="true">L</span><span class="tip" aria-hidden="true"><b>Beet</b>7 days</span></button>
+    <button class="lt" data-wear="chai" data-at="14" style="--c:#D9A877" aria-label="K: wear Chai, unlocked at a 14-day streak">K<span class="fill" aria-hidden="true">K</span><span class="tip" aria-hidden="true"><b>Chai</b>14 days</span></button>
+    <button class="lt" data-wear="saffron" data-at="30" style="--c:#E8A00E" aria-label="E: wear Saffron, unlocked at a 30-day streak">E<span class="fill" aria-hidden="true">E</span><span class="tip" aria-hidden="true"><b>Saffron</b>30 days</span></button>
+    <button class="lt secret" data-secret aria-label="Y: a secret colour, at a 60-day streak">Y<span class="tip" aria-hidden="true"><b>A secret</b>60 days</span></button>
   </div>
 
   <div class="spellrow">
@@ -1272,11 +1280,12 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
 
 <footer><div class="wrap">
   <a class="brand" href="#top"><svg><use href="#mark"/></svg>calkey</a>
-  <span>© 2026 Interludeapps · Estimates, not medical advice · <a href="privacy.html">Privacy</a> · <a href="delete-account.html">Delete account</a></span>
+  <span>© 2026 Interludeapps · Estimates, not medical advice · <a href="https://calkey.app/calories/">Calorie guide</a> · <a href="privacy.html">Privacy</a> · <a href="delete-account.html">Delete account</a></span>
+  <span class="langs"><a href="https://calkey.app/hi/" hreflang="hi" lang="hi">हिन्दी</a> · <a href="https://calkey.app/pt/" hreflang="pt-BR" lang="pt-BR">Português</a> · <a href="https://calkey.app/id/" hreflang="id" lang="id">Bahasa Indonesia</a></span>
 </div></footer>
 
 <template id="form-tpl">
-  <div class="coupon" data-coupon role="button" tabindex="0" aria-label="Mystery discount on your first month, revealed at launch"><span class="off"><span class="reels" aria-hidden="true"><span class="reel"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>?</span></span></span><span class="reel"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>?</span></span></span></span>% OFF <span aria-hidden="true">🔒</span></span><span class="what" data-coupon-what><b>A mystery discount</b> on your first month for everyone who joins before launch. Revealed at launch.</span></div>
+  <div class="coupon" data-coupon role="button" tabindex="0"><span class="off"><span class="reels" aria-hidden="true"><span class="reel"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>?</span></span></span><span class="reel"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>?</span></span></span></span>% OFF <span aria-hidden="true">🔒</span></span><span class="what" data-coupon-what><b>A mystery discount</b> on your first month for everyone who joins before launch. Revealed at launch.</span></div>
   <form class="join" novalidate>
     <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">
     <button class="btn" type="submit">Join waitlist</button>
