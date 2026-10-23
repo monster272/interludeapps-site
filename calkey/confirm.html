@@ -6,42 +6,75 @@
 <meta name="robots" content="noindex">
 <meta name="referrer" content="no-referrer">
 <title>Calkey — Confirm your spot</title>
+<meta name="theme-color" content="#EAE9EE">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* The landing page's Night tokens (index.html), Saffron accent. */
+  /* Design B, as on the home page: the grey page, a card, navy ink, cream for the
+     good news, periwinkle as text; the navy night in dark mode. */
   :root {
-    --night: #16151A; --float: #201F25; --ink: #F4F3F7; --soft: #A3A1AD;
-    --faint: #6E6C78; --rule: #2E2D35; --a: #E8A00E; --as: #3F2903;
-    --display: "Outfit", "Inter", system-ui, sans-serif;
+    --page: #EAE9EE; --page2: #E5E4EA; --float: #F8F7FB; --sunk: #DEDCE6; --panel: #FAE7C8;
+    --ink: #090124; --soft: #47425E; --faint: #605A73; --rule: #D6D4DE;
+    --accent: #5146D6; --wash: #DCD9FA;
+    --shadow: 0 24px 60px -30px rgba(9,1,36,.4);
+    --display: "Fraunces", Georgia, serif;
     --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    color-scheme: dark;
+    --e: cubic-bezier(.2,0,0,1);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #0E0A24; --page2: #0B081E; --float: #1A1538; --sunk: #251F48; --panel: #2B2347;
+      --ink: #F5EBDD; --soft: #CBC3D9; --faint: #9C94B2; --rule: #2C2652;
+      --accent: #B9B4F2; --wash: #2E2760;
+      --shadow: 0 24px 60px -28px rgba(0,0,0,.8);
+      color-scheme: dark;
+    }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--night); color: var(--ink); min-height: 100vh; font: 16px/1.6 var(--sans); }
-  main { max-width: 34rem; margin: 0 auto; padding: 4rem 16px 6rem; }
-  .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; font: 600 20px var(--display); margin-bottom: 2.5rem; }
-  .brand img { width: 28px; height: 28px; border-radius: 8px; }
-  .msg { border-radius: 24px; padding: 22px 22px; background: var(--float); }
-  .msg.ok { background: var(--as); }
-  h1 { margin: 0 0 6px; font: 600 26px/1.25 var(--display); letter-spacing: -.02em; }
-  h1 .num { color: var(--a); }
-  p { margin: 0 0 10px; color: var(--soft); }
+  body {
+    margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+    background: radial-gradient(80% 50% at 50% 0%, color-mix(in srgb, var(--wash) 70%, transparent), transparent 70%), linear-gradient(var(--page), var(--page2));
+    color: var(--ink); font: 400 16.5px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  main { flex: 1; width: 100%; max-width: 560px; margin: 0 auto; padding: 56px 16px 40px; display: flex; flex-direction: column; }
+  .brand { align-self: center; display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 600 26px/1 var(--display); letter-spacing: -.02em; margin-bottom: 40px; }
+  .brand svg { width: 36px; height: 36px; border-radius: 10px; box-shadow: 0 0 0 1px var(--rule); }
+  .brand .pen { animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .msg { background: var(--float); border: 1px solid var(--rule); border-radius: 30px; padding: 32px 28px; box-shadow: var(--shadow); animation: rise .5s var(--e) both; }
+  .msg.ok { background: var(--panel); border-color: transparent; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  h1 { margin: 0 0 12px; font: 600 clamp(28px, 6vw, 36px)/1.15 var(--display); letter-spacing: -.02em; }
+  h1 .num { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .msg.ok h1 .num { display: block; font-size: clamp(60px, 16vw, 92px); line-height: 1; margin-top: 10px; letter-spacing: -.03em; }
+  p { margin: 0 0 12px; color: var(--soft); }
   p:last-child { margin-bottom: 0; }
-  b { color: var(--ink); }
-  a { color: var(--ink); }
-  .share { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-  .share a, .share button { font: 600 14px var(--sans); background: var(--float); color: var(--ink); border: 1px solid var(--rule); border-radius: 999px; padding: 8px 16px; text-decoration: none; cursor: pointer; }
-  .fine { font-size: 13px; color: var(--faint); margin-top: 2rem; }
+  b { color: var(--ink); font-weight: 600; }
+  .msg a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+  .wait { display: flex; align-items: center; gap: 12px; margin: 0; color: var(--soft); }
+  .wait i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--wash); border-top-color: var(--accent); animation: spin .8s linear infinite; flex: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .share { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .share a, .share button { font: 600 14.5px var(--sans); background: var(--float); color: var(--ink); border: 1px solid var(--rule); border-radius: 999px; padding: 10px 18px; min-height: 44px; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; }
+  .msg .share a { color: var(--ink); font-weight: 600; }
+  .share a:first-child { background: var(--ink); color: var(--page); border-color: transparent; }
+  .msg .share a:first-child { color: var(--page); }
+  .fine { text-align: center; font-size: 14px; color: var(--faint); margin: 28px 0 0; }
   .fine a { color: var(--soft); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="#EFE7D8"/><path fill="#090124" d="M62.213,29.734 A25,25 0 1 0 62.213,78.266 A1.3,1.3 0 0 0 63.2,77.004 L63.2,68.333 A1.3,1.3 0 0 0 61.42,67.125 A14.125,14.125 0 1 1 61.42,40.875 A1.3,1.3 0 0 0 63.2,39.667 L63.2,30.996 A1.3,1.3 0 0 0 62.213,29.734 Z"/><path class="pen" fill="#5D51E1" d="M69.394,38.222 H72.231 A1.3,1.3 0 0 1 73.531,39.522 V68.478 A1.3,1.3 0 0 1 72.231,69.778 H69.394 A1.3,1.3 0 0 1 68.094,68.478 V39.522 A1.3,1.3 0 0 1 69.394,38.222 Z"/></symbol>
+</svg>
 <main>
-  <a class="brand" href="./"><img src="favicon.svg" alt="">calkey</a>
-  <div id="out" class="msg" aria-live="polite"><p>Confirming your spot…</p></div>
+  <a class="brand" href="./" aria-label="Calkey, home"><svg aria-hidden="true"><use href="#mark"/></svg>calkey</a>
+  <div id="out" class="msg" aria-live="polite"><p class="wait"><i aria-hidden="true"></i>Confirming your spot…</p></div>
   <p class="fine">Questions? <a href="mailto:support@calkey.app">support@calkey.app</a> · <a href="privacy.html#waitlist">Privacy</a></p>
 </main>
 <script src="config.js"></script>
@@ -51,7 +84,8 @@
   const token = new URLSearchParams(location.search).get("t");
   // The token is spent on first use; keep it out of history and screenshots.
   history.replaceState(null, "", location.pathname);
-  const show = (cls, html) => { out.className = "msg " + cls; out.innerHTML = html; };
+  // A new state rises in, as the app's sheets do.
+  const show = (cls, html) => { out.className = "msg " + cls; out.innerHTML = html; out.style.animation = "none"; void out.offsetWidth; out.style.animation = ""; };
   const home = new URL("./", location.href).href;
   const bad = () => show("", `
     <h1>This link has expired or was already used.</h1>
@@ -80,8 +114,9 @@
     localStorage.removeItem("calkey_pending");
   } catch {}
   const text = "I just joined the Calkey waitlist: log calories by writing what you ate, in your own language. The waitlist gets a mystery discount, revealed at launch:";
+  const pos = Number(res.position);
   show("ok", `
-    <h1>You're in. You're <span class="num">#${Number(res.position).toLocaleString()}</span>.</h1>
+    <h1>You're in. You're <span class="num"><span data-pos>#${pos.toLocaleString()}</span>.</span></h1>
     <p><b>Your mystery discount is locked to this email.</b> We'll email you once more, when it's your turn: your invite and the discount.</p>
     <div class="share">
       <a target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(text + " " + home + "?ref=whatsapp")}">WhatsApp</a>
@@ -89,6 +124,12 @@
       <button type="button" data-copy>Copy link</button>
     </div>`);
   out.querySelector("[data-copy]").onclick = e => navigator.clipboard?.writeText(home + "?ref=link").then(() => e.target.textContent = "Copied ✓");
+  // The place counts up, as the app's figures do.
+  if (pos > 0 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const el = out.querySelector("[data-pos]"), t0 = performance.now(), ms = 900;
+    const step = t => { const p = Math.min(1, (t - t0) / ms), v = Math.max(1, Math.round(pos * (1 - Math.pow(1 - p, 3)))); el.textContent = "#" + v.toLocaleString(); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
 })();
 </script>
 </body>
