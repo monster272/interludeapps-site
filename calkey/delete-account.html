@@ -4,94 +4,191 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calkey — Delete your account</title>
+<meta name="description" content="How to delete your Calkey account and everything in it, in the app or by email, and what is kept.">
+<meta name="theme-color" content="#EAE9EE">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Design B, as on the privacy page: the grey page, cards, navy ink, cream for
+     the one block that leads, periwinkle as text; the navy night in dark mode. */
   :root {
-    --bg: #EAE9EE; --bg2: #E5E4EA; --ink: #090124; --soft: #47425E;
-    --faint: #605A73; --rule: #D6D4DE; --accent: #5146D6;
+    --page: #EAE9EE; --page2: #E5E4EA; --float: #F8F7FB; --sunk: #DEDCE6; --panel: #FAE7C8;
+    --ink: #090124; --soft: #47425E; --faint: #605A73; --rule: #D6D4DE;
+    --accent: #5146D6; --wash: #DCD9FA; --no: #B84B16;
+    --shadow: 0 18px 40px -24px rgba(9,1,36,.32);
+    --display: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0E0A24; --bg2: #0B081E; --ink: #F5EBDD; --soft: #CBC3D9;
-      --faint: #9C94B2; --rule: #2C2652; --accent: #B9B4F2;
+      --page: #0E0A24; --page2: #0B081E; --float: #1A1538; --sunk: #251F48; --panel: #2B2347;
+      --ink: #F5EBDD; --soft: #CBC3D9; --faint: #9C94B2; --rule: #2C2652;
+      --accent: #B9B4F2; --wash: #2E2760; --no: #FF8A3D;
+      --shadow: 0 18px 40px -20px rgba(0,0,0,.7);
+      color-scheme: dark;
     }
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; background: linear-gradient(var(--bg), var(--bg2));
-    color: var(--ink); min-height: 100vh;
-    font: 16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    margin: 0; background: linear-gradient(var(--page), var(--page2)) fixed; color: var(--ink);
+    font: 400 16.5px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 46rem; margin: 0 auto; padding: 4rem 16px 6rem; }
-  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.02em; }
-  h2 { font-size: 1.1rem; margin: 2.6rem 0 .6rem; letter-spacing: -.01em; }
-  .sub { color: var(--faint); margin: 0 0 2.5rem; font-size: .95rem; }
-  p, li { color: var(--soft); }
-  li { margin: .35rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
   strong { color: var(--ink); font-weight: 600; }
-  a { color: var(--accent); }
-  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
-  .note {
-    border-left: 3px solid var(--accent); padding: .1rem 0 .1rem 1rem;
-    margin: 1.5rem 0; color: var(--soft);
+  ::selection { background: var(--wash); color: var(--ink); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--page) 84%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid var(--rule); }
+  nav .wrap { display: flex; align-items: center; gap: 20px; height: 64px; max-width: 1120px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font: 600 23px/1 var(--display); letter-spacing: -.02em; }
+  .brand svg { width: 28px; height: 28px; border-radius: 8px; box-shadow: 0 0 0 1px var(--rule); }
+  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 14.5px; }
+  nav .links a { color: var(--soft); text-decoration: none; }
+  nav .links a:hover { color: var(--ink); }
+
+  header { padding: 72px 0 32px; }
+  .kick { font: 600 12.5px var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin: 0 0 16px; }
+  h1 { font: 600 clamp(42px, 6.4vw, 72px)/1.02 var(--display); letter-spacing: -.03em; margin: 0 0 18px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: var(--soft); margin-bottom: 28px; }
+  .meta span { background: var(--float); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; }
+  .intro { background: var(--float); border: 1px solid var(--rule); border-radius: 24px; padding: 22px 24px; box-shadow: var(--shadow); }
+  .intro p { margin: 0; color: var(--soft); font-size: 17px; }
+
+  main { padding: 24px 0 96px; }
+  section { padding: 0 0 48px; }
+  h2 { display: flex; align-items: baseline; gap: 14px; font: 600 clamp(26px, 3vw, 34px)/1.15 var(--display); letter-spacing: -.02em; margin: 0 0 16px; }
+  h2 .n { font: 600 14px var(--display); color: var(--accent); border: 1px solid currentColor; border-radius: 999px; padding: 2px 10px; flex: none; transform: translateY(-5px); }
+  p { color: var(--soft); margin: 0 0 14px; }
+
+  /* the two ways, side by side */
+  .ways { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
+  .way { background: var(--float); border: 1px solid var(--rule); border-radius: 26px; padding: 24px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+  .way h2 { font-size: 26px; }
+  .steps { list-style: none; margin: 4px 0 0; padding: 0; counter-reset: s; display: grid; gap: 4px; }
+  .steps li { position: relative; padding: 8px 0 8px 46px; color: var(--soft); counter-increment: s; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 6px; width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center; font: 600 15px var(--display); color: var(--accent); background: var(--wash); }
+  .steps li:not(:last-child)::after { content: ""; position: absolute; left: 14.5px; top: 40px; bottom: -6px; width: 1px; background: var(--rule); }
+  .way .mail { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--ink); color: var(--page);
+    text-decoration: none; font: 600 15px var(--sans); border-radius: 999px; padding: 12px 20px; min-height: 48px; }
+
+  /* deleted and kept */
+  .dk { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .col { border-radius: 24px; padding: 22px 24px; border: 1px solid var(--rule); background: var(--float); }
+  .col .h { display: flex; align-items: center; gap: 10px; font: 600 20px var(--display); letter-spacing: -.01em; color: var(--ink); margin-bottom: 8px; }
+  .col .h i { width: 28px; height: 28px; border-radius: 50%; flex: none; display: grid; place-items: center; }
+  .col.del .h i { background: var(--no); }
+  .col.kept .h i { background: var(--sunk); }
+  .col .h svg { width: 15px; height: 15px; }
+  .col p { margin: 0; font-size: 15.5px; }
+
+  .callout { background: var(--panel); border-radius: 24px; padding: 22px 24px; }
+  .callout p { color: var(--ink); margin: 0; }
+
+  footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; color: var(--faint); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; align-items: center; max-width: 1120px; }
+  footer a { color: var(--soft); }
+
+  @media (max-width: 760px) {
+    .ways, .dk { grid-template-columns: 1fr; }
   }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .94rem; }
-  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  th { color: var(--ink); font-weight: 600; }
-  td { color: var(--soft); }
-  code { font-size: .88em; color: var(--ink); }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    nav .links a.hide { display: none; }
+    header { padding: 48px 0 24px; }
+    .intro p { font-size: 16px; }
+  }
+  @media print {
+    nav, .way .mail { display: none; }
+    body { background: #fff; color: #000; }
+    .intro, .way, .col, .callout { box-shadow: none; background: #fff; border-color: #ccc; break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>Delete your account</h1>
-  <p class="sub">Calkey — AI calorie tracker · Interludeapps</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="#EFE7D8"/><path fill="#090124" d="M62.213,29.734 A25,25 0 1 0 62.213,78.266 A1.3,1.3 0 0 0 63.2,77.004 L63.2,68.333 A1.3,1.3 0 0 0 61.42,67.125 A14.125,14.125 0 1 1 61.42,40.875 A1.3,1.3 0 0 0 63.2,39.667 L63.2,30.996 A1.3,1.3 0 0 0 62.213,29.734 Z"/><path fill="#5D51E1" d="M69.394,38.222 H72.231 A1.3,1.3 0 0 1 73.531,39.522 V68.478 A1.3,1.3 0 0 1 72.231,69.778 H69.394 A1.3,1.3 0 0 1 68.094,68.478 V39.522 A1.3,1.3 0 0 1 69.394,38.222 Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></g></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-keep" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="4" rx="1"/><path d="M5.5 9v10h13V9M10 13h4"/></g></symbol>
+</svg>
 
-  <p>Calkey needs a Google sign-in, and keeps a backup of your journal with that
+<nav><div class="wrap">
+  <a class="brand" href="./index.html" aria-label="Calkey, home"><svg><use href="#mark"/></svg>calkey</a>
+  <div class="links"><a class="hide" href="./index.html">Home</a><a href="privacy.html">Privacy policy</a><a href="mailto:support@calkey.app">Contact</a></div>
+</div></nav>
+
+<header><div class="wrap">
+  <p class="kick">Account deletion</p>
+  <h1>Delete your account</h1>
+  <div class="meta"><span>Calkey — AI calorie tracker</span><span>Interludeapps</span></div>
+  <div class="intro"><p>Calkey needs a Google sign-in, and keeps a backup of your journal with that
   account: your name and email address, an internal account identifier, the
   meals you logged (the text you typed and the calorie and macronutrient
   figures), water and weight entries, your goals and body details, your
   partner link if you have one, and your subscription status. Deleting your
-  account removes all of it.</p>
+  account removes all of it.</p></div>
+</div></header>
 
-  <h2>Delete it from inside the app</h2>
-  <p>This is the quickest way, and it takes effect immediately.</p>
-  <ol>
-    <li>Open Calkey.</li>
-    <li>Tap the <strong>settings</strong> icon at the top right of the journal.</li>
-    <li>Tap your <strong>account</strong> card at the top, then <strong>Delete account</strong>.</li>
-    <li>Confirm. Your account and your journal are removed from our servers
-    and from the phone, and any partner link ends. This cannot be undone.</li>
-  </ol>
+<main class="wrap">
+  <section class="ways">
+    <div class="way">
+      <h2><span class="n">01</span>Delete it from inside the app</h2>
+      <p>This is the quickest way, and it takes effect immediately.</p>
+      <ol class="steps">
+        <li>Open Calkey.</li>
+        <li>Tap the <strong>settings</strong> icon at the top right of the journal.</li>
+        <li>Tap your <strong>account</strong> card at the top, then <strong>Delete account</strong>.</li>
+        <li>Confirm. Your account and your journal are removed from our servers
+        and from the phone, and any partner link ends. This cannot be undone.</li>
+      </ol>
+    </div>
+    <div class="way">
+      <h2><span class="n">02</span>If you can't open the app</h2>
+      <p>Write to <a href="mailto:support@calkey.app?subject=Delete%20my%20Calkey%20account">support@calkey.app</a> from the email address you signed in with, and say you want
+      your Calkey account deleted. We reply within 7 days and complete deletion
+      within 30. We delete exactly what the in-app button deletes.</p>
+      <a class="mail" href="mailto:support@calkey.app?subject=Delete%20my%20Calkey%20account"><svg width="18" height="18" aria-hidden="true"><use href="#i-mail"/></svg>support@calkey.app</a>
+    </div>
+  </section>
 
-  <h2>If you can't open the app</h2>
-  <p>Write to <a href="mailto:support@calkey.app?subject=Delete%20my%20Calkey%20account">support@calkey.app</a> from the email address you signed in with, and say you want
-  your Calkey account deleted. We reply within 7 days and complete deletion
-  within 30. We delete exactly what the in-app button deletes.</p>
+  <section>
+    <h2><span class="n">03</span>What is deleted, and what is not</h2>
+    <div class="dk">
+      <div class="col del">
+        <div class="h"><i><svg aria-hidden="true"><use href="#i-trash"/></svg></i>Deleted</div>
+        <p>Your account (name, email, identifier), journal, water and weight
+        entries, goals, body details, partner link and daily summaries, and
+        subscription status</p>
+      </div>
+      <div class="col kept">
+        <div class="h"><i style="color:var(--soft)"><svg aria-hidden="true"><use href="#i-keep"/></svg></i>Kept</div>
+        <p>Per-request technical records (when a meal was parsed, how long it
+        took), which never contained your meal text and lose any link to you;
+        anonymous tallies that never contained your identity; the shared caches of
+        meal words and their figures, which never held a link to you; and a
+        scrambled form of your Google account identifier, with whether its free day
+        was used and whether it was blocked, so the same Google account cannot claim
+        a second free day</p>
+      </div>
+    </div>
+  </section>
 
-  <h2>What is deleted, and what is not</h2>
-  <table>
-    <tr><th>Deleted</th><th>Kept</th></tr>
-    <tr>
-      <td>Your account (name, email, identifier), journal, water and weight
-      entries, goals, body details, partner link and daily summaries, and
-      subscription status</td>
-      <td>Per-request technical records (when a meal was parsed, how long it
-      took), which never contained your meal text and lose any link to you;
-      anonymous tallies that never contained your identity; the shared caches of
-      meal words and their figures, which never held a link to you; and a
-      scrambled form of your Google account identifier, with whether its free day
-      was used and whether it was blocked, so the same Google account cannot claim
-      a second free day</td>
-    </tr>
-  </table>
-
-  <h2>Your subscription</h2>
-  <p>Deleting your account does <strong>not</strong> cancel a Google Play
-  subscription, because Google bills it, not us. Cancel it first in
-  <strong>Google Play → Profile → Payments and subscriptions → Subscriptions</strong>.</p>
-
-  <hr>
-  <p class="sub"><a href="privacy.html">Privacy policy</a> · <a href="./index.html">← Calkey</a></p>
+  <section>
+    <h2><span class="n">04</span>Your subscription</h2>
+    <div class="callout"><p>Deleting your account does <strong>not</strong> cancel a Google Play
+    subscription, because Google bills it, not us. Cancel it first in
+    <strong>Google Play → Profile → Payments and subscriptions → Subscriptions</strong>.</p></div>
+  </section>
 </main>
+
+<footer><div class="wrap">
+  <a class="brand" href="./index.html" style="font-size:19px"><svg style="width:24px;height:24px;border-radius:7px"><use href="#mark"/></svg>calkey</a>
+  <span>© 2026 Interludeapps · Estimates, not medical advice · <a href="privacy.html">Privacy policy</a></span>
+</div></footer>
 </body>
 </html>
