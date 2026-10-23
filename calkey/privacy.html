@@ -280,10 +280,18 @@
           only to your own journal — it never changes anyone else's figures</div>
         </div>
         <div class="row">
-          <div><span class="k">Data</span>Anonymous usage events — that a meal was logged, how long it took,
-          whether a parse failed</div>
-          <div><span class="k">Why</span>To keep logging fast</div>
-          <div><span class="k">Where it goes</span>Our analytics provider</div>
+          <div><span class="k">Data</span>Anonymous usage statistics: that a meal was logged and how long it
+          took, whether a parse failed, how much a correction changed a figure (as a
+          percentage), and which setup steps were finished (onboarding, sign-in, the
+          plans page, a purchase). With them, a random identifier for this install,
+          the app version, your phone model, Android version, language, and your
+          country as your SIM card or phone settings give it. Your IP address is not
+          used to locate you and is not stored. <strong>Never your meal text, food
+          names, calorie figures, name or email</strong></div>
+          <div><span class="k">Why</span>To keep logging fast and to see where people get stuck</div>
+          <div><span class="k">Where it goes</span>PostHog, in its EU region. On unless you turn off "Share usage
+          statistics" in Settings › Data &amp; privacy; signing out starts a new
+          random identifier</div>
         </div>
         <div class="row">
           <div><span class="k">Data</span>Your subscription status: when your free day started, your plan,
@@ -415,6 +423,9 @@
         your phone, if you switch it on, for water only.</li>
         <li><strong>Supabase</strong>The database and server that hold your
         backup, and the waitlist.</li>
+        <li><strong>PostHog</strong>Receives the anonymous usage statistics
+        described above, if "Share usage statistics" is on. It never receives your
+        meals, figures or identity.</li>
         <li><strong>Exa</strong>Web search, for foods our tables do not cover. It
         receives a search query derived from your meal text, not your identity.</li>
         <li><strong>Resend</strong>Delivers the messages you send us from the app
@@ -438,7 +449,8 @@
       while we need it to help you. The anonymous tallies of corrections and unrecognised food words
       never contained your identity, and are kept to improve accuracy. The shared
       caches of meal words and their figures never held a link to you, and are
-      kept with no set end date.</p>
+      kept with no set end date. Usage statistics are kept by PostHog for up to a
+      year and are not linked to your account.</p>
       <p>When an account is deleted we keep one thing: a scrambled form of its
       Google account identifier that names no one, with whether its free day was
       used and whether it was blocked, so the same Google account cannot claim a
