@@ -4,282 +4,503 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calkey — Privacy Policy</title>
+<meta name="description" content="What Calkey collects, why, where it goes, and what it never does.">
+<meta name="theme-color" content="#EAE9EE">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Design B, as on the home page: the grey page, cards, navy ink, cream for the
+     one block that leads, periwinkle as text; the navy night in dark mode. */
   :root {
-    --bg: #EAE9EE; --bg2: #E5E4EA; --ink: #090124; --soft: #47425E;
-    --faint: #605A73; --rule: #D6D4DE; --accent: #5146D6;
+    --page: #EAE9EE; --page2: #E5E4EA; --float: #F8F7FB; --sunk: #DEDCE6; --panel: #FAE7C8;
+    --ink: #090124; --soft: #47425E; --faint: #605A73; --rule: #D6D4DE;
+    --accent: #5146D6; --wash: #DCD9FA; --good: #1F7A46; --no: #B84B16;
+    --shadow: 0 18px 40px -24px rgba(9,1,36,.32);
+    --display: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0E0A24; --bg2: #0B081E; --ink: #F5EBDD; --soft: #CBC3D9;
-      --faint: #9C94B2; --rule: #2C2652; --accent: #B9B4F2;
+      --page: #0E0A24; --page2: #0B081E; --float: #1A1538; --sunk: #251F48; --panel: #2B2347;
+      --ink: #F5EBDD; --soft: #CBC3D9; --faint: #9C94B2; --rule: #2C2652;
+      --accent: #B9B4F2; --wash: #2E2760; --good: #3DDC84; --no: #FF8A3D;
+      --shadow: 0 18px 40px -20px rgba(0,0,0,.7);
+      color-scheme: dark;
     }
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0; background: linear-gradient(var(--bg), var(--bg2));
-    color: var(--ink); min-height: 100vh;
-    font: 16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    margin: 0; background: linear-gradient(var(--page), var(--page2)) fixed; color: var(--ink);
+    font: 400 16.5px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 46rem; margin: 0 auto; padding: 4rem 16px 6rem; }
-  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.02em; }
-  h2 { font-size: 1.1rem; margin: 2.6rem 0 .6rem; letter-spacing: -.01em; }
-  .sub { color: var(--faint); margin: 0 0 2.5rem; font-size: .95rem; }
-  p, li { color: var(--soft); }
-  li { margin: .35rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
   strong { color: var(--ink); font-weight: 600; }
-  a { color: var(--accent); }
-  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
-  .note {
-    border-left: 3px solid var(--accent); padding: .1rem 0 .1rem 1rem;
-    margin: 1.5rem 0; color: var(--soft);
+  ::selection { background: var(--wash); color: var(--ink); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------------------------------------------------------------- the nav */
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--page) 84%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid var(--rule); }
+  nav .wrap { display: flex; align-items: center; gap: 20px; height: 64px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font: 600 23px/1 var(--display); letter-spacing: -.02em; }
+  .brand svg { width: 28px; height: 28px; border-radius: 8px; box-shadow: 0 0 0 1px var(--rule); }
+  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 14.5px; }
+  nav .links a { color: var(--soft); text-decoration: none; }
+  nav .links a:hover { color: var(--ink); }
+
+  /* --------------------------------------------------------------- the head */
+  header { padding: 72px 0 40px; }
+  .kick { display: inline-flex; align-items: center; gap: 8px; font: 600 12.5px var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin: 0 0 16px; }
+  h1 { font: 600 clamp(42px, 6.4vw, 76px)/1.02 var(--display); letter-spacing: -.03em; margin: 0 0 18px; max-width: 13em; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { font-size: 19px; color: var(--soft); max-width: 36em; margin: 0 0 22px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: var(--soft); }
+  .meta span { background: var(--float); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; }
+
+  /* the four promises, from "What we do not do" and the partner section */
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 40px 0 0; }
+  .g { background: var(--float); border: 1px solid var(--rule); border-radius: 22px; padding: 20px; box-shadow: var(--shadow); }
+  .g svg { width: 26px; height: 26px; color: var(--accent); margin-bottom: 12px; }
+  .g b { display: block; font: 600 18px/1.25 var(--display); letter-spacing: -.01em; margin-bottom: 4px; }
+  .g span { font-size: 14.5px; color: var(--soft); line-height: 1.5; }
+
+  /* ------------------------------------------------------------ the layout */
+  .layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 56px; padding: 40px 0 96px; }
+  .toc { position: sticky; top: 88px; align-self: start; }
+  .toc p { font: 600 12px var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--faint); margin: 0 0 10px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: t; }
+  .toc a { display: flex; gap: 10px; padding: 6px 10px; border-radius: 10px; color: var(--soft); text-decoration: none; font-size: 14.5px; line-height: 1.35; }
+  .toc a::before { counter-increment: t; content: counter(t, decimal-leading-zero); font: 600 12px/1.6 var(--display); color: var(--faint); flex: none; width: 18px; }
+  .toc a:hover { background: var(--float); color: var(--ink); }
+  .toc a.on { background: var(--wash); color: var(--ink); }
+  .toc a.on::before { color: var(--accent); }
+
+  article { min-width: 0; max-width: 760px; }
+  section { scroll-margin-top: 84px; padding: 0 0 52px; }
+  section + section { border-top: 1px solid var(--rule); padding-top: 44px; }
+  h2 { display: flex; align-items: baseline; gap: 14px; font: 600 clamp(26px, 3vw, 34px)/1.15 var(--display); letter-spacing: -.02em; margin: 0 0 16px; }
+  h2 .n { font: 600 14px var(--display); color: var(--accent); border: 1px solid currentColor; border-radius: 999px; padding: 2px 10px; flex: none; transform: translateY(-5px); }
+  p, li { color: var(--soft); }
+  p { margin: 0 0 14px; max-width: 40em; }
+
+  /* what we collect: one card per kind of data */
+  .data { display: grid; gap: 12px; margin-top: 6px; }
+  .row { background: var(--float); border: 1px solid var(--rule); border-radius: 20px; padding: 18px 20px; display: grid; grid-template-columns: 1.15fr 1fr 1.15fr; gap: 18px; }
+  .row > div { font-size: 15px; line-height: 1.55; color: var(--soft); }
+  .row > div:first-child { color: var(--ink); font-weight: 500; }
+  .row .k { display: block; font: 600 11.5px var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--faint); margin-bottom: 5px; }
+  .row.opt { border-color: color-mix(in srgb, var(--accent) 35%, var(--rule)); }
+  .tag { display: inline-block; font: 600 11.5px var(--sans); letter-spacing: .04em; color: var(--accent); background: var(--wash); border-radius: 999px; padding: 2px 9px; margin-bottom: 6px; }
+
+  /* what we do not do */
+  .nots { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .nots li { display: flex; gap: 14px; align-items: flex-start; background: var(--float); border: 1px solid var(--rule); border-radius: 16px; padding: 14px 16px; margin: 0; }
+  .nots li::before { content: ""; flex: none; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: var(--no) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7L7 17'/%3E%3C/svg%3E") center/11px no-repeat; }
+
+  /* the processors */
+  .who { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .who li { background: var(--float); border: 1px solid var(--rule); border-radius: 18px; padding: 16px 18px; margin: 0; font-size: 15px; line-height: 1.55; }
+  .who li strong { display: block; font: 600 19px var(--display); letter-spacing: -.01em; margin-bottom: 4px; }
+  .who li.wide { grid-column: 1 / -1; }
+
+  /* the one block that leads a section */
+  .callout { background: var(--panel); border-radius: 22px; padding: 20px 22px; margin: 4px 0 16px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout p { color: var(--ink); }
+
+  /* the contact card */
+  .contact { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; background: var(--ink); color: var(--page); border-radius: 26px; padding: 26px 28px; margin-top: 8px; }
+  .contact b { display: block; font: 600 24px/1.2 var(--display); letter-spacing: -.02em; color: var(--page); }
+  .contact span { color: color-mix(in srgb, var(--page) 72%, transparent); font-size: 15px; }
+  .contact a.btn { display: inline-flex; align-items: center; gap: 8px; background: var(--page); color: var(--ink); text-decoration: none; font: 600 15px var(--sans); border-radius: 999px; padding: 12px 20px; min-height: 48px; }
+
+  footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; color: var(--faint); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; align-items: center; }
+  footer a { color: var(--soft); }
+
+  @media (max-width: 960px) {
+    .glance { grid-template-columns: 1fr 1fr; }
+    .layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .toc { position: static; margin-bottom: 36px; background: var(--float); border: 1px solid var(--rule); border-radius: 20px; padding: 16px; }
+    .toc ol { grid-template-columns: 1fr 1fr; }
   }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .94rem; }
-  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  th { color: var(--ink); font-weight: 600; }
-  td { color: var(--soft); }
-  code { font-size: .88em; color: var(--ink); }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    nav .links a.hide { display: none; }
+    header { padding: 48px 0 28px; }
+    .lede { font-size: 17px; }
+    .glance { grid-template-columns: 1fr; }
+    .toc ol { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; gap: 10px; }
+    .who { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media print {
+    nav, .toc, .glance, .contact .btn { display: none; }
+    body { background: #fff; color: #000; }
+    .layout { display: block; padding: 0; }
+    .row, .nots li, .who li, .callout, .contact { box-shadow: none; border-color: #ccc; background: #fff; color: #000; break-inside: avoid; }
+    .contact b, .contact span { color: #000; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>Privacy Policy</h1>
-  <p class="sub">Calkey — AI calorie tracker · Last updated 23 October 2026</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="#EFE7D8"/><path fill="#090124" d="M62.213,29.734 A25,25 0 1 0 62.213,78.266 A1.3,1.3 0 0 0 63.2,77.004 L63.2,68.333 A1.3,1.3 0 0 0 61.42,67.125 A14.125,14.125 0 1 1 61.42,40.875 A1.3,1.3 0 0 0 63.2,39.667 L63.2,30.996 A1.3,1.3 0 0 0 62.213,29.734 Z"/><path fill="#5D51E1" d="M69.394,38.222 H72.231 A1.3,1.3 0 0 1 73.531,39.522 V68.478 A1.3,1.3 0 0 1 72.231,69.778 H69.394 A1.3,1.3 0 0 1 68.094,68.478 V39.522 A1.3,1.3 0 0 1 69.394,38.222 Z"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><path d="M4 20L20 4"/></g></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/><path d="M4 21L20 3"/></g></symbol>
+  <symbol id="i-partner" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M15.5 20a5 5 0 0 1 6-4.8"/></g></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></g></symbol>
+</svg>
 
-  <h2>Who we are</h2>
-  <p>Calkey is published by Interludeapps. For any question about this policy or
-  your data, contact <a href="mailto:support@calkey.app">support@calkey.app</a>.</p>
+<nav><div class="wrap">
+  <a class="brand" href="./index.html" aria-label="Calkey, home"><svg><use href="#mark"/></svg>calkey</a>
+  <div class="links"><a class="hide" href="./index.html">Home</a><a href="delete-account.html">Delete account</a><a href="mailto:support@calkey.app">Contact</a></div>
+</div></nav>
 
-  <h2>What we collect, and why</h2>
-  <table>
-    <tr><th>Data</th><th>Why</th><th>Where it goes</th></tr>
-    <tr>
-      <td>Your Google account identifier and email address</td>
-      <td>Signing in is required, so that your journal can be restored if you
-      lose or change your phone, and so your usage allowance is yours</td>
-      <td>Our database, scoped so only your account can read your rows</td>
-    </tr>
-    <tr>
-      <td>Your journal: the text you type for each meal, the calorie and
-      macronutrient figures, the time, water and weight entries, and your goals</td>
-      <td>It is the app</td>
-      <td>Stored on your phone first; backed up to our database</td>
-    </tr>
-    <tr>
-      <td><strong>Only if you pair with a partner:</strong> your daily totals —
-      calories, protein, carbs and fat, water, your goals and your current
-      streak — for today and the last few days</td>
-      <td>So the one person you chose can see how your day is going</td>
-      <td>Our database, readable only by you and your linked partner. <strong>Never
-      your meal text, the foods you logged, or anything you typed</strong></td>
-    </tr>
-    <tr>
-      <td>The text of a meal you log, at the moment you log it</td>
-      <td>To work out what you ate and what it contains</td>
-      <td>Sent to Google (Gemini) to be read, and — for foods our own tables do
-      not cover — a short search query derived from it is sent to Exa</td>
-    </tr>
-    <tr>
-      <td>Per-request technical records: your account id, which model answered,
-      the region setting, <strong>the number of characters you typed</strong>,
-      how many items came back, how long it took, and whether it succeeded</td>
-      <td>To find slow and failing requests</td>
-      <td>Our database. <strong>The meal text itself is not recorded here</strong> —
-      only its length</td>
-    </tr>
-    <tr>
-      <td>Individual words our food tables could not recognise, counted by word
-      and region</td>
-      <td>To decide which foods to add next</td>
-      <td>Our database, as a running tally with <strong>no account id and no
-      meal text</strong>. Two people typing the same word are indistinguishable
-      from one person typing it twice</td>
-    </tr>
-    <tr>
-      <td>When you correct an estimate: the food, the portion and the region</td>
-      <td>To find figures that are wrong for everyone and re-check them against
-      published nutrition data</td>
-      <td>Our database, as a tally with <strong>no account id and no meal
-      text</strong>. Your correction itself stays on your phone and is applied
-      only to your own journal — it never changes anyone else's figures</td>
-    </tr>
-    <tr>
-      <td>Anonymous usage events — that a meal was logged, how long it took,
-      whether a parse failed</td>
-      <td>To keep logging fast</td>
-      <td>Our analytics provider</td>
-    </tr>
-    <tr>
-      <td>Your subscription status: when your free day started, your plan,
-      whether it is in a trial, renewing or ended, its expiry date, and the
-      purchase reference Google Play gives us</td>
-      <td>To unlock the app for the time you have paid for, and to check with
-      Google Play that a purchase is real</td>
-      <td>Our database, linked to your account. We never see your card or
-      payment details; Google Play handles the payment</td>
-    </tr>
-    <tr>
-      <td>A notification token for your phone, your phone's time zone, language
-      setting and install country, the app version, and which kinds of
-      notification you have switched on</td>
-      <td>To send the notifications you allow: your partner's goal moments,
-      notices about your subscription, occasional news, and a single nudge
-      after a few quiet days. The time zone keeps them out of your night</td>
-      <td>Our database, linked to your account, and Google's Firebase Cloud
-      Messaging, which delivers them. Deleted when you sign out, when the app
-      is uninstalled and the token expires, or when you delete your
-      account</td>
-    </tr>
-    <tr>
-      <td>Your water, if you switch on Health Connect in Settings: each glass
-      you log in Calkey, and the water other apps have logged there</td>
-      <td>So a glass logged anywhere shows up everywhere. Only water is
-      shared; never what you ate</td>
-      <td>Health Connect on your phone, under Google's Health Connect
-      permissions, which you can withdraw there or in Calkey's Settings at any
-      time. Nothing read from Health Connect leaves your phone except as part
-      of the water total already described above</td>
-    </tr>
-    <tr>
-      <td>Messages you send us from "Write to us" in the app, with your app
-      version, phone model, country and language</td>
-      <td>To read and answer them. Your reply comes by email to your account's
-      address. Your meals are never attached</td>
-      <td>Our database, readable only by us, and our support inbox. Kept 90 days
-      in the database</td>
-    </tr>
-    <tr>
-      <td>Crash reports, if the app crashes: where in the code it stopped, your
-      phone model, Android version, the app version, and a random identifier
-      for this installation</td>
-      <td>To find and fix what made the app crash. Never your meals, and not
-      linked to your account</td>
-      <td>Google's Firebase Crashlytics, which keeps them for 90 days. On unless
-      you turn off "Send crash reports" in Settings › Data &amp; privacy; turning
-      it off also discards any report not yet sent</td>
-    </tr>
-  </table>
+<header><div class="wrap">
+  <p class="kick">Privacy policy</p>
+  <h1>Your journal is <em>yours</em>.</h1>
+  <p class="lede">What Calkey collects, why, where it goes, and what it never does. Written to be read, not skimmed past.</p>
+  <div class="meta"><span>Calkey — AI calorie tracker</span><span>Last updated 23 October 2026</span><span>Published by Interludeapps</span></div>
 
-  <h2>What we do not do</h2>
-  <ul>
-    <li>We do not sell your data, and we do not share it for advertising.</li>
-    <li>We do not build a profile of you for anyone else. The only person who
-    can see any of your figures is a partner you chose to pair with, and only
-    your daily totals.</li>
-    <li>We do not record your meal text in our technical logs, our food backlog
-    or our correction tallies.</li>
-    <li>We do not use your journal to train our own models.</li>
-    <li>No notification ever contains what you, or your partner, ate.</li>
-  </ul>
+  <div class="glance" aria-label="At a glance">
+    <div class="g"><svg aria-hidden="true"><use href="#i-tag"/></svg><b>Never sold</b><span>We do not sell your data, and we do not share it for advertising.</span></div>
+    <div class="g"><svg aria-hidden="true"><use href="#i-note"/></svg><b>Meal text stays out of our logs</b><span>Not in our technical logs, our food backlog or our correction tallies.</span></div>
+    <div class="g"><svg aria-hidden="true"><use href="#i-partner"/></svg><b>A partner sees totals</b><span>Only if you pair, and only your daily totals. Never what you ate.</span></div>
+    <div class="g"><svg aria-hidden="true"><use href="#i-trash"/></svg><b>Delete your account</b><span>Your account and your journal, in the app or on the web.</span></div>
+  </div>
+</div></header>
 
-  <h2>Notifications</h2>
-  <p>Calkey only sends notifications if you allow them when the app asks. Meal
-  reminders are made on your phone itself. Everything else comes from our server:
-  your partner's goal moments, notices about your subscription, occasional news
-  from us, and one gentle nudge if you have not logged for a few days (never
-  more than one a week). We hold them between 22:00 and 08:00 your time, except
-  a payment problem, and send no more than three a day.</p>
-  <p>You can switch partner updates, news and the nudge off in
-  <strong>Settings</strong>, and silence any kind in your phone's notification
-  settings. Subscription notices cannot be switched off in the app, because they
-  are about money you may be charged.</p>
+<div class="wrap layout">
+  <aside class="toc" aria-label="On this page">
+    <p>On this page</p>
+    <ol>
+      <li><a href="#who">Who we are</a></li>
+      <li><a href="#collect">What we collect, and why</a></li>
+      <li><a href="#not">What we do not do</a></li>
+      <li><a href="#notifications">Notifications</a></li>
+      <li><a href="#partner">Sharing with a partner</a></li>
+      <li><a href="#waitlist">The pre-launch waitlist</a></li>
+      <li><a href="#processors">Who else processes your data</a></li>
+      <li><a href="#keep">How long we keep it</a></li>
+      <li><a href="#delete">Deleting your data</a></li>
+      <li><a href="#children">Children</a></li>
+      <li><a href="#rights">Your rights</a></li>
+      <li><a href="#medical">Not medical advice</a></li>
+      <li><a href="#changes">Changes</a></li>
+    </ol>
+  </aside>
 
-  <h2>Sharing with a partner</h2>
-  <p>Partner sharing is off unless you turn it on. To pair, one of you makes a
-  six-character code in <strong>Settings → Partner</strong> and the other types it
-  in; a code works once and expires after 48 hours. You can be paired with one
-  person at a time.</p>
-  <p>Once paired, you each see the other's totals for the day: calories eaten
-  and left against the goal, protein, carbs and fat, water, and the current
-  streak. Neither of you can see what the other ate, the text of any entry, or
-  any history beyond the last few days.</p>
-  <p>Your partner sees the name on your Google account (or the first part of
-  your email address if it has no name), and can rename you on their own
-  phone.</p>
-  <p>Either of you can stop at any time with <strong>Settings → Partner → Stop
-  sharing</strong>. It ends sharing in both directions immediately. Deleting
-  either account also ends it.</p>
+  <article>
+    <section id="who">
+      <h2><span class="n">01</span>Who we are</h2>
+      <p>Calkey is published by Interludeapps. For any question about this policy or
+      your data, contact <a href="mailto:support@calkey.app">support@calkey.app</a>.</p>
+    </section>
 
-  <h2 id="waitlist">The pre-launch waitlist</h2>
-  <p>If you join the waitlist on our website, we store your email address, and
-  if you give them: what you mostly eat, your browser's language setting, the
-  site or link you came from, and whether you voted for an iPhone version. We
-  use them to send you one email when the app is ready for you, to honour the
-  first-month discount promised to everyone on the list, and, in aggregate, to
-  decide which cuisines and countries to support first.</p>
-  <p>When you join, we first send one email with a link, to check the address
-  is yours. Until you tap it you are not on the list and are not counted; if
-  you never tap it, we delete the address 7 days after that email. To stop
-  automated sign-ups we also keep, for at most two days, a count of sign-ups per
-  connection, keyed by a scrambled form of your IP address that changes daily
-  and cannot be turned back into the address.</p>
-  <p>The list is not shared, sold or used for advertising. The page shows only
-  how many people have confirmed. To be removed, write to <a href="mailto:support@calkey.app">support@calkey.app</a>.
-  We delete the whole list within 90 days of the app's public launch, once the
-  launch invites and discounts have gone out.</p>
+    <section id="collect">
+      <h2><span class="n">02</span>What we collect, and why</h2>
+      <div class="data">
+        <div class="row">
+          <div><span class="k">Data</span>Your Google account identifier and email address</div>
+          <div><span class="k">Why</span>Signing in is required, so that your journal can be restored if you
+          lose or change your phone, and so your usage allowance is yours</div>
+          <div><span class="k">Where it goes</span>Our database, scoped so only your account can read your rows</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Your journal: the text you type for each meal, the calorie and
+          macronutrient figures, the time, water and weight entries, and your goals</div>
+          <div><span class="k">Why</span>It is the app</div>
+          <div><span class="k">Where it goes</span>Stored on your phone first; backed up to our database</div>
+        </div>
+        <div class="row opt">
+          <div><span class="tag">Only if you pair with a partner</span><br>Your daily totals —
+          calories, protein, carbs and fat, water, your goals and your current
+          streak — for today and the last few days</div>
+          <div><span class="k">Why</span>So the one person you chose can see how your day is going</div>
+          <div><span class="k">Where it goes</span>Our database, readable only by you and your linked partner. <strong>Never
+          your meal text, the foods you logged, or anything you typed</strong></div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>The text of a meal you log, or of a fix you type for it, at the moment you send it</div>
+          <div><span class="k">Why</span>To work out what you ate and what it contains</div>
+          <div><span class="k">Where it goes</span>Sent to Google (Gemini) to be read, and — for foods our own tables do
+          not cover — a short search query derived from it is sent to Exa</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>The words of a meal, tidied and with <strong>no link to you</strong>,
+          with the figures they came back with; and the search queries derived from
+          them, with what the search found</div>
+          <div><span class="k">Why</span>So the same words give the same figures every time, for everyone,
+          and faster</div>
+          <div><span class="k">Where it goes</span>Our database, in shared caches with <strong>no account id</strong>.
+          Explanations written by the model are not kept there, only the
+          figures</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Per-request technical records: your account id, which model answered,
+          the region setting, <strong>the number of characters you typed</strong>,
+          how many items came back, how long it took, and whether it succeeded</div>
+          <div><span class="k">Why</span>To find slow and failing requests</div>
+          <div><span class="k">Where it goes</span>Our database. <strong>The meal text itself is not recorded here</strong> —
+          only its length</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Individual words our food tables could not recognise, counted by word
+          and region</div>
+          <div><span class="k">Why</span>To decide which foods to add next</div>
+          <div><span class="k">Where it goes</span>Our database, as a running tally with <strong>no account id and no
+          meal text</strong>. Two people typing the same word are indistinguishable
+          from one person typing it twice</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>When you correct an estimate: the food, the portion and the region</div>
+          <div><span class="k">Why</span>To find figures that are wrong for everyone and re-check them against
+          published nutrition data</div>
+          <div><span class="k">Where it goes</span>Our database, as a tally with <strong>no account id and no meal
+          text</strong>. Your correction itself stays on your phone and is applied
+          only to your own journal — it never changes anyone else's figures</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Anonymous usage events — that a meal was logged, how long it took,
+          whether a parse failed</div>
+          <div><span class="k">Why</span>To keep logging fast</div>
+          <div><span class="k">Where it goes</span>Our analytics provider</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Your subscription status: when your free day started, your plan,
+          whether it is in a trial, renewing or ended, its expiry date, and the
+          purchase reference Google Play gives us</div>
+          <div><span class="k">Why</span>To unlock the app for the time you have paid for, and to check with
+          Google Play that a purchase is real</div>
+          <div><span class="k">Where it goes</span>Our database, linked to your account. We never see your card or
+          payment details; Google Play handles the payment</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>A notification token for your phone, your phone's time zone, language
+          setting and install country, the app version, and which kinds of
+          notification you have switched on</div>
+          <div><span class="k">Why</span>To send the notifications you allow: your partner's goal moments,
+          notices about your subscription, occasional news, and a single nudge
+          after a few quiet days. The time zone keeps them out of your night</div>
+          <div><span class="k">Where it goes</span>Our database, linked to your account, and Google's Firebase Cloud
+          Messaging, which delivers them. Deleted when you sign out, when the app
+          is uninstalled and the token expires, or when you delete your
+          account</div>
+        </div>
+        <div class="row opt">
+          <div><span class="tag">Only if you switch on Health Connect</span><br>Your water, if you switch on Health Connect in Settings: each glass
+          you log in Calkey, and the water other apps have logged there</div>
+          <div><span class="k">Why</span>So a glass logged anywhere shows up everywhere. Only water is
+          shared; never what you ate</div>
+          <div><span class="k">Where it goes</span>Health Connect on your phone, under Google's Health Connect
+          permissions, which you can withdraw there or in Calkey's Settings at any
+          time. Nothing read from Health Connect leaves your phone except as part
+          of the water total already described above</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Messages you send us from "Write to us" in the app, with your app
+          version, phone model, country and language</div>
+          <div><span class="k">Why</span>To read and answer them. Your reply comes by email to your account's
+          address. Your meals are never attached</div>
+          <div><span class="k">Where it goes</span>Our database, readable only by us, and our support inbox. Kept 90 days
+          in the database</div>
+        </div>
+        <div class="row">
+          <div><span class="k">Data</span>Crash reports, if the app crashes: where in the code it stopped, your
+          phone model, Android version, the app version, and a random identifier
+          for this installation</div>
+          <div><span class="k">Why</span>To find and fix what made the app crash. Never your meals, and not
+          linked to your account</div>
+          <div><span class="k">Where it goes</span>Google's Firebase Crashlytics, which keeps them for 90 days. On unless
+          you turn off "Send crash reports" in Settings › Data &amp; privacy; turning
+          it off also discards any report not yet sent</div>
+        </div>
+      </div>
+    </section>
 
-  <h2>Who else processes your data</h2>
-  <ul>
-    <li><strong>Google</strong> — sign-in, the language model that reads
-    your meal text, Google Play, which takes subscription payments and
-    tells us whether a subscription is active, Firebase Cloud Messaging,
-    which delivers notifications to your phone, Firebase Crashlytics, which
-    receives crash reports, and Health Connect on your
-    phone, if you switch it on, for water only.</li>
-    <li><strong>Supabase</strong> — the database and server that hold your
-    backup, and the waitlist.</li>
-    <li><strong>Resend</strong> — delivers the messages you send us from the app
-    to our support inbox, our replies from support@calkey.app, and the
-    waitlist's confirmation email and launch invite. It receives the message, your email address and,
-    for messages from the app, the app details listed above.</li>
-    <li><strong>ImprovMX</strong> — forwards email you send to an
-    @calkey.app address, such as support@calkey.app, to our support inbox. It
-    receives that email.</li>
-    <li><strong>Exa</strong> — web search, for foods our tables do not cover. It
-    receives a search query derived from your meal text, not your identity.</li>
-  </ul>
+    <section id="not">
+      <h2><span class="n">03</span>What we do not do</h2>
+      <ul class="nots">
+        <li>We do not sell your data, and we do not share it for advertising.</li>
+        <li>We do not build a profile of you for anyone else. The only person who
+        can see any of your figures is a partner you chose to pair with, and only
+        your daily totals.</li>
+        <li>We do not record your meal text in our technical logs, our food backlog
+        or our correction tallies.</li>
+        <li>We do not use your journal to train our own models.</li>
+        <li>No notification ever contains what you, or your partner, ate.</li>
+      </ul>
+    </section>
 
-  <h2>How long we keep it</h2>
-  <p>Your journal, goals, partner link and subscription status are kept until you
-  delete them or delete your account, and are removed with it. Our per-request
-  technical records (when a meal was parsed, how long it took, whether it
-  failed; never the meal text) lose any link to you when your account is
-  deleted. Messages you send us from the app are deleted from our database
-  after 90 days, or with your account; the copy in our support inbox is kept
-  while we need it to help you. The anonymous tallies of corrections and unrecognised food words
-  never contained your identity, and are kept to improve accuracy.</p>
+    <section id="notifications">
+      <h2><span class="n">04</span>Notifications</h2>
+      <p>Calkey only sends notifications if you allow them when the app asks. Meal
+      reminders are made on your phone itself. Everything else comes from our server:
+      your partner's goal moments, notices about your subscription, occasional news
+      from us, and one gentle nudge if you have not logged for a few days (never
+      more than one a week). We hold them between 22:00 and 08:00 your time, except
+      a payment problem, and send no more than three a day.</p>
+      <p>You can switch partner updates, news and the nudge off in
+      <strong>Settings</strong>, and silence any kind in your phone's notification
+      settings. Subscription notices cannot be switched off in the app, because they
+      are about money you may be charged.</p>
+    </section>
 
-  <h2>Deleting your data</h2>
-  <p>In the app, open <strong>Settings → Delete account</strong>. This removes
-  your account and everything in it, on the phone and on our servers, ends any
-  partner link, and cannot be undone. It does <strong>not</strong> cancel a
-  Google Play subscription, which Google bills, not us: cancel it first in
-  <strong>Google Play → Subscriptions</strong>. If you can no longer open the app,
-  follow the steps on our <a href="delete-account.html">account deletion page</a>
-  or write to <a href="mailto:support@calkey.app">support@calkey.app</a>; we reply within 7 days and complete deletion
-  within 30.</p>
+    <section id="partner">
+      <h2><span class="n">05</span>Sharing with a partner</h2>
+      <div class="callout"><p>Partner sharing is off unless you turn it on. To pair, one of you makes a
+      six-character code in <strong>Settings → Partner</strong> and the other types it
+      in; a code works once and expires after 48 hours. You can be paired with one
+      person at a time.</p></div>
+      <p>Once paired, you each see the other's totals for the day: calories eaten
+      and left against the goal, protein, carbs and fat, water, and the current
+      streak. Neither of you can see what the other ate, the text of any entry, or
+      any history beyond the last few days.</p>
+      <p>Your partner sees the name on your Google account (or the first part of
+      your email address if it has no name), and can rename you on their own
+      phone.</p>
+      <p>Either of you can stop at any time with <strong>Settings → Partner → Stop
+      sharing</strong>. It ends sharing in both directions immediately. Deleting
+      either account also ends it.</p>
+    </section>
 
-  <h2>Children</h2>
-  <p>Calkey is meant for adults and is not directed at anyone under 18. We do
-  not knowingly collect data from children; if you believe a child has created
-  an account, write to us and we will delete it.</p>
+    <section id="waitlist">
+      <h2><span class="n">06</span>The pre-launch waitlist</h2>
+      <p>If you join the waitlist on our website, we store your email address, and
+      if you give them: what you mostly eat, your browser's language setting, the
+      site or link you came from, and whether you voted for an iPhone version. We
+      use them to send you one email when the app is ready for you, to honour the
+      first-month discount promised to everyone on the list, and, in aggregate, to
+      decide which cuisines and countries to support first.</p>
+      <p>When you join, we first send one email with a link, to check the address
+      is yours. Until you tap it you are not on the list and are not counted; if
+      you never tap it, we delete the address 7 days after that email. To stop
+      automated sign-ups we also keep, for at most two days, a count of sign-ups per
+      connection, keyed by a scrambled form of your IP address that changes daily
+      and cannot be turned back into the address.</p>
+      <p>The list is not shared, sold or used for advertising. The page shows only
+      how many people have confirmed. To be removed, write to <a href="mailto:support@calkey.app">support@calkey.app</a>.
+      We delete the whole list within 90 days of the app's public launch, once the
+      launch invites and discounts have gone out.</p>
+    </section>
 
-  <h2>Your rights</h2>
-  <p>Depending on where you live, you may have the right to access, correct,
-  export or delete your personal data, and to object to some processing. Write
-  to <a href="mailto:support@calkey.app">support@calkey.app</a> and we will respond within 30 days.</p>
+    <section id="processors">
+      <h2><span class="n">07</span>Who else processes your data</h2>
+      <ul class="who">
+        <li class="wide"><strong>Google</strong>Sign-in, the language model that reads
+        your meal text, Google Play, which takes subscription payments and
+        tells us whether a subscription is active, Firebase Cloud Messaging,
+        which delivers notifications to your phone, Firebase Crashlytics, which
+        receives crash reports, Play Integrity, which checks that the copy of
+        Calkey talking to our server came from Google Play, and Health Connect on
+        your phone, if you switch it on, for water only.</li>
+        <li><strong>Supabase</strong>The database and server that hold your
+        backup, and the waitlist.</li>
+        <li><strong>Exa</strong>Web search, for foods our tables do not cover. It
+        receives a search query derived from your meal text, not your identity.</li>
+        <li><strong>Resend</strong>Delivers the messages you send us from the app
+        to our support inbox, our replies from support@calkey.app, and the
+        waitlist's confirmation email and launch invite. It receives the message, your email address and,
+        for messages from the app, the app details listed above.</li>
+        <li><strong>ImprovMX</strong>Forwards email you send to an
+        @calkey.app address, such as support@calkey.app, to our support inbox. It
+        receives that email.</li>
+      </ul>
+    </section>
 
-  <h2>Not medical advice</h2>
-  <p>Calkey gives estimates. It does not provide medical advice, diagnosis or
-  treatment, and nothing in it should be used as a substitute for a qualified
-  professional.</p>
+    <section id="keep">
+      <h2><span class="n">08</span>How long we keep it</h2>
+      <p>Your journal, goals, partner link and subscription status are kept until you
+      delete them or delete your account, and are removed with it. Our per-request
+      technical records (when a meal was parsed, how long it took, whether it
+      failed; never the meal text) lose any link to you when your account is
+      deleted. Messages you send us from the app are deleted from our database
+      after 90 days, or with your account; the copy in our support inbox is kept
+      while we need it to help you. The anonymous tallies of corrections and unrecognised food words
+      never contained your identity, and are kept to improve accuracy. The shared
+      caches of meal words and their figures never held a link to you, and are
+      kept with no set end date.</p>
+      <p>When an account is deleted we keep one thing: a scrambled form of its
+      Google account identifier that names no one, with whether its free day was
+      used and whether it was blocked, so the same Google account cannot claim a
+      second free day. It is kept with no set end date.</p>
+    </section>
 
-  <h2>Changes</h2>
-  <p>If this policy changes we will update the date at the top of this page, and
-  say so in the app when the change is significant.</p>
+    <section id="delete">
+      <h2><span class="n">09</span>Deleting your data</h2>
+      <div class="callout"><p>In the app, open <strong>Settings → Account → Delete account</strong>. This removes
+      your account and everything in it, on the phone and on our servers, except the
+      scrambled identifier described above, ends any partner link, and cannot be undone. It does <strong>not</strong> cancel a
+      Google Play subscription, which Google bills, not us: cancel it first in
+      <strong>Google Play → Subscriptions</strong>.</p></div>
+      <p>If you can no longer open the app,
+      follow the steps on our <a href="delete-account.html">account deletion page</a>
+      or write to <a href="mailto:support@calkey.app">support@calkey.app</a>; we reply within 7 days and complete deletion
+      within 30.</p>
+    </section>
 
-  <hr>
-  <p class="sub"><a href="./index.html">← Calkey</a></p>
-</main>
+    <section id="children">
+      <h2><span class="n">10</span>Children</h2>
+      <p>Calkey is meant for adults and is not directed at anyone under 18. We do
+      not knowingly collect data from children; if you believe a child has created
+      an account, write to us and we will delete it.</p>
+    </section>
+
+    <section id="rights">
+      <h2><span class="n">11</span>Your rights</h2>
+      <p>Depending on where you live, you may have the right to access, correct,
+      export or delete your personal data, and to object to some processing. Write
+      to <a href="mailto:support@calkey.app">support@calkey.app</a> and we will respond within 30 days.</p>
+    </section>
+
+    <section id="medical">
+      <h2><span class="n">12</span>Not medical advice</h2>
+      <p>Calkey gives estimates. It does not provide medical advice, diagnosis or
+      treatment, and nothing in it should be used as a substitute for a qualified
+      professional.</p>
+    </section>
+
+    <section id="changes">
+      <h2><span class="n">13</span>Changes</h2>
+      <p>If this policy changes we will update the date at the top of this page, and
+      say so in the app when the change is significant.</p>
+      <div class="contact">
+        <div><b>Questions about your data?</b><span>Write to us and we will respond within 30 days.</span></div>
+        <a class="btn" href="mailto:support@calkey.app"><svg width="18" height="18" aria-hidden="true"><use href="#i-mail"/></svg>support@calkey.app</a>
+      </div>
+    </section>
+  </article>
+</div>
+
+<footer><div class="wrap">
+  <a class="brand" href="./index.html" style="font-size:19px"><svg style="width:24px;height:24px;border-radius:7px"><use href="#mark"/></svg>calkey</a>
+  <span>© 2026 Interludeapps · Estimates, not medical advice · <a href="delete-account.html">Delete account</a></span>
+</div></footer>
+
+<script>
+  // The contents list marks the section you are reading.
+  (() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const byId = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(a => a.classList.remove("on"));
+      byId.get(e.target.id)?.classList.add("on");
+    }), { rootMargin: "-20% 0px -70% 0px" });
+    document.querySelectorAll("article section").forEach(s => io.observe(s));
+    // The last sections are too short to reach the band; at the very bottom, mark the last one.
+    addEventListener("scroll", () => {
+      if (innerHeight + scrollY < document.documentElement.scrollHeight - 4) return;
+      links.forEach(a => a.classList.remove("on")); links[links.length - 1].classList.add("on");
+    }, { passive: true });
+  })();
+</script>
 </body>
 </html>
