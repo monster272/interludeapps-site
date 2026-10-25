@@ -46,7 +46,8 @@
       "@id": "https://calkey.app/#publisher",
       "name": "Interludeapps",
       "url": "https://interludeapps.store/",
-      "email": "support@calkey.app"
+      "email": "support@calkey.app",
+      "sameAs": ["https://www.instagram.com/calkey.app/"]
     },
     {
       "@type": "WebSite",
@@ -87,8 +88,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- The fonts load without holding up the first paint: text shows at once in the fallback and swaps. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=optional"></noscript>
 <script>
   // The intro plays once per visit, never with reduced motion. Decided before
   // first paint so the page never flashes underneath it.
@@ -422,6 +423,9 @@ h2 em{font-style:normal;color:var(--a)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--e),transform .8s var(--eo)}
 .rv.in{opacity:1;transform:none}
 .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+/* room for the waitlist form before the script mounts it, so the phone beside it never jumps */
+[data-join]:empty{min-height:265px}
+@media (max-width:640px){ [data-join]:empty{min-height:399px} }
 
 /* ========================================================= 01 · partner */
 .partner{background:radial-gradient(120% 60% at 80% 0%,color-mix(in srgb,var(--as) 70%,transparent),transparent 60%),var(--night)}
@@ -1356,6 +1360,9 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
     setTimeout(open, 2050);
     $("[data-curtain]").addEventListener("click", open);
     addEventListener("keydown", open, { once: true });
+    // The hero settles behind the curtain, so it is already on the page when the
+    // ring opens (and counts as painted for the phone's loading measure).
+    $$(".hero .rv").forEach(el => el.classList.add("in"));
   }
 
   // -------------------------------------------------------- scroll + nav
