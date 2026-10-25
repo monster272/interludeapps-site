@@ -2056,6 +2056,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
       body: JSON.stringify({ email, cuisine, locale: navigator.language || null, source, platform, website: website || "" })
     });
     const res = await r.json().catch(() => ({}));
+    if (r.ok) calkeyStat("waitlist_join", { platform, source: source || null, state: res.status || null });
     if (!r.ok) throw Object.assign(new Error(JOIN_ERRORS[r.status] || "Something went wrong on our side. Try again in a moment?"), { status: r.status });
     if (res.status === "confirmed") {
       try { localStorage.setItem("calkey_joined", JSON.stringify({ ...res, email })); localStorage.removeItem("calkey_pending"); } catch {}
@@ -2172,5 +2173,6 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
     document.head.appendChild(s);
   })();
 </script>
+<script src="stats.js" defer></script>
 </body>
 </html>

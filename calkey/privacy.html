@@ -178,7 +178,7 @@
   <p class="kick">Privacy policy</p>
   <h1>Your journal is <em>yours</em>.</h1>
   <p class="lede">What Calkey collects, why, where it goes, and what it never does. Written to be read, not skimmed past.</p>
-  <div class="meta"><span>Calkey — AI calorie tracker</span><span>Last updated 23 October 2026</span><span>Published by Interludeapps</span></div>
+  <div class="meta"><span>Calkey — AI calorie tracker</span><span>Last updated 25 October 2026</span><span>Published by Interludeapps</span></div>
 
   <div class="glance" aria-label="At a glance">
     <div class="g"><svg aria-hidden="true"><use href="#i-tag"/></svg><b>Never sold</b><span>We do not sell your data, and we do not share it for advertising.</span></div>
@@ -197,7 +197,7 @@
       <li><a href="#not">What we do not do</a></li>
       <li><a href="#notifications">Notifications</a></li>
       <li><a href="#partner">Sharing with a partner</a></li>
-      <li><a href="#waitlist">The pre-launch waitlist</a></li>
+      <li><a href="#waitlist">Our website and the pre-launch waitlist</a></li>
       <li><a href="#processors">Who else processes your data</a></li>
       <li><a href="#keep">How long we keep it</a></li>
       <li><a href="#delete">Deleting your data</a></li>
@@ -393,7 +393,17 @@
     </section>
 
     <section id="waitlist">
-      <h2><span class="n">06</span>The pre-launch waitlist</h2>
+      <h2><span class="n">06</span>Our website and the pre-launch waitlist</h2>
+      <p id="website">When you visit calkey.app, we count the visit with PostHog, in its
+      EU region: which page you opened and how long it stayed open, the address of
+      the page without any codes in it (except a short tag such as "?ref=instagram"
+      on links we share), the site that sent you, your browser, device type, screen
+      size and language, and, if you join the waitlist, that you did, whether for
+      Android or iPhone. No cookies are set and nothing is saved on your device, so
+      each visit is counted on its own and is never tied to you, to your email, or
+      to an account. Your IP address is not used to locate you and is not stored.
+      If your browser sends "Do Not Track" or "Global Privacy Control", nothing is
+      counted at all. The page that confirms your email counts nothing.</p>
       <p>If you join the waitlist on our website, we store your email address, and
       if you give them: what you mostly eat, your browser's language setting, the
       site or link you came from, and whether you voted for an iPhone version. We
@@ -425,8 +435,9 @@
         <li><strong>Supabase</strong>The database and server that hold your
         backup, and the waitlist.</li>
         <li><strong>PostHog</strong>Receives the anonymous usage statistics
-        described above, if "Share usage statistics" is on. It never receives your
-        meals, figures or identity.</li>
+        described above, if "Share usage statistics" is on, and the anonymous visit
+        counts from our website. It never receives your meals, figures, email or
+        identity.</li>
         <li><strong>Exa</strong>Web search, for foods our tables do not cover. It
         receives a search query derived from your meal text, not your identity.</li>
         <li><strong>Resend</strong>Delivers the messages you send us from the app
@@ -450,8 +461,8 @@
       while we need it to help you. The anonymous tallies of corrections and unrecognised food words
       never contained your identity, and are kept to improve accuracy. The shared
       caches of meal words and their figures never held a link to you, and are
-      kept with no set end date. Usage statistics are kept by PostHog for up to a
-      year and are not linked to your account.</p>
+      kept with no set end date. Usage statistics and website visit counts are kept
+      by PostHog for up to a year and are not linked to your account.</p>
       <p>When an account is deleted we keep one thing: a scrambled form of its
       Google account identifier that names no one, with whether its free day was
       used and whether it was blocked, so the same Google account cannot claim a
@@ -527,5 +538,6 @@
     }, { passive: true });
   })();
 </script>
+<script src="stats.js" defer></script>
 </body>
 </html>
