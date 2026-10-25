@@ -423,6 +423,8 @@ h2 em{font-style:normal;color:var(--a)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--e),transform .8s var(--eo)}
 .rv.in{opacity:1;transform:none}
 .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+/* The hero is there in the first paint, not after the script: it is what a phone measures the page by. */
+.hero .rv{opacity:1;transform:none;transition:none}
 /* room for the waitlist form before the script mounts it, so the phone beside it never jumps */
 [data-join]:empty{min-height:265px}
 @media (max-width:640px){ [data-join]:empty{min-height:399px} }
@@ -1360,9 +1362,6 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
     setTimeout(open, 2050);
     $("[data-curtain]").addEventListener("click", open);
     addEventListener("keydown", open, { once: true });
-    // The hero settles behind the curtain, so it is already on the page when the
-    // ring opens (and counts as painted for the phone's loading measure).
-    $$(".hero .rv").forEach(el => el.classList.add("in"));
   }
 
   // -------------------------------------------------------- scroll + nav
