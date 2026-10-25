@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-wear="periwinkle">
+<html lang="en" data-wear="tidal">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +28,7 @@
 <meta name="twitter:title" content="Calkey: AI calorie & macro tracker">
 <meta name="twitter:description" content="Log calories and macros by typing what you ate, in your own language. Early access on Android.">
 <meta name="twitter:image" content="https://calkey.app/og-image.png">
-<meta name="theme-color" content="#EAE9EE">
+<meta name="theme-color" content="#F4F4F1">
 <meta name="application-name" content="Calkey">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48">
@@ -102,38 +102,39 @@
 </script>
 <style>
 /* ===================================================================== tokens
-   The app's own values (design B, 23 Oct 2026): the grey page, cards, navy ink
-   and cream panel from ui/theme/Color.kt, the navy night for the dark sections,
-   the six colours from ui/theme/BrandPalettes.kt (each in its light AND its dark
-   values, *L and *D), and the icon's paper, navy and pens from docs/brand/ring.
-   The page is light; a .night section takes the dark set. The accent set is
-   registered so that wearing a colour cross-fades the page. */
-@property --a   { syntax: "<color>"; inherits: true; initial-value: #5146D6; }
-@property --af  { syntax: "<color>"; inherits: true; initial-value: #090124; }
+   The app's own values (Tidal, 24 Oct 2026): the cloud page, white cards, Deep
+   Ink and the panel from ui/theme/Color.kt, the Abyss night for the dark
+   sections, the six colours from ui/theme/BrandPalettes.kt (each in its light AND
+   its dark values, *L and *D), and the icon's tile, Foam ring and pens from
+   docs/brand/ring. The page is light; a .night section takes the dark set. The
+   accent set is registered so that wearing a colour cross-fades the page. */
+@property --a   { syntax: "<color>"; inherits: true; initial-value: #0B6B74; }
+@property --af  { syntax: "<color>"; inherits: true; initial-value: #0B6B74; }
 @property --aon { syntax: "<color>"; inherits: true; initial-value: #FFFFFF; }
-@property --as  { syntax: "<color>"; inherits: true; initial-value: #DCD9FA; }
-@property --pen { syntax: "<color>"; inherits: true; initial-value: #5D51E1; }
-@property --mp  { syntax: "<color>"; inherits: true; initial-value: #057168; }
-@property --mc  { syntax: "<color>"; inherits: true; initial-value: #9A4F00; }
-@property --mf  { syntax: "<color>"; inherits: true; initial-value: #B03A70; }
-@property --fl  { syntax: "<color>"; inherits: true; initial-value: #C2560C; }
-@property --chk { syntax: "<color>"; inherits: true; initial-value: #FAC775; }
-@property --chkInk { syntax: "<color>"; inherits: true; initial-value: #633806; }
+@property --as  { syntax: "<color>"; inherits: true; initial-value: #D2EEEA; }
+@property --pen { syntax: "<color>"; inherits: true; initial-value: #0B6B74; }
+@property --mp  { syntax: "<color>"; inherits: true; initial-value: #5A45D8; }
+@property --mc  { syntax: "<color>"; inherits: true; initial-value: #8C5F00; }
+@property --mf  { syntax: "<color>"; inherits: true; initial-value: #A8326F; }
+@property --fl  { syntax: "<color>"; inherits: true; initial-value: #06474D; }
+@property --chk { syntax: "<color>"; inherits: true; initial-value: #FFE2C2; }
+@property --chkInk { syntax: "<color>"; inherits: true; initial-value: #6B3300; }
 
 :root{
   /* --night is "this section's page", whichever theme the section wears. */
-  --night:#EAE9EE; --night2:#E5E4EA; --float:#F8F7FB; --sunk:#DEDCE6;
-  --ink:#090124; --soft:#47425E; --faint:#605A73; --rule:#D6D4DE; --panel:#FAE7C8;
-  --good:#1F7A46; --water:#1E7FD0;
-  --shadow:0 18px 40px -20px rgba(9,1,36,.28); --phoneShadow:0 50px 90px -40px rgba(9,1,36,.55);
-  --errBg:#FDECC8; --errInk:#633806;
+  --night:#F4F4F1; --night2:#E8F1EE; --float:#FFFFFF; --sunk:#EBEDE9;
+  --ink:#0C1B1F; --soft:#3F5257; --faint:#5C6E72; --rule:#DDE2E0; --panel:#E3F3F0;
+  --good:#1A7A47; --water:#1D66B0;
+  --shadow:0 18px 40px -20px rgba(12,27,31,.28); --phoneShadow:0 50px 90px -40px rgba(12,27,31,.55);
+  --errBg:#FFE2C2; --errInk:#6B3300;
   /* the icon's own colours: they never change with the theme */
-  --paper:#EFE7D8; --navy:#090124; --nightBg:#0E0A24;
+  --paper:#0C1B1F; --foam:#EDF3F1; --navy:#0C1B1F; --nightBg:#081215; --penIcon:#45D0D4;
+  --tile:linear-gradient(135deg,#0C1B1F 38%,#11555B);
   --display:"Fraunces",Georgia,serif;
   --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --rs:8px; --rm:16px; --rl:24px; --rx:34px;
   --e:cubic-bezier(.2,0,0,1); --eo:cubic-bezier(.05,.7,.1,1); --spring:cubic-bezier(.34,1.3,.64,1);
-  --ipen:var(--pen);
+  --ipen:var(--penIcon);
   --a:var(--aL); --af:var(--afL); --aon:var(--aonL); --as:var(--asL);
   --mp:var(--mpL); --mc:var(--mcL); --mf:var(--mfL); --fl:var(--flL); --chk:var(--chkL); --chkInk:var(--chkInkL);
   color-scheme:light;
@@ -142,34 +143,34 @@
   transition:--a .7s var(--e),--af .7s var(--e),--aon .7s var(--e),--as .7s var(--e),--pen .7s var(--e),
              --mp .7s var(--e),--mc .7s var(--e),--mf .7s var(--e),--fl .7s var(--e),--chk .7s var(--e),--chkInk .7s var(--e);
 }
-/* The navy night (DarkLedgerColors): partner, colours and the last call. */
+/* The Abyss night (DarkLedgerColors): partner, colours and the last call. */
 .night,nav.onnight{
-  --night:#0E0A24; --night2:#0B081E; --float:#1A1538; --sunk:#251F48;
-  --ink:#F5EBDD; --soft:#CBC3D9; --faint:#9C94B2; --rule:#2C2652; --panel:#2B2347;
-  --good:#3DDC84; --water:#5AB8FF;
+  --night:#081215; --night2:#0B1A1E; --float:#0F1D21; --sunk:#16272C;
+  --ink:#EDF3F1; --soft:#B4C4C2; --faint:#8B9E9D; --rule:#1F3237; --panel:#12292D;
+  --good:#4ADE8A; --water:#6CB4FF;
   --shadow:0 18px 40px -18px rgba(0,0,0,.75); --phoneShadow:0 50px 90px -40px rgba(0,0,0,.9);
-  --errBg:#3A2A10; --errInk:#FAC775;
+  --errBg:#3A2510; --errInk:#FFCF99;
   --a:var(--aD); --af:var(--afD); --aon:var(--aonD); --as:var(--asD);
   --mp:var(--mpD); --mc:var(--mcD); --mf:var(--mfD); --fl:var(--flD); --chk:var(--chkD); --chkInk:var(--chkInkD);
   color-scheme:dark;
 }
-/* Periwinkle is everyone's from day one. It is too light to be text on grey, so
-   the light page writes it in its deeper shade and fills buttons with navy. */
-:root[data-wear="periwinkle"]{--pen:#5D51E1;
-  --aL:#5146D6;--afL:#090124;--aonL:#FFFFFF;--asL:#DCD9FA;--mpL:#057168;--mcL:#9A4F00;--mfL:#B03A70;--flL:#C2560C;--chkL:#FAC775;--chkInkL:#633806;
-  --aD:#B9B4F2;--afD:#B9B4F2;--aonD:#090124;--asD:#2E2760;--mpD:#65DDCF;--mcD:#F2B05E;--mfD:#EA78A8;--flD:#FF8A3D;--chkD:#FAC775;--chkInkD:#633806}
-:root[data-wear="pistachio"]{--pen:#548A04;
-  --aL:#3E6804;--afL:#7DB24A;--aonL:#141414;--asL:#E0F2D3;--mpL:#AB8308;--mcL:#00767F;--mfL:#B24FE0;--flL:#E75D1C;--chkL:#FAC775;--chkInkL:#633806;
-  --aD:#7DB24A;--afD:#7DB24A;--aonD:#141414;--asD:#223412;--mpD:#F5C542;--mcD:#74DFEB;--mfD:#D96BFF;--flD:#FF8A3D;--chkD:#FAC775;--chkInkD:#633806}
-:root[data-wear="beet"]{--pen:#C0396F;
-  --aL:#8E1F4E;--afL:#8E1F4E;--aonL:#FFFFFF;--asL:#FEE3EA;--mpL:#AB8308;--mcL:#00767F;--mfL:#B24FE0;--flL:#E75D1C;--chkL:#FAC775;--chkInkL:#633806;
-  --aD:#EC779F;--afD:#A93A64;--aonD:#FFFFFF;--asD:#46202D;--mpD:#F5C542;--mcD:#74DFEB;--mfD:#D96BFF;--flD:#FF8A3D;--chkD:#FAC775;--chkInkD:#633806}
-:root[data-wear="chai"]{--pen:#6F5446;
-  --aL:#7C552B;--afL:#9A6D3D;--aonL:#FFFFFF;--asL:#FCE7D3;--mpL:#057168;--mcL:#3D4DA3;--mfL:#CB5C8C;--flL:#A47545;--chkL:#96AEC7;--chkInkL:#122334;
-  --aD:#D9A877;--afD:#D9A877;--aonD:#141414;--asD:#3D2915;--mpD:#65DDCF;--mcD:#98AEFE;--mfD:#EA78A8;--flD:#D9A877;--chkD:#96AEC7;--chkInkD:#122334}
-:root[data-wear="saffron"]{--pen:#C06A00;
-  --aL:#7E5502;--afL:#E8A00E;--aonL:#141414;--asL:#FDE8CA;--mpL:#057168;--mcL:#3D4DA3;--mfL:#CB5C8C;--flL:#AA7405;--chkL:#96AEC7;--chkInkL:#122334;
-  --aD:#E8A00E;--afD:#E8A00E;--aonD:#141414;--asD:#3F2903;--mpD:#65DDCF;--mcD:#98AEFE;--mfD:#EA78A8;--flD:#E8A00E;--chkD:#96AEC7;--chkInkD:#122334}
+/* Tidal is everyone's from day one; the others unlock with the streak (domain/AccentUnlocks).
+   --pen draws on the light page, --penIcon is the app icon's pen (each colour's night accent). */
+:root[data-wear="tidal"]{--pen:#0B6B74;--penIcon:#45D0D4;
+  --aL:#0B6B74;--afL:#0B6B74;--aonL:#FFFFFF;--asL:#D2EEEA;--mpL:#5A45D8;--mcL:#8C5F00;--mfL:#A8326F;--flL:#06474D;--chkL:#FFE2C2;--chkInkL:#6B3300;
+  --aD:#45D0D4;--afD:#45D0D4;--aonD:#081215;--asD:#133A3E;--mpD:#A79BFF;--mcD:#F2C94C;--mfD:#F17DB8;--flD:#CFF24A;--chkD:#3A2510;--chkInkD:#FFCF99}
+:root[data-wear="volt"]{--pen:#4D6A00;--penIcon:#CFF24A;
+  --aL:#4D6A00;--afL:#C6F035;--aonL:#0C1B1F;--asL:#EAF8C2;--mpL:#5A45D8;--mcL:#8C5F00;--mfL:#A8326F;--flL:#06474D;--chkL:#FFE2C2;--chkInkL:#6B3300;
+  --aD:#CFF24A;--afD:#CFF24A;--aonD:#081215;--asD:#2A3510;--mpD:#A79BFF;--mcD:#F2C94C;--mfD:#F17DB8;--flD:#CFF24A;--chkD:#3A2510;--chkInkD:#FFCF99}
+:root[data-wear="iris"]{--pen:#5A45D8;--penIcon:#A79BFF;
+  --aL:#5A45D8;--afL:#5A45D8;--aonL:#FFFFFF;--asL:#E6E2FB;--mpL:#0B6B74;--mcL:#8C5F00;--mfL:#A8326F;--flL:#06474D;--chkL:#FFE2C2;--chkInkL:#6B3300;
+  --aD:#A79BFF;--afD:#A79BFF;--aonD:#081215;--asD:#26214A;--mpD:#45D0D4;--mcD:#F2C94C;--mfD:#F17DB8;--flD:#CFF24A;--chkD:#3A2510;--chkInkD:#FFCF99}
+:root[data-wear="sky"]{--pen:#1D66B0;--penIcon:#6CB4FF;
+  --aL:#1D66B0;--afL:#1D66B0;--aonL:#FFFFFF;--asL:#DCEAF8;--mpL:#5A45D8;--mcL:#8C5F00;--mfL:#A8326F;--flL:#06474D;--chkL:#FFE2C2;--chkInkL:#6B3300;
+  --aD:#6CB4FF;--afD:#6CB4FF;--aonD:#081215;--asD:#15304C;--mpD:#A79BFF;--mcD:#F2C94C;--mfD:#F17DB8;--flD:#CFF24A;--chkD:#3A2510;--chkInkD:#FFCF99}
+:root[data-wear="berry"]{--pen:#A8326F;--penIcon:#F17DB8;
+  --aL:#A8326F;--afL:#A8326F;--aonL:#FFFFFF;--asL:#F6E0EB;--mpL:#5A45D8;--mcL:#8C5F00;--mfL:#0B6B74;--flL:#06474D;--chkL:#FFE2C2;--chkInkL:#6B3300;
+  --aD:#F17DB8;--afD:#F17DB8;--aonD:#081215;--asD:#3F1A2E;--mpD:#A79BFF;--mcD:#F2C94C;--mfD:#45D0D4;--flD:#CFF24A;--chkD:#3A2510;--chkInkD:#FFCF99}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -194,8 +195,8 @@ img,svg{display:block}
           mask:radial-gradient(circle at 50% 50%,transparent var(--hole),#000 calc(var(--hole) + 1px));
   animation:hole .75s cubic-bezier(.6,0,.2,1) 1.25s forwards}
 .intro .curtain svg{width:120px;height:120px;overflow:visible;animation:markOut .75s cubic-bezier(.6,0,.2,1) 1.25s forwards}
-.curtain .arc{fill:none;stroke:var(--paper);stroke-width:10.875;stroke-dasharray:76 200;stroke-dashoffset:76;animation:draw .8s var(--e) .1s forwards}
-.curtain .pen{fill:#B9B4F2;opacity:0;animation:penIn .2s .75s forwards,blink .5s steps(1) .95s 1}
+.curtain .arc{fill:none;stroke:var(--foam);stroke-width:10.875;stroke-dasharray:76 200;stroke-dashoffset:76;animation:draw .8s var(--e) .1s forwards}
+.curtain .pen{fill:#C6F035;opacity:0;animation:penIn .2s .75s forwards,blink .5s steps(1) .95s 1}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes penIn{to{opacity:1}}
 @keyframes blink{50%{opacity:0}}
@@ -285,8 +286,8 @@ h1 .l2{display:block;color:var(--a)}
 /* The totals capsule wears the OTHER theme (LocalInverseLedgerColors): navy on the
    grey page, pale on the navy night. */
 .cap{flex:1;min-width:0;display:flex;align-items:baseline;gap:5px;border-radius:999px;padding:11px 14px;box-shadow:var(--shadow);white-space:nowrap;overflow:hidden;cursor:default;
-  background:#1A1538;color:#F5EBDD;--soft:#CBC3D9;--a:var(--aD);--mp:var(--mpD);--mc:var(--mcD);--mf:var(--mfD)}
-.night .cap{background:#F8F7FB;color:#090124;--soft:#47425E;--a:var(--aL);--mp:var(--mpL);--mc:var(--mcL);--mf:var(--mfL)}
+  background:#0C1B1F;color:#EDF3F1;--soft:#B4C4C2;--a:var(--aD);--mp:var(--mpD);--mc:var(--mcD);--mf:var(--mfD)}
+.night .cap{background:#FFFFFF;color:#0C1B1F;--soft:#3F5257;--a:var(--aL);--mp:var(--mpL);--mc:var(--mcL);--mf:var(--mfL)}
 .cap b{font:600 19px var(--display);font-variant-numeric:tabular-nums}
 .cap small{font-size:11.5px;color:var(--soft)}
 .cap .m{font-size:11.5px;color:var(--soft);font-variant-numeric:tabular-nums;margin-left:auto}
@@ -300,7 +301,7 @@ h1 .l2{display:block;color:var(--a)}
 .P{color:var(--mp)}.C{color:var(--mc)}.F{color:var(--mf)}
 
 /* half-height today sheet: no scrim, the journal stays lit above it */
-.sheet{position:absolute;left:0;right:0;bottom:0;height:56%;background:var(--float);border-radius:30px 30px 0 0;padding:10px 18px 0;box-shadow:0 -20px 50px -24px rgba(9,1,36,.45);transform:translateY(105%);transition:transform .5s var(--eo);z-index:4}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:56%;background:var(--float);border-radius:30px 30px 0 0;padding:10px 18px 0;box-shadow:0 -20px 50px -24px rgba(12,27,31,.45);transform:translateY(105%);transition:transform .5s var(--eo);z-index:4}
 .night .sheet{box-shadow:0 -20px 50px -20px rgba(0,0,0,.8)}
 .sheet.up{transform:none}
 .grab{width:34px;height:4px;border-radius:999px;background:var(--sunk);margin:0 auto 14px}
@@ -427,7 +428,7 @@ h2 em{font-style:normal;color:var(--a)}
 .colours{background:radial-gradient(90% 55% at 50% 100%,color-mix(in srgb,var(--as) 80%,transparent),transparent 65%),var(--night)}
 .scrolly{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px}
 .steps{padding:6vh 0 20vh}
-.step{min-height:68vh;display:flex;flex-direction:column;justify-content:center;opacity:.6;transition:opacity .5s var(--e)}
+.step{min-height:68vh;display:flex;flex-direction:column;justify-content:center;opacity:.68;transition:opacity .5s var(--e)}
 .step.on{opacity:1}
 .step .i{font:600 14px var(--display);color:var(--a);letter-spacing:.06em;margin-bottom:10px}
 .step h3{font:600 clamp(26px,2.6vw,34px)/1.12 var(--display);letter-spacing:-.03em;margin:0 0 12px}
@@ -524,7 +525,7 @@ h2 em{font-style:normal;color:var(--a)}
 .globe .pin text{font:600 13px var(--sans);fill:var(--ink)}
 .globe .pin .lbl{fill:var(--float);stroke:var(--ink);stroke-width:1}
 .globe .arc{fill:none;stroke:var(--pen);stroke-width:1.8;stroke-linecap:round}
-.mcard{background:var(--float);border:1px solid var(--rule);border-radius:var(--rx);padding:26px;box-shadow:0 30px 60px -36px rgba(9,1,36,.35)}
+.mcard{background:var(--float);border:1px solid var(--rule);border-radius:var(--rx);padding:26px;box-shadow:0 30px 60px -36px rgba(12,27,31,.35)}
 .wtabs{display:inline-flex;background:var(--sunk);border-radius:999px;padding:4px;margin-bottom:20px}
 .wtabs button{font:600 15px var(--sans);border:0;background:none;color:var(--soft);padding:8px 20px;border-radius:999px;cursor:pointer;min-height:40px;transition:background .3s,color .3s}
 .wtabs button[aria-selected="true"]{background:var(--ink);color:var(--float)}
@@ -827,8 +828,9 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
     <path id="ring" d="M62.213,29.734 A25,25 0 1 0 62.213,78.266 A1.3,1.3 0 0 0 63.2,77.004 L63.2,68.333 A1.3,1.3 0 0 0 61.42,67.125 A14.125,14.125 0 1 1 61.42,40.875 A1.3,1.3 0 0 0 63.2,39.667 L63.2,30.996 A1.3,1.3 0 0 0 62.213,29.734 Z"/>
     <path id="cursor" d="M69.394,38.222 H72.231 A1.3,1.3 0 0 1 73.531,39.522 V68.478 A1.3,1.3 0 0 1 72.231,69.778 H69.394 A1.3,1.3 0 0 1 68.094,68.478 V39.522 A1.3,1.3 0 0 1 69.394,38.222 Z"/>
   </defs>
-  <symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="#EFE7D8"/><use href="#ring" fill="#090124"/><use href="#cursor" class="pen" style="fill:var(--ipen)"/></symbol>
-  <symbol id="mark-default" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="#EFE7D8"/><use href="#ring" fill="#090124"/><use href="#cursor" fill="#5D51E1"/></symbol>
+  <linearGradient id="tile" gradientUnits="userSpaceOnUse" x1="18" y1="18" x2="90" y2="90"><stop offset="0" stop-color="#0C1B1F"/><stop offset=".38" stop-color="#0C1B1F"/><stop offset="1" stop-color="#11555B"/></linearGradient>
+  <symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="url(#tile)"/><use href="#ring" fill="#EDF3F1"/><use href="#cursor" class="pen" style="fill:var(--ipen)"/></symbol>
+  <symbol id="mark-default" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="url(#tile)"/><use href="#ring" fill="#EDF3F1"/><use href="#cursor" fill="#45D0D4"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-flame" viewBox="0 0 24 24"><path fill="currentColor" d="M19.48 12.35c-1.57-4.08-7.16-4.3-5.81-10.23.1-.44-.37-.78-.75-.55C9.29 3.71 6.68 8 8.87 13.62c.18.46-.36.89-.75.59-1.81-1.37-2-3.34-1.84-4.75.06-.52-.62-.77-.91-.34C4.69 10.16 4 11.84 4 14.37c.38 5.6 5.11 7.32 6.81 7.54 2.43.31 5.06-.14 6.95-1.87 2.08-1.93 2.84-5.01 1.72-7.69zM10.2 17.38c1.44-.35 2.18-1.39 2.38-2.31.33-1.43-.96-2.83-.09-5.09.33 1.87 3.27 3.04 3.27 5.08.08 2.53-2.66 4.7-5.56 2.32z"/></symbol>
   <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></g></symbol>
@@ -1208,14 +1210,14 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
 <section class="night colours" id="colours"><div class="wrap">
   <p class="kick rv">Colours you earn</p>
   <h2 class="split">Keep going and <em>spell CALKEY</em>.</h2>
-  <p class="sub rv">Calkey starts in Periwinkle. Log every day and new colours unlock, one letter at a time: Pistachio at 3 days, Beet at 7, Chai at 14, Saffron at 30. The last letter is a secret. Everyone earns them, nobody can buy them, and an earned colour is yours for good. <b>Scroll to run the streak, or tap a letter to try it on this page.</b></p>
+  <p class="sub rv">Calkey starts in Tidal. Log every day and new colours unlock, one letter at a time: Volt at 3 days, Iris at 7, Sky at 14, Berry at 30. The last letter is a secret. Everyone earns them, nobody can buy them, and an earned colour is yours for good. <b>Scroll to run the streak, or tap a letter to try it on this page.</b></p>
 
   <div class="spell" data-spell>
-    <button class="lt" data-wear="periwinkle" data-at="0" style="--c:#B9B4F2" aria-label="C: wear Periwinkle, everyone's from day one">C<span class="fill" aria-hidden="true">C</span><span class="tip" aria-hidden="true"><b>Periwinkle</b>Day 1</span></button>
-    <button class="lt" data-wear="pistachio" data-at="3" style="--c:#7DB24A" aria-label="A: wear Pistachio, unlocked at a 3-day streak">A<span class="fill" aria-hidden="true">A</span><span class="tip" aria-hidden="true"><b>Pistachio</b>3 days</span></button>
-    <button class="lt" data-wear="beet" data-at="7" style="--c:#EC779F" aria-label="L: wear Beet, unlocked at a 7-day streak">L<span class="fill" aria-hidden="true">L</span><span class="tip" aria-hidden="true"><b>Beet</b>7 days</span></button>
-    <button class="lt" data-wear="chai" data-at="14" style="--c:#D9A877" aria-label="K: wear Chai, unlocked at a 14-day streak">K<span class="fill" aria-hidden="true">K</span><span class="tip" aria-hidden="true"><b>Chai</b>14 days</span></button>
-    <button class="lt" data-wear="saffron" data-at="30" style="--c:#E8A00E" aria-label="E: wear Saffron, unlocked at a 30-day streak">E<span class="fill" aria-hidden="true">E</span><span class="tip" aria-hidden="true"><b>Saffron</b>30 days</span></button>
+    <button class="lt" data-wear="tidal" data-at="0" style="--c:#45D0D4" aria-label="C: wear Tidal, everyone's from day one">C<span class="fill" aria-hidden="true">C</span><span class="tip" aria-hidden="true"><b>Tidal</b>Day 1</span></button>
+    <button class="lt" data-wear="volt" data-at="3" style="--c:#CFF24A" aria-label="A: wear Volt, unlocked at a 3-day streak">A<span class="fill" aria-hidden="true">A</span><span class="tip" aria-hidden="true"><b>Volt</b>3 days</span></button>
+    <button class="lt" data-wear="iris" data-at="7" style="--c:#A79BFF" aria-label="L: wear Iris, unlocked at a 7-day streak">L<span class="fill" aria-hidden="true">L</span><span class="tip" aria-hidden="true"><b>Iris</b>7 days</span></button>
+    <button class="lt" data-wear="sky" data-at="14" style="--c:#6CB4FF" aria-label="K: wear Sky, unlocked at a 14-day streak">K<span class="fill" aria-hidden="true">K</span><span class="tip" aria-hidden="true"><b>Sky</b>14 days</span></button>
+    <button class="lt" data-wear="berry" data-at="30" style="--c:#F17DB8" aria-label="E: wear Berry, unlocked at a 30-day streak">E<span class="fill" aria-hidden="true">E</span><span class="tip" aria-hidden="true"><b>Berry</b>30 days</span></button>
     <button class="lt secret" data-secret aria-label="Y: a secret colour, at a 60-day streak">Y<span class="tip" aria-hidden="true"><b>A secret</b>60 days</span></button>
   </div>
 
@@ -1762,18 +1764,18 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   const css = n => getComputedStyle(root).getPropertyValue(n).trim();
   function draw(now = performance.now()) {
     if (!W) return;
-    const R = W * .42, cx = W / 2, cy = W / 2, pen = css("--pen") || "#5D51E1";
+    const R = W * .42, cx = W / 2, cy = W / 2, pen = css("--pen") || "#0B6B74";
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, W, W);
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fillStyle = "#F8F7FB"; ctx.fill();
-    ctx.lineWidth = 1.2; ctx.strokeStyle = "rgba(9,1,36,.85)"; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fillStyle = "#FFFFFF"; ctx.fill();
+    ctx.lineWidth = 1.2; ctx.strokeStyle = "rgba(12,27,31,.85)"; ctx.stroke();
     // graticule
-    ctx.lineWidth = .7; ctx.strokeStyle = "rgba(9,1,36,.14)";
+    ctx.lineWidth = .7; ctx.strokeStyle = "rgba(12,27,31,.14)";
     const line = pts => { ctx.beginPath(); let on = false; for (const v of pts) { const [x, y, z] = proj(v); if (z > 0) { on ? ctx.lineTo(cx + R * x, cy - R * y) : ctx.moveTo(cx + R * x, cy - R * y); on = true; } else on = false; } ctx.stroke(); };
     for (let lon = -180; lon < 180; lon += 30) { const pts = []; for (let lat = -90; lat <= 90; lat += 5) pts.push(vec(lat, lon)); line(pts); }
     for (let lat = -60; lat <= 60; lat += 30) { const pts = []; for (let lon = -180; lon <= 180; lon += 5) pts.push(vec(lat, lon)); line(pts); }
     // land
     const ds = Math.max(1, W / 340);
-    for (const v of DOTS) { const [x, y, z] = proj(v); if (z <= 0.02) continue; ctx.globalAlpha = .25 + .6 * z; ctx.fillStyle = "#090124"; ctx.beginPath(); ctx.arc(cx + R * x, cy - R * y, ds * (.7 + .5 * z), 0, Math.PI * 2); ctx.fill(); }
+    for (const v of DOTS) { const [x, y, z] = proj(v); if (z <= 0.02) continue; ctx.globalAlpha = .25 + .6 * z; ctx.fillStyle = "#0C1B1F"; ctx.beginPath(); ctx.arc(cx + R * x, cy - R * y, ds * (.7 + .5 * z), 0, Math.PI * 2); ctx.fill(); }
     ctx.globalAlpha = 1;
     // the arc between the last city and this one, lifted off the surface
     if (arc) {
@@ -1793,13 +1795,13 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
       if (z <= 0) continue;
       const px = cx + R * x, py = cy - R * y, on = key === lastCity;
       if (on && !reduce) { const ph = (now % 1600) / 1600; ctx.beginPath(); ctx.arc(px, py, 6 + 16 * ph, 0, Math.PI * 2); ctx.strokeStyle = pen; ctx.globalAlpha = .9 * (1 - ph); ctx.lineWidth = 1.5; ctx.stroke(); ctx.globalAlpha = 1; }
-      ctx.beginPath(); ctx.arc(px, py, on ? 6 : 4, 0, Math.PI * 2); ctx.fillStyle = on ? pen : "rgba(9,1,36,.55)"; ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, on ? 6 : 4, 0, Math.PI * 2); ctx.fillStyle = on ? pen : "rgba(12,27,31,.55)"; ctx.fill();
       if (on) {
         const [val, unit] = M[word][key], label = `${c.name} · ${val} ${unit}`;
         ctx.font = `600 ${Math.max(12, W / 34)}px Inter, system-ui, sans-serif`;
         const tw = ctx.measureText(label).width, h = Math.max(26, W / 17), lx = Math.min(W - tw - 30, Math.max(6, px + 12)), ly = py - h - 8;
         ctx.globalAlpha = Math.min(1, z * 3);
-        ctx.fillStyle = "#090124"; ctx.beginPath(); ctx.roundRect(lx, ly, tw + 24, h, h / 2); ctx.fill();
+        ctx.fillStyle = "#0C1B1F"; ctx.beginPath(); ctx.roundRect(lx, ly, tw + 24, h, h / 2); ctx.fill();
         ctx.fillStyle = "#F8F7FB"; ctx.textBaseline = "middle"; ctx.fillText(label, lx + 12, ly + h / 2 + 1);
         ctx.globalAlpha = 1;
       }
@@ -1929,7 +1931,7 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   let counted = false, inCol = false, tint = null;
   const UNLOCK = letters.map(l => [+l.dataset.at, l.dataset.wear]);
   const spellEl = $("[data-spell]");
-  const own = () => { try { const w = localStorage.getItem("calkey_wear"); return w && $(`.lt[data-wear="${w}"]`) ? w : "periwinkle"; } catch { return "periwinkle"; } };
+  const own = () => { try { const w = localStorage.getItem("calkey_wear"); return w && $(`.lt[data-wear="${w}"]`) ? w : "tidal"; } catch { return "tidal"; } };
   function runStreak() {
     if (counted) return;
     // 0 days as the word's top reaches 85% of the screen, 30 by the time it reaches 30%
@@ -1962,9 +1964,9 @@ footer .brand svg{width:24px;height:24px;border-radius:7px}
   sw.addEventListener("click", () => {
     const on = sw.getAttribute("aria-checked") !== "true";
     sw.setAttribute("aria-checked", on);
-    root.style.setProperty("--ipen", on ? "var(--pen)" : "#5D51E1");
+    root.style.setProperty("--ipen", on ? "var(--penIcon)" : "#45D0D4");
   });
-  try { const w = localStorage.getItem("calkey_wear"); if (w && $(`.lt[data-wear="${w}"]`)) wear(w, false); else wear("periwinkle", false); } catch { wear("periwinkle", false); }
+  try { const w = localStorage.getItem("calkey_wear"); if (w && $(`.lt[data-wear="${w}"]`)) wear(w, false); else wear("tidal", false); } catch { wear("tidal", false); }
 
   // ============================================================== waitlist
   const api = (fn, body) => fetch(`${cfg.supabaseUrl}/rest/v1/rpc/${fn}`, {

@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://calkey.app/privacy.html">
 <meta property="og:image" content="https://calkey.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#EAE9EE">
+<meta name="theme-color" content="#F4F4F1">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -26,9 +26,9 @@
   /* Design B, as on the home page: the grey page, cards, navy ink, cream for the
      one block that leads, periwinkle as text; the navy night in dark mode. */
   :root {
-    --page: #EAE9EE; --page2: #E5E4EA; --float: #F8F7FB; --sunk: #DEDCE6; --panel: #FAE7C8;
-    --ink: #090124; --soft: #47425E; --faint: #605A73; --rule: #D6D4DE;
-    --accent: #5146D6; --wash: #DCD9FA; --good: #1F7A46; --no: #B84B16;
+    --page: #F4F4F1; --page2: #E8F1EE; --float: #FFFFFF; --sunk: #EBEDE9; --panel: #E3F3F0;
+    --ink: #0C1B1F; --soft: #3F5257; --faint: #5C6E72; --rule: #DDE2E0;
+    --accent: #0B6B74; --wash: #D2EEEA; --good: #1A7A47; --no: #B8672D;
     --shadow: 0 18px 40px -24px rgba(9,1,36,.32);
     --display: "Fraunces", Georgia, serif;
     --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -36,9 +36,9 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --page: #0E0A24; --page2: #0B081E; --float: #1A1538; --sunk: #251F48; --panel: #2B2347;
-      --ink: #F5EBDD; --soft: #CBC3D9; --faint: #9C94B2; --rule: #2C2652;
-      --accent: #B9B4F2; --wash: #2E2760; --good: #3DDC84; --no: #FF8A3D;
+      --page: #081215; --page2: #0B1A1E; --float: #0F1D21; --sunk: #16272C; --panel: #12292D;
+      --ink: #EDF3F1; --soft: #B4C4C2; --faint: #8B9E9D; --rule: #1F3237;
+      --accent: #45D0D4; --wash: #133A3E; --good: #4ADE8A; --no: #FFAE57;
       --shadow: 0 18px 40px -20px rgba(0,0,0,.7);
       color-scheme: dark;
     }
@@ -162,7 +162,7 @@
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="#EFE7D8"/><path fill="#090124" d="M62.213,29.734 A25,25 0 1 0 62.213,78.266 A1.3,1.3 0 0 0 63.2,77.004 L63.2,68.333 A1.3,1.3 0 0 0 61.42,67.125 A14.125,14.125 0 1 1 61.42,40.875 A1.3,1.3 0 0 0 63.2,39.667 L63.2,30.996 A1.3,1.3 0 0 0 62.213,29.734 Z"/><path fill="#5D51E1" d="M69.394,38.222 H72.231 A1.3,1.3 0 0 1 73.531,39.522 V68.478 A1.3,1.3 0 0 1 72.231,69.778 H69.394 A1.3,1.3 0 0 1 68.094,68.478 V39.522 A1.3,1.3 0 0 1 69.394,38.222 Z"/></symbol>
+  <linearGradient id="tile" gradientUnits="userSpaceOnUse" x1="18" y1="18" x2="90" y2="90"><stop offset="0" stop-color="#0C1B1F"/><stop offset=".38" stop-color="#0C1B1F"/><stop offset="1" stop-color="#11555B"/></linearGradient><symbol id="mark" viewBox="18 18 72 72"><rect x="0" y="0" width="120" height="120" fill="url(#tile)"/><path fill="#EDF3F1" d="M62.213,29.734 A25,25 0 1 0 62.213,78.266 A1.3,1.3 0 0 0 63.2,77.004 L63.2,68.333 A1.3,1.3 0 0 0 61.42,67.125 A14.125,14.125 0 1 1 61.42,40.875 A1.3,1.3 0 0 0 63.2,39.667 L63.2,30.996 A1.3,1.3 0 0 0 62.213,29.734 Z"/><path fill="#45D0D4" d="M69.394,38.222 H72.231 A1.3,1.3 0 0 1 73.531,39.522 V68.478 A1.3,1.3 0 0 1 72.231,69.778 H69.394 A1.3,1.3 0 0 1 68.094,68.478 V39.522 A1.3,1.3 0 0 1 69.394,38.222 Z"/></symbol>
   <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><path d="M4 20L20 4"/></g></symbol>
   <symbol id="i-note" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/><path d="M4 21L20 3"/></g></symbol>
   <symbol id="i-partner" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M15.5 20a5 5 0 0 1 6-4.8"/></g></symbol>
