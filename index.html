@@ -3,367 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sadhana Lock — your apps rest, your practice opens them</title>
-<meta name="description" content="Sadhana Lock guards your distracting apps on a schedule. To open them, you sit for a moment: a Gītā shloka, a breath, or a round of japa. 765 verses in 9 languages. Optional sign-in, no advertising, no data sold.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..600;1,400..500&family=Mukta:wght@300;400;500;600;700&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
+<title>Interlude Apps</title>
+<meta name="description" content="Interlude Apps makes PalmVani: free AI palm reading, daily rashifal and couple palm match in Hindi and English.">
+<meta name="theme-color" content="#F7F4EE">
 <style>
-:root{
-  /* the app's own registers — sand by day, dusk after dark */
-  --sand:#F7F2EA; --sand-deep:#EFE7DA; --card:#FFFDF9; --paper:#FDFAF3;
-  --ink:#24201A; --ink-soft:#544C3D; --ink-dim:#7A705E;
-  --edge:#E4DACB; --edge-2:#D2C6B2;
-  --accent:#9C4221; --accent-hi:#B04A22;
-  --night:#1A100A; --night-2:#241811; --n-ink:#F3E7D0; --n-soft:#B9A585; --n-dim:#8A785C;
-  --gold:#F5C46A; --candle:#F6E3B4;
-  --r-lg:28px; --r-md:18px; --r-sm:12px;
-  --s1:.5rem; --s2:.85rem; --s3:1.4rem; --s4:2.2rem; --s5:3.6rem; --s6:5.5rem; --s7:8rem;
-  --shadow:0 30px 70px -40px rgba(50,32,16,.5);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
-body{margin:0;background:var(--sand);color:var(--ink);
-  font:400 17px/1.65 Mukta,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-h1,h2,h3{font-family:Lora,Georgia,serif;font-weight:600;letter-spacing:-.015em;text-wrap:balance;margin:0}
-a{color:inherit}
-.dev{font-family:'Tiro Devanagari Sanskrit',Lora,serif}
-
-/* floating pill nav — Open / Posh */
-.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;
-  display:flex;align-items:center;gap:6px;padding:7px 8px 7px 16px;
-  background:rgba(255,253,249,.82);backdrop-filter:blur(14px) saturate(1.3);
-  border:1px solid var(--edge);border-radius:999px;box-shadow:0 10px 34px -20px rgba(50,32,16,.5);
-  max-width:calc(100vw - 28px)}
-.nav .brand{font-family:Lora,serif;font-weight:600;font-size:15px;margin-right:6px;white-space:nowrap}
-.nav a{font-size:13.5px;color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:999px;white-space:nowrap}
-.nav a:hover{background:var(--sand-deep);color:var(--ink)}
-.nav .cta{background:var(--ink);color:var(--paper);font-weight:600}
-.nav .cta:hover{background:var(--accent);color:#fff}
-@media(max-width:860px){.nav a:not(.cta){display:none}}
-
-/* ---------- HERO: a night panel resting on the sand ---------- */
-.hero{padding:118px 0 var(--s5)}
-.slab{position:relative;background:var(--night);border-radius:var(--r-lg);overflow:hidden;
-  box-shadow:var(--shadow);padding:clamp(2.2rem,5vw,4.4rem)}
-.slab::before{content:"";position:absolute;inset:0;
-  background:radial-gradient(120% 80% at 50% 108%,rgba(232,148,47,.30),transparent 62%);pointer-events:none}
-.slab-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
-@media(max-width:900px){.slab-grid{grid-template-columns:1fr;text-align:center}}
-.sloka{font-family:'Tiro Devanagari Sanskrit',serif;font-size:15px;color:var(--gold);opacity:.9;margin:0 0 var(--s3)}
-.slab h1{color:var(--n-ink);font-size:clamp(2.3rem,5.3vw,3.9rem);line-height:1.06}
-.slab h1 em{font-style:italic;color:var(--gold)}
-.slab .lede{color:var(--n-soft);font-size:clamp(1rem,1.4vw,1.12rem);max-width:34rem;margin:var(--s3) 0 var(--s4)}
-@media(max-width:900px){.slab .lede{margin-inline:auto}}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap}
-@media(max-width:900px){.cta-row{justify-content:center}}
-.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:999px;
-  font:600 15px Mukta,sans-serif;text-decoration:none;border:1px solid transparent;transition:transform .18s,background .18s}
-.btn:hover{transform:translateY(-1px)}
-.btn-candle{background:var(--candle);color:#241204}
-.btn-candle:hover{background:#FFF0CE}
-.btn-quiet{background:transparent;color:var(--n-soft);border-color:rgba(230,180,100,.28)}
-.btn-quiet:hover{color:var(--n-ink);border-color:rgba(230,180,100,.5)}
-.btn[aria-disabled=true]{opacity:.58;cursor:default}
-.btn[aria-disabled=true]:hover{transform:none}
-.hero-note{color:var(--n-dim);font-size:13.5px;margin:var(--s3) 0 0}
-
-/* device frame — real screenshots drop straight in */
-.phone{justify-self:center;width:min(300px,78vw);aspect-ratio:1080/2340;border-radius:34px;
-  padding:9px;background:linear-gradient(160deg,#4a3c30,#181310);
-  box-shadow:0 50px 90px -40px rgba(0,0,0,.85);position:relative}
-.phone > .screen{width:100%;height:100%;border-radius:26px;overflow:hidden;background:var(--night-2);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px}
-.phone img{width:100%;height:100%;object-fit:cover;border-radius:26px;display:block}
-.lamp{width:96px;height:96px;border-radius:50%;
-  background:radial-gradient(circle at 50% 42%,#FFE9B0 0%,#E8942F 24%,rgba(138,58,24,.4) 52%,transparent 74%);
-  margin-bottom:20px}
-.ph-eyebrow{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--n-dim);margin:0 0 10px}
-.ph-title{font-family:Lora,serif;font-size:21px;color:var(--n-ink);margin:0 0 8px;line-height:1.25}
-.ph-sub{font-size:13px;color:var(--n-soft);margin:0 0 22px}
-.ph-btn{background:var(--candle);color:#241204;border-radius:999px;padding:12px 0;width:100%;font:600 14px Mukta,sans-serif}
-.ph-ghost{color:var(--n-dim);font-size:12px;margin-top:12px}
-
-/* ---------- stat strip ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--edge);
-  border:1px solid var(--edge);border-radius:var(--r-md);overflow:hidden;margin-top:var(--s4)}
-@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
-.stat{background:var(--card);padding:22px 20px}
-.stat .n{font-family:Lora,serif;font-size:30px;font-weight:600;line-height:1;display:block}
-.stat .l{font-size:13px;color:var(--ink-dim);margin-top:6px;display:block;line-height:1.4}
-
-/* ---------- sections ---------- */
-section{padding:var(--s6) 0}
-.eyebrow{font-size:11.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 var(--s2)}
-h2{font-size:clamp(1.85rem,3.6vw,2.65rem);line-height:1.14;max-width:22ch}
-.lede{color:var(--ink-soft);font-size:1.06rem;max-width:52ch;margin-top:var(--s3)}
-
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
-@media(max-width:860px){.steps{grid-template-columns:1fr}}
-.step{background:var(--card);border:1px solid var(--edge);border-radius:var(--r-md);padding:26px 24px}
-.step .num{width:30px;height:30px;border-radius:50%;background:var(--sand-deep);color:var(--accent);
-  font:600 14px Mukta,sans-serif;display:grid;place-items:center;margin-bottom:16px}
-.step h3{font-size:1.15rem;margin-bottom:8px}
-.step p{color:var(--ink-soft);font-size:15px;margin:0}
-
-/* two-up: ritual + scripture, each a night card on sand */
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s5)}
-@media(max-width:900px){.duo{grid-template-columns:1fr}}
-.panel{border-radius:var(--r-lg);padding:clamp(1.6rem,3vw,2.6rem);border:1px solid var(--edge);background:var(--card)}
-.panel.dark{background:var(--night);border-color:transparent;color:var(--n-ink);position:relative;overflow:hidden}
-.panel.dark::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(90% 60% at 50% 100%,rgba(232,148,47,.20),transparent 60%);pointer-events:none}
-.panel.dark h3,.panel.dark h2{color:var(--n-ink)}
-.panel.dark p,.panel.dark li{color:var(--n-soft)}
-.panel h3{font-size:1.35rem;margin-bottom:10px}
-.panel ul{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:11px}
-.panel li{font-size:15px;color:var(--ink-soft);display:grid;grid-template-columns:18px 1fr;gap:11px;align-items:start}
-.panel li b{color:var(--ink);font-weight:600}
-.panel.dark li b{color:var(--n-ink)}
-.tick{color:var(--accent);font-weight:700;line-height:1.5}
-.panel.dark .tick{color:var(--gold)}
-.verse-card{background:var(--paper);border-radius:var(--r-md);padding:24px;text-align:center;margin-top:var(--s3)}
-.verse-card .dev{font-size:19px;line-height:1.85;color:var(--ink)}
-.verse-card .tr{font-size:14.5px;color:var(--ink-soft);margin:12px 0 8px;font-style:italic}
-.verse-card .cite{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
-
-/* real screenshots */
-.phone img{width:100%;height:auto;border-radius:26px;display:block}
-.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-top:var(--s4)}
-@media(max-width:900px){.shots{grid-template-columns:repeat(2,1fr)}}
-.shots figure{margin:0}
-.shots img{width:100%;height:auto;border-radius:20px;display:block;
-  border:1px solid var(--edge);box-shadow:0 24px 50px -34px rgba(50,32,16,.55)}
-.shots figcaption{font-size:13px;color:var(--ink-dim);margin-top:12px;line-height:1.45}
-
-/* feature grid */
-.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
-@media(max-width:980px){.feat{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.feat{grid-template-columns:1fr}}
-.f{background:var(--card);border:1px solid var(--edge);border-radius:var(--r-md);padding:22px}
-.f h4{font-family:Lora,serif;font-size:1.02rem;font-weight:600;margin:0 0 7px}
-.f p{margin:0;font-size:14.5px;color:var(--ink-soft)}
-
-/* pricing */
-.plans{display:grid;grid-template-columns:1fr 1.08fr;gap:var(--s3);margin-top:var(--s5)}
-@media(max-width:860px){.plans{grid-template-columns:1fr}}
-.plan{border:1px solid var(--edge);border-radius:var(--r-lg);padding:clamp(1.6rem,3vw,2.4rem);background:var(--card)}
-.plan.plus{background:var(--night);border-color:transparent;position:relative;overflow:hidden}
-.plan.plus::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 80% 0%,rgba(245,196,106,.14),transparent 60%);pointer-events:none}
-.plan.plus h3,.plan.plus .price{color:var(--n-ink)}
-.plan.plus p,.plan.plus li{color:var(--n-soft)}
-.plan h3{font-size:1.2rem}
-.price{font-family:Lora,serif;font-size:2.4rem;font-weight:600;margin:10px 0 2px;display:block}
-.price-sub{font-size:13.5px;color:var(--ink-dim);margin:0}
-.plan.plus .price-sub{color:var(--n-dim)}
-.plan ul{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:10px}
-.plan li{font-size:15px;display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--ink-soft)}
-
-/* closing */
-.close{text-align:center;padding:var(--s6) 0 var(--s7)}
-.close h2{margin-inline:auto}
-footer{border-top:1px solid var(--edge);padding:var(--s4) 0;font-size:14px;color:var(--ink-dim)}
-.foot-row{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
-footer a{color:var(--ink-soft)}
-
-/* reveal on scroll */
-.rise{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
-.rise.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.rise{opacity:1;transform:none}}
+  :root { --bg: #F7F4EE; --card: #FFFFFF; --ink: #1F1B16; --soft: #645B52; --line: #E4DDD2; --link: #B23A1F; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16130F; --card: #221D18; --ink: #F3EEE6; --soft: #BFB4A6; --line: #3A322A; --link: #FF8A6E; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 48px 16px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 6px; }
+  .lead { color: var(--soft); margin: 0 0 32px; }
+  .app { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 0 0 16px; }
+  .app h2 { margin: 0 0 4px; font-size: 1.25rem; }
+  .app p { margin: 0 0 10px; color: var(--soft); }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; }
+  a { color: var(--link); }
+  footer { margin-top: 40px; color: var(--soft); font-size: .95rem; }
 </style>
 </head>
 <body>
+<main>
+  <h1>Interlude Apps</h1>
+  <p class="lead">Small, honest Android apps. No trials, no surprise charges.</p>
 
-<nav class="nav" aria-label="Primary">
-  <span class="brand">Sādhana Lock</span>
-  <a href="#how">How it works</a>
-  <a href="#ritual">The ritual</a>
-  <a href="#scripture">Scripture</a>
-  <a href="#privacy">Privacy</a>
-  <a href="#pricing">Pricing</a>
-  <a href="#get" class="cta">Get the app</a>
-</nav>
-
-<main id="main">
-
-<!-- HERO -->
-<div class="wrap hero">
-  <div class="slab">
-    <div class="slab-grid">
-      <div>
-        <p class="sloka">योगः कर्मसु कौशलम्</p>
-        <h1>Your apps rest.<br>Your <em>practice</em> opens them.</h1>
-        <p class="lede">Sadhana Lock guards your most distracting apps on a schedule you set. When you reach for one, it doesn't scold you — it offers you a shloka, a breath, or a round of japa. Finish, and the app opens.</p>
-        <div class="cta-row">
-          <a class="btn btn-candle" href="#get">See the app</a>
-          <a class="btn btn-quiet" href="#how">How it works</a>
-        </div>
-        <p class="hero-note">Android · Free to use · Optional Plus from ₹99 a month · Works without an account</p>
-      </div>
-      <div class="phone">
-        <img src="shots/lock.webp" width="620" height="1288" alt="The lock face over a guarded app: Chrome is resting, 19 days, this is day 20, with a button to sit for three minutes." loading="eager" decoding="async">
-      </div>
+  <section class="app">
+    <h2>PalmVani</h2>
+    <p>Free AI palm reading, daily rashifal and couple palm match, in Hindi and English.</p>
+    <div class="links">
+      <a href="/palmvani/privacy.html">Privacy policy</a>
+      <a href="/palmvani/privacy.html#hi">गोपनीयता नीति</a>
     </div>
-  </div>
+  </section>
 
-  <div class="stats rise">
-    <div class="stat"><span class="n">765</span><span class="l">verses, sourced and translated</span></div>
-    <div class="stat"><span class="n">701</span><span class="l">of them the complete Bhagavad Gītā</span></div>
-    <div class="stat"><span class="n">9</span><span class="l">languages to read them in</span></div>
-    <div class="stat"><span class="n">0</span><span class="l">adverts, trackers or data sold</span></div>
-  </div>
-</div>
-
-<!-- HOW -->
-<section id="how"><div class="wrap">
-  <p class="eyebrow rise">How it works</p>
-  <h2 class="rise">Three decisions, then it runs itself.</h2>
-  <p class="lede rise">No streak guilt, no shame screens, no counting the hours you have wasted. Just a door that asks something small of you before it opens.</p>
-  <div class="steps">
-    <div class="step rise"><div class="num">1</div><h3>Choose what to guard</h3>
-      <p>Pick from your installed apps. Social, video and games float to the top, so you aren't scrolling past Calendar to find Instagram.</p></div>
-    <div class="step rise"><div class="num">2</div><h3>Set your practice times</h3>
-      <p>The three sandhya hours come ready. Add your own, choose which days each repeats, and the lock arms itself — exactly, even while the phone sleeps.</p></div>
-    <div class="step rise"><div class="num">3</div><h3>Practise to open</h3>
-      <p>Open a guarded app during a lock and the practice screen appears over it. Finish a sitting and every guarded app opens for as long as you chose.</p></div>
-  </div>
-</div></section>
-
-<!-- RITUAL + SCRIPTURE -->
-<section id="ritual"><div class="wrap">
-  <p class="eyebrow rise">The core loop</p>
-  <h2 class="rise">Three ways to sit. All of them count.</h2>
-  <div class="duo">
-    <div class="panel dark rise">
-      <h3>The unlock is a practice, not a puzzle</h3>
-      <ul>
-        <li><span class="tick">✳</span><span><b>Guided.</b> A shloka from the Gītā in Devanagari, with its meaning.</span></li>
-        <li><span class="tick">✳</span><span><b>Your own.</b> A breathing orb that expands and settles. Bring whatever practice is already yours.</span></li>
-        <li><span class="tick">✳</span><span><b>Japa.</b> A full 108-bead mala on screen, with a haptic tick per bead.</span></li>
-        <li><span class="tick">✳</span><span><b>An honest way out.</b> Need maps, or to take a call? One tap opens <em>that one app</em> for ten minutes — not all of them.</span></li>
-      </ul>
-    </div>
-    <div class="panel rise" id="scripture">
-      <h3>A real scripture library, not a quote generator</h3>
-      <p style="color:var(--ink-soft);font-size:15px;margin:10px 0 0">Four books, read verse by verse, each remembering exactly where you left it. The Sanskrit is public domain and unedited; every translation was written for this app.</p>
-      <div class="verse-card">
-        <p class="dev" style="margin:0">योगस्थः कुरु कर्माणि<br>सङ्गं त्यक्त्वा धनञ्जय</p>
-        <p class="tr">Do your work steadied in yoga, letting go of attachment.</p>
-        <p class="cite">Bhagavad Gītā · 2.48</p>
-      </div>
-      <ul>
-        <li><span class="tick">✳</span><span><b>All 701 verses</b> of the Gītā, all 18 chapters. Not a selection.</span></li>
-        <li><span class="tick">✳</span><span>Īśha Upaniṣad, Āditya Hṛdayam, Śiva Tāṇḍava Stotram.</span></li>
-        <li><span class="tick">✳</span><span><b>Nine languages</b>, and a verse card you can share in one tap.</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="shots rise">
-    <figure><img src="shots/verse.webp" width="620" height="1288" loading="lazy" decoding="async" alt="A guided sitting showing Bhagavad Gita 2.47 in Devanagari with transliteration and meaning."><figcaption>Guided — the shloka, its sound, its meaning.</figcaption></figure>
-    <figure><img src="shots/japa.webp" width="620" height="1288" loading="lazy" decoding="async" alt="The japa counter, a 108-bead mala part way through a round."><figcaption>Japa — a full mala, a tick per bead.</figcaption></figure>
-    <figure><img src="shots/home.webp" width="620" height="1288" loading="lazy" decoding="async" alt="Today, showing the lamp, the devotion number and a thread of nineteen lit days."><figcaption>Today — the lamp, and the days behind it.</figcaption></figure>
-    <figure><img src="shots/home-dark.webp" width="620" height="1288" loading="lazy" decoding="async" alt="The same Today screen in the app's dark register."><figcaption>And the same, after dark.</figcaption></figure>
-  </div>
-</div></section>
-
-<!-- FEATURES -->
-<section id="features"><div class="wrap">
-  <p class="eyebrow rise">Everything else</p>
-  <h2 class="rise">Built for the phone you actually own.</h2>
-  <div class="feat">
-    <div class="f rise"><h4>Exact times, any day of week</h4><p>Set as many as you need and pick the days each repeats. Exact alarms fire even while the phone is asleep.</p></div>
-    <div class="f rise"><h4>Survives Indian phones</h4><p>Realme, Oppo, Xiaomi and Vivo kill background apps aggressively. Setup walks you through auto-launch and battery exemption on your exact skin.</p></div>
-    <div class="f rise"><h4>A diya that grows with you</h4><p>Seven states over ninety days, each with its own name. Never taken away, and never behind a paywall.</p></div>
-    <div class="f rise"><h4>108-bead japa counter</h4><p>A full mala with a marked guru bead. Targets of 27, 54 or 108, a haptic tick per bead, and a flourish when the round closes.</p></div>
-    <div class="f rise"><h4>Insights that stay kind</h4><p>Practice calendar, streaks, minutes, malas and your daily rhythm — across a week, a month, a quarter or a year.</p></div>
-    <div class="f rise"><h4>Works with no signal</h4><p>Every verse, translation and font is bundled. The moment you need it most may be the moment you have none.</p></div>
-    <div class="f rise"><h4>Lock health</h4><p>One screen tells you whether the guard is actually standing — every permission, green or amber, each tappable to the right setting.</p></div>
-    <div class="f rise"><h4>Yours, personally</h4><p>Choose your iṣṭa devatā and the emblem, the mantra and the verses follow. Or choose none: every form is one light.</p></div>
-    <div class="f rise"><h4>Light and dark</h4><p>Sand by day, a quieter register after dark — following your phone, or pinned to whichever you prefer.</p></div>
-  </div>
-</div></section>
-
-<!-- PRIVACY -->
-<section id="privacy"><div class="wrap">
-  <p class="eyebrow rise">Privacy</p>
-  <h2 class="rise">An app that watches your screen, and tells no one.</h2>
-  <p class="lede rise">Sadhana Lock needs Android's accessibility service to know which app just came to the foreground. That is a serious permission, so here is exactly what it is allowed to do — every claim is checkable in the app's manifest.</p>
-  <div class="panel rise" style="margin-top:var(--s4)">
-    <ul>
-      <li><span class="tick">✓</span><span>The service is declared <b>unable to read window content</b>. It cannot see your messages, your passwords or anything you type.</span></li>
-      <li><span class="tick">✓</span><span>It listens for <b>one event</b> — a window changing — and reads <b>one thing</b>: the package name of the app in front.</span></li>
-      <li><span class="tick">✓</span><span><b>An account is optional.</b> The whole app works without one. Sign in with Google only if you want your practice carried to a new phone.</span></li>
-      <li><span class="tick">✓</span><span><b>The apps you guard never leave your phone.</b> That list is the most revealing thing here, and it is excluded from the backup even when you are signed in.</span></li>
-      <li><span class="tick">✓</span><span><b>Anonymous diagnostics, and a switch to stop them.</b> Crash reports and plain counts go to Firebase so we can catch phones that silently kill the lock. They never say <em>which</em> app you opened.</span></li>
-      <li><span class="tick">✓</span><span><b>No advertising, no data sold</b>, and nothing shared with a third party for their own purposes.</span></li>
-    </ul>
-    <p style="margin-top:var(--s3);font-size:14.5px"><a href="privacy.html">Read the full privacy policy</a> · <a href="terms.html">Terms of use</a></p>
-  </div>
-</div></section>
-
-<!-- PRICING -->
-<section id="pricing"><div class="wrap">
-  <p class="eyebrow rise">Pricing</p>
-  <h2 class="rise">The lock is free. Forever.</h2>
-  <p class="lede rise">Not a trial, and not a hostage situation: guarding your apps, the ritual, your japa and the whole Bhagavad Gītā cost nothing and never stop working. Plus opens the rest of the shelf, and you can cancel it in two taps.</p>
-  <div class="plans">
-    <div class="plan rise">
-      <h3>Free</h3><span class="price">₹0</span>
-      <p class="price-sub">A complete daily practice, not a demo.</p>
-      <ul>
-        <li><span class="tick">✳</span><span>Guard up to 4 apps</span></li>
-        <li><span class="tick">✳</span><span>3 practice times — the three sandhya hours</span></li>
-        <li><span class="tick">✳</span><span>The complete Bhagavad Gītā, in every language</span></li>
-        <li><span class="tick">✳</span><span>The full ritual, japa, the diya and verse sharing</span></li>
-        <li><span class="tick">✳</span><span>A month of practice history</span></li>
-      </ul>
-    </div>
-    <div class="plan plus rise">
-      <h3>Sadhana Plus</h3><span class="price">₹499 <span style="font-size:1.1rem;font-weight:400">a year</span></span>
-      <p class="price-sub">or ₹99 a month · cancel any time</p>
-      <ul>
-        <li><span class="tick">✳</span><span>Unlimited apps and unlimited practice times</span></li>
-        <li><span class="tick">✳</span><span>Three more sacred books — 64 further verses</span></li>
-        <li><span class="tick">✳</span><span>Every reading plan, the nine Navratri days included</span></li>
-        <li><span class="tick">✳</span><span>Your whole practice history, not only the last month</span></li>
-      </ul>
-    </div>
-  </div>
-</div></section>
-
-<!-- CLOSE -->
-<section id="get" class="close"><div class="wrap">
-  <p class="eyebrow rise">Get the app</p>
-  <h2 class="rise">Begin where you are.</h2>
-  <p class="lede rise" style="margin-inline:auto">Guard four apps, keep the three sandhya hours, and read the whole Gītā — without paying anything.</p>
-  <div style="margin-top:var(--s4)" class="rise">
-    <!-- PRE-LAUNCH: restore <a class="btn btn-candle" href="https://play.google.com/store/apps/details?id=com.sadhanalock.app"> at launch -->
-    <span class="btn btn-candle" aria-disabled="true" style="background:var(--ink);color:var(--paper)">Coming to Google Play</span>
-  </div>
-  <p style="margin-top:var(--s3);font-size:14px;color:var(--ink-dim)">In closed testing now · Requires Android 8.0 or later · <a href="mailto:interludeapp.official@gmail.com?subject=Tell%20me%20when%20Sadhana%20Lock%20launches">ask to be told when it lands</a></p>
-</div></section>
-
+  <footer>Contact: <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a></footer>
 </main>
-
-<footer><div class="wrap foot-row">
-  <span>© 2026 Interlude Apps</span>
-  <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="delete-account.html">Delete your account</a> · <a href="mailto:interludeapp.official@gmail.com">Contact</a></span>
-</div></footer>
-
-<script>
-(function(){
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.rise').forEach(function(e){ e.classList.add('in'); });
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-  }, {rootMargin:'0px 0px -8% 0px', threshold:.08});
-  document.querySelectorAll('.rise').forEach(function(e,i){ e.style.transitionDelay = (i%3)*70 + 'ms'; io.observe(e); });
-})();
-</script>
 </body>
 </html>
