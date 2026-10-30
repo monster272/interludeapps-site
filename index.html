@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Interludeapps</title>
-<meta name="description" content="Interludeapps is an independent Android app studio in Navi Mumbai, India. It makes Calkey, a calorie tracker you type in your own language, and PalmVani, palm reading and rashifal in Hindi and English.">
+<meta name="description" content="Interludeapps is an independent Android app studio in India. It makes Calkey, a calorie tracker you type in your own language, and PalmVani, palm reading and rashifal in Hindi and English.">
 <link rel="canonical" href="https://interludeapps.store/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#F3F3F1" media="(prefers-color-scheme: light)">
@@ -15,13 +15,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Interludeapps">
 <meta property="og:title" content="Interludeapps: apps that speak the way people really talk">
-<meta property="og:description" content="An independent Android studio in Navi Mumbai, India. Calkey and PalmVani.">
+<meta property="og:description" content="An independent Android studio in India. Calkey and PalmVani.">
 <meta property="og:url" content="https://interludeapps.store/">
 <meta property="og:image" content="https://interludeapps.store/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Interludeapps: apps that speak the way people really talk.">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">
 {
@@ -31,16 +32,23 @@
   "url": "https://interludeapps.store/",
   "logo": "https://interludeapps.store/apple-touch-icon.png",
   "email": "interludeapps@gmail.com",
-  "address": { "@type": "PostalAddress", "addressLocality": "Navi Mumbai", "addressRegion": "Maharashtra", "addressCountry": "IN" }
+  "address": { "@type": "PostalAddress", "addressCountry": "IN" }
 }
 </script>
-<script>document.documentElement.classList.add("js");</script>
+<script>(function(d){d.classList.add("js");try{if(!sessionStorage.getItem("ia-intro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("intro-on");history.scrollRestoration="manual";scrollTo(0,0)}}catch(e){}})(document.documentElement);</script>
 <style>
   @font-face {
     font-family: "Archivo";
     src: url("/assets/fonts/archivo.woff2") format("woff2");
     font-weight: 100 900;
     font-stretch: 62% 125%;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Bricolage Grotesque";
+    src: url("/assets/fonts/bricolage.woff2") format("woff2");
+    font-weight: 200 800;
+    font-stretch: 75% 100%;
     font-display: swap;
   }
 
@@ -64,6 +72,7 @@
 
     --ease: cubic-bezier(.16, 1, .3, 1);
     --font: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --display: "Bricolage Grotesque", "Archivo", ui-sans-serif, system-ui, sans-serif;
     --gutter: clamp(16px, 3.4vw, 48px);
   }
   @media (prefers-color-scheme: dark) {
@@ -97,16 +106,37 @@
   .skip:focus { top: 16px; }
   .small { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 
-  /* ---------- Intro curtain ---------- */
+  /* ---------- Intro ---------- */
   .curtain { display: none; }
-  .js .curtain {
-    display: grid; place-items: center; position: fixed; inset: 0; z-index: 90;
-    background: var(--ink); color: var(--paper);
-    animation: curtain-failsafe 0s 4s forwards;
+  .intro-on .curtain {
+    display: grid; place-items: center; position: fixed; inset: 0; z-index: 90; overflow: hidden;
+    background: #0B0B0C; color: #F3F3F1; font-family: var(--display);
+    animation: curtain-failsafe 0s 6s forwards;
   }
+  .intro-on .bar .brand { opacity: 0; animation: brand-failsafe 0s 6s forwards; }
   @keyframes curtain-failsafe { to { visibility: hidden; } }
-  @media (prefers-reduced-motion: reduce) { .js .curtain { display: none; } }
-  .curtain span { font-weight: 800; font-stretch: 62%; font-size: clamp(2rem, 7vw, 5rem); letter-spacing: -.02em; }
+  @keyframes brand-failsafe { to { opacity: 1; } }
+  .orbs { position: absolute; inset: -20%; filter: blur(70px) saturate(1.2); opacity: .9; }
+  .orbs i { position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; opacity: .55; animation: orbit 9s ease-in-out infinite alternate; }
+  .orbs i:nth-child(1) { background: #0B6B74; left: 2%; top: 8%; }
+  .orbs i:nth-child(2) { background: #C6F035; left: 52%; top: 0%; opacity: .32; animation-duration: 11s; animation-delay: -3s; }
+  .orbs i:nth-child(3) { background: #C2381F; left: 40%; top: 46%; animation-duration: 10s; animation-delay: -6s; }
+  .orbs i:nth-child(4) { background: #F5B82E; left: 0%; top: 52%; opacity: .38; animation-duration: 12s; animation-delay: -2s; }
+  @keyframes orbit { to { transform: translate(12vmax, -8vmax) scale(1.15); } }
+  .grain { position: absolute; inset: 0; opacity: .12; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .hello, .mark { position: relative; grid-area: 1 / 1; }
+  .hello { font-size: clamp(2.6rem, 9vw, 7.5rem); font-weight: 500; letter-spacing: -.04em; line-height: 1; }
+  .hello .greet { display: inline-block; }
+  .hello .greet[lang="hi"] { font-family: "Kohinoor Devanagari", "Noto Sans Devanagari", "Nirmala UI", sans-serif; letter-spacing: 0; }
+  .mark {
+    font-size: clamp(2.8rem, 10.5vw, 9.5rem); font-weight: 800; letter-spacing: -.045em; line-height: 1;
+    white-space: nowrap; transform-origin: 0 0; opacity: 0;
+  }
+  .mark .l { display: inline-block; font-weight: var(--g, 800); font-stretch: var(--s, 100%); }
+  .intro-foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 26px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--font); color: rgba(243, 243, 241, .7); }
+  .intro-foot .bar-line { flex: 1; height: 1px; background: rgba(243, 243, 241, .2); position: relative; overflow: hidden; }
+  .intro-foot .bar-line b { position: absolute; inset: 0; background: #F3F3F1; transform-origin: 0 50%; transform: scaleX(0); }
+  @media (prefers-reduced-motion: reduce) { .intro-on .curtain { display: none; } .intro-on .bar .brand { opacity: 1; animation: none; } }
 
   /* ---------- Top bar ---------- */
   .bar {
@@ -116,7 +146,7 @@
   }
   .bar.over-ck { color: var(--ck-ink); }
   .bar.over-pv { color: var(--pv-ink); }
-  .brand { font-weight: 800; font-size: 1.05rem; text-decoration: none; letter-spacing: -.01em; }
+  .brand { font-family: var(--display); font-weight: 800; font-size: 1.2rem; text-decoration: none; letter-spacing: -.035em; line-height: 1; }
   .bar nav ul { display: flex; gap: clamp(14px, 2.4vw, 36px); margin: 0; padding: 0; list-style: none; }
   .bar nav a { text-decoration: none; font-weight: 600; font-size: .95rem; padding: 8px 0; display: inline-block; }
   .bar nav a:hover { text-decoration: underline; }
@@ -130,11 +160,11 @@
   }
   .hero h1 {
     margin: 0; align-self: end;
-    font-weight: 820; font-size: clamp(3.1rem, 11.2vw, 11.5rem); line-height: .9; letter-spacing: -.035em;
+    font-family: var(--display); font-weight: 800; font-size: clamp(3.1rem, 11.4vw, 11.8rem); line-height: .9; letter-spacing: -.05em;
   }
   .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
   .hero h1 .in { display: inline-block; }
-  .hero h1 .ch { display: inline-block; font-stretch: var(--w, 100%); transition: font-stretch .6s var(--ease); }
+  .hero h1 .ch { display: inline-block; font-stretch: var(--w, 100%); font-weight: var(--g, 800); transition: font-stretch .6s var(--ease), font-weight .6s var(--ease); }
   .hero h1 em { font-style: normal; color: var(--ink-soft); }
   .icons { display: inline-flex; vertical-align: -.04em; margin-left: .1em; }
   .icons img { width: .78em; height: .78em; border-radius: 24%; box-shadow: 0 .08em .2em -.06em rgba(0, 0, 0, .35); }
@@ -151,7 +181,7 @@
   .cue svg { width: 14px; height: 14px; animation: drift 2.2s var(--ease) infinite; }
   @keyframes drift { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
   @media (max-width: 720px) {
-    .hero h1 { font-size: 15.4vw; }
+    .hero h1 { font-size: 12.4vw; }
     .hero-foot { grid-template-columns: 1fr; gap: 18px; }
     .hero-foot .c { display: none; }
     .hero-foot .r { justify-self: start; }
@@ -163,15 +193,15 @@
   .track { display: flex; width: max-content; will-change: transform; }
   .track span {
     flex: none; padding: 0 .55em; white-space: nowrap;
-    font-weight: 300; font-stretch: 75%; font-size: clamp(2rem, 5.4vw, 4.8rem); line-height: 1.08; letter-spacing: -.02em;
+    font-family: var(--display); font-weight: 300; font-stretch: 80%; font-size: clamp(2rem, 5.4vw, 4.8rem); line-height: 1.12; letter-spacing: -.03em;
   }
   .track span::after { content: "/"; margin-left: 1.1em; color: var(--line); font-weight: 200; }
-  .track.b span { font-weight: 700; font-stretch: 112%; }
+  .track.b span { font-weight: 800; font-stretch: 100%; }
 
   /* ---------- Work index ---------- */
   .work { padding: clamp(70px, 11vw, 150px) var(--gutter) clamp(40px, 6vw, 80px); position: relative; }
   .work-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 24px; }
-  .work-head h2 { margin: 0; font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.02em; }
+  .work-head h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.02em; }
   .work ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
   .work li { border-bottom: 1px solid var(--ink); }
   .work-row {
@@ -179,10 +209,10 @@
     padding: clamp(14px, 2vw, 26px) 0; text-decoration: none;
   }
   .work-name {
-    font-weight: 820; font-size: clamp(3rem, 10.5vw, 10rem); line-height: .92; letter-spacing: -.04em;
-    font-stretch: 85%; transition: font-stretch .7s var(--ease), letter-spacing .7s var(--ease);
+    font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 10.5vw, 10rem); line-height: .92; letter-spacing: -.05em;
+    font-stretch: 100%; transition: font-stretch .7s var(--ease), font-weight .7s var(--ease);
   }
-  .work-row:hover .work-name, .work-row:focus-visible .work-name { font-stretch: 125%; letter-spacing: -.05em; }
+  .work-row:hover .work-name, .work-row:focus-visible .work-name { font-stretch: 75%; font-weight: 300; }
   .work-meta { display: grid; gap: 4px; text-align: right; color: var(--ink-soft); }
   .work-meta b { color: var(--ink); font-weight: 700; }
   .dot { display: inline-block; width: .55em; height: .55em; border-radius: 50%; margin-right: .45em; vertical-align: .05em; }
@@ -208,8 +238,8 @@
   .chapter.palmvani .sheet { background: var(--pv); color: var(--pv-ink); }
   .chapter-title { display: flex; align-items: center; gap: clamp(14px, 2vw, 24px); margin: 0 0 clamp(22px, 3vw, 36px); }
   .chapter-title img { width: clamp(56px, 6vw, 84px); height: auto; border-radius: 22%; box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .5); }
-  .chapter h2 { margin: 0; font-weight: 850; font-size: clamp(3.2rem, 7.4vw, 7rem); line-height: .88; letter-spacing: -.045em; }
-  .chapter h2 small { display: block; font-size: max(.2em, 1rem); font-weight: 500; letter-spacing: 0; line-height: 1.3; margin-top: .55em; }
+  .chapter h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(3.2rem, 7.4vw, 7rem); line-height: .88; letter-spacing: -.045em; }
+  .chapter h2 small { display: block; font-family: var(--font); font-size: max(.2em, 1rem); font-weight: 500; letter-spacing: 0; line-height: 1.3; margin-top: .55em; }
   .pitch { font-size: clamp(1.25rem, 2.3vw, 1.9rem); line-height: 1.25; letter-spacing: -.012em; font-weight: 500; margin: 0 0 clamp(22px, 3vw, 34px); max-width: 26ch; }
   .facts { list-style: none; margin: 0 0 clamp(26px, 3.4vw, 40px); padding: 0; max-width: 46ch; }
   .facts li { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 12px; padding: 11px 0; border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
@@ -283,7 +313,7 @@
   /* ---------- Studio ---------- */
   .studio { padding: clamp(90px, 14vw, 200px) var(--gutter); }
   .studio h2 { color: var(--ink-soft); margin: 0 0 22px; }
-  .manifesto { margin: 0; font-weight: 600; font-size: clamp(1.7rem, 4.4vw, 4.2rem); line-height: 1.08; letter-spacing: -.028em; max-width: 22ch; }
+  .manifesto { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 4.4vw, 4.2rem); line-height: 1.08; letter-spacing: -.028em; max-width: 22ch; }
   .pledges { list-style: none; padding: 0; margin: clamp(48px, 7vw, 90px) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(16px, 3vw, 40px); }
   .pledges li { border-top: 1px solid var(--ink); padding-top: 16px; }
   .pledges b { display: block; font-size: 1.15rem; margin-bottom: 6px; letter-spacing: -.01em; }
@@ -294,11 +324,11 @@
   .contact { padding: 0 var(--gutter) clamp(60px, 9vw, 120px); }
   .contact h2 { color: var(--ink-soft); margin: 0 0 14px; }
   .mail {
-    display: inline-block; text-decoration: none; font-weight: 800; letter-spacing: -.045em; line-height: .95;
-    font-size: clamp(1.6rem, 6.6vw, 7rem); font-stretch: 80%; transition: font-stretch .8s var(--ease);
+    display: inline-block; text-decoration: none; font-family: var(--display); font-weight: 800; letter-spacing: -.05em; line-height: .95;
+    font-size: clamp(1.6rem, 6.6vw, 7rem); font-stretch: 100%; transition: font-stretch .8s var(--ease), font-weight .8s var(--ease);
     overflow-wrap: anywhere; border-bottom: 3px solid currentColor; padding-bottom: .04em; max-width: 100%;
   }
-  .mail:hover, .mail:focus-visible { font-stretch: 96%; }
+  .mail:hover, .mail:focus-visible { font-stretch: 75%; font-weight: 300; }
   .contact p { margin: 22px 0 0; color: var(--ink-soft); }
 
   /* ---------- Footer ---------- */
@@ -327,12 +357,18 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="curtain" aria-hidden="true"><span>Interludeapps</span></div>
+<div class="curtain" aria-hidden="true">
+  <div class="orbs"><i></i><i></i><i></i><i></i></div>
+  <div class="grain"></div>
+  <div class="hello"><span class="greet">Hello</span></div>
+  <div class="mark">Interludeapps</div>
+  <div class="intro-foot small"><span>India</span><span class="bar-line"><b></b></span><span>Android apps</span></div>
+</div>
 <div class="cursor" aria-hidden="true"></div>
 
 <header class="bar">
   <a class="brand" href="/">Interludeapps</a>
-  <span class="where small" id="clock">Navi Mumbai, India</span>
+  <span class="where small" id="clock">India</span>
   <nav aria-label="Main">
     <ul>
       <li><a href="#work">Work</a></li>
@@ -350,7 +386,7 @@
       <span class="line"><span class="in"><span data-stretch><em>really talk.</em></span> <span class="icons" aria-hidden="true"><img src="/assets/calkey.webp" alt="" width="72" height="72"><img src="/assets/palmvani.webp" alt="" width="72" height="72"></span></span></span>
     </h1>
     <div class="hero-foot">
-      <p>Interludeapps is an independent studio in Navi Mumbai, India, making Android apps in more than one language.</p>
+      <p>Interludeapps is an independent studio in India, making Android apps in more than one language.</p>
       <p class="c small">Calkey · PalmVani</p>
       <p class="r"><a class="cue small" href="#work">See the work <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 2v12M3 9l5 5 5-5"/></svg></a></p>
     </div>
@@ -477,7 +513,7 @@
 <footer>
   <div>
     <h2 class="small">Interludeapps</h2>
-    Navi Mumbai, India<br>© 2026 Interludeapps
+    India<br>© 2026 Interludeapps
   </div>
   <div>
     <h2 class="small">Calkey</h2>

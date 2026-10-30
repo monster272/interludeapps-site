@@ -10,13 +10,18 @@
   function tick() {
     try {
       var t = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
-      clock.textContent = "Navi Mumbai, India · " + t + " IST";
+      clock.textContent = "India · " + t + " IST";
     } catch (e) {}
   }
   tick(); setInterval(tick, 20000);
 
   var gsap = window.gsap, ST = window.ScrollTrigger;
-  if (still || !gsap || !ST) { if (curtain) curtain.remove(); return; }
+  function endIntro() {
+    if (curtain) curtain.remove();
+    doc.classList.remove("intro-on");
+    try { sessionStorage.setItem("ia-intro", "1"); } catch (e) {}
+  }
+  if (still || !gsap || !ST) { endIntro(); return; }
   gsap.registerPlugin(ST);
 
   // Smooth scroll, driven by GSAP's clock so scroll-linked work stays in step.
@@ -60,14 +65,54 @@
     });
   });
 
-  // ---------- Intro ----------
-  var intro = gsap.timeline();
-  intro.from(".curtain span", { yPercent: 100, opacity: 0, duration: 0.7, ease: "expo.out" })
-    .to(".curtain", { clipPath: "inset(0 0 100% 0)", duration: 1.0, ease: "expo.inOut" }, "+=0.25")
-    .from(".hero h1 .in", { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: 0.09 }, "-=0.45")
+  // ---------- Intro: hello in the studio's languages, then the name lands in the bar ----------
+  var playing = doc.classList.contains("intro-on") && curtain;
+  var intro = gsap.timeline({ onComplete: endIntro });
+  if (playing) {
+    // The intro always lands on the hero, whatever scroll the browser restores.
+    var toTop = function () { window.scrollTo(0, 0); if (lenis) lenis.scrollTo(0, { immediate: true, force: true }); };
+    toTop(); window.addEventListener("load", toTop);
+    var greet = curtain.querySelector(".greet");
+    var mark = curtain.querySelector(".mark");
+    var brand = document.querySelector(".bar .brand");
+    mark.innerHTML = mark.textContent.split("").map(function (c) { return '<span class="l">' + c + "</span>"; }).join("");
+    var letters = mark.querySelectorAll(".l");
+    var hellos = [["Hello", "en"], ["नमस्ते", "hi"], ["Olá", "pt"], ["Halo", "id"], ["Hola", "es"], ["Hallo", "de"]];
+    gsap.set(letters, { yPercent: 60, opacity: 0, "--g": 200, "--s": "75%" });
+    intro.to(".intro-foot .bar-line b", { scaleX: 1, duration: 2.7, ease: "power1.inOut" }, 0);
+    hellos.forEach(function (h, i) {
+      var at = 0.15 + i * 0.24;
+      intro.add(function () { greet.textContent = h[0]; greet.lang = h[1]; }, at)
+        .fromTo(greet, { opacity: 0, y: 16, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out" }, at);
+      if (i < hellos.length - 1) intro.to(greet, { opacity: 0, y: -12, filter: "blur(8px)", duration: 0.12, ease: "power2.in" }, at + 0.16);
+    });
+    intro.to(greet, { opacity: 0, scale: 0.9, filter: "blur(14px)", duration: 0.3, ease: "power2.in" }, 0.15 + hellos.length * 0.24)
+      .set(mark, { opacity: 1 }, "-=0.1")
+      .to(letters, { yPercent: 0, opacity: 1, duration: 0.7, ease: "expo.out", stagger: 0.03 }, "-=0.15")
+      .to(letters, { "--g": 800, "--s": "100%", duration: 0.75, ease: "expo.inOut", stagger: 0.025 }, "<")
+      .addLabel("land", "+=0.05")
+      // FLIP: the curtain's wordmark flies into the bar and becomes the brand.
+      .to(mark, { x: function () { return flip().x; }, y: function () { return flip().y; }, scale: function () { return flip().k; },
+        color: function () { return getComputedStyle(brand).color; }, duration: 1.05, ease: "expo.inOut" }, "land")
+      .to(".orbs, .grain, .intro-foot", { opacity: 0, duration: 0.6, ease: "power2.out" }, "land")
+      .to(curtain, { clipPath: "inset(0 0 100% 0)", duration: 1.05, ease: "expo.inOut" }, "land+=0.2")
+      .set(brand, { opacity: 1 }, "land+=1.05")
+      .set(mark, { opacity: 0 }, "land+=1.05");
+    var flipped = null;
+    function flip() {
+      if (!flipped) {
+        var from = mark.getBoundingClientRect(), to = brand.getBoundingClientRect();
+        flipped = { x: to.left - from.left, y: to.top - from.top, k: to.height / from.height };
+      }
+      return flipped;
+    }
+    function skip() { intro.progress(1); }
+    window.addEventListener("keydown", skip, { once: true });
+    curtain.addEventListener("pointerdown", skip, { once: true });
+  }
+  intro.from(".hero h1 .in", { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: 0.09 }, playing ? "land+=0.6" : 0.1)
     .from(".icons img", { scale: 0, rotate: -40, duration: 1.1, ease: "back.out(1.6)", stagger: 0.12 }, "-=0.7")
-    .from(".hero-foot > *", { y: 18, opacity: 0, duration: 0.9, ease: "expo.out", stagger: 0.06 }, "-=0.8")
-    .add(function () { if (curtain) curtain.remove(); });
+    .from(".hero-foot > *", { y: 18, opacity: 0, duration: 0.9, ease: "expo.out", stagger: 0.06 }, "-=0.8");
 
   if (fine) {
     var mx = -9999, my = -9999, raf = 0;
@@ -76,7 +121,7 @@
       if (!raf) raf = requestAnimationFrame(stretch);
     }, { passive: true });
     document.querySelector(".hero").addEventListener("pointerleave", function () {
-      chars.forEach(function (c) { c.style.setProperty("--w", "100%"); });
+      chars.forEach(function (c) { c.style.setProperty("--w", "100%"); c.style.setProperty("--g", "800"); });
     });
     function stretch() {
       raf = 0;
@@ -85,7 +130,8 @@
         if (r.bottom < 0 || r.top > innerHeight) return;
         var d = Math.hypot(r.left + r.width / 2 - mx, r.top + r.height / 2 - my);
         var k = Math.max(0, 1 - d / 320);
-        c.style.setProperty("--w", (88 + k * 30).toFixed(1) + "%");
+        c.style.setProperty("--w", (100 - k * 25).toFixed(1) + "%");
+        c.style.setProperty("--g", Math.round(800 - k * 560));
       });
     }
   }
