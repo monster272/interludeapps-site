@@ -3,42 +3,499 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interlude Apps</title>
-<meta name="description" content="Interlude Apps makes PalmVani: free AI palm reading, daily rashifal and couple palm match in Hindi and English.">
-<meta name="theme-color" content="#F7F4EE">
+<title>Interludeapps</title>
+<meta name="description" content="Interludeapps is an independent Android app studio in Navi Mumbai, India. It makes Calkey, a calorie tracker you type in your own language, and PalmVani, palm reading and rashifal in Hindi and English.">
+<link rel="canonical" href="https://interludeapps.store/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F3F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Interludeapps">
+<meta property="og:title" content="Interludeapps: apps that speak the way people really talk">
+<meta property="og:description" content="An independent Android studio in Navi Mumbai, India. Calkey and PalmVani.">
+<meta property="og:url" content="https://interludeapps.store/">
+<meta property="og:image" content="https://interludeapps.store/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Interludeapps: apps that speak the way people really talk.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Interludeapps",
+  "url": "https://interludeapps.store/",
+  "logo": "https://interludeapps.store/apple-touch-icon.png",
+  "email": "interludeapps@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Navi Mumbai", "addressRegion": "Maharashtra", "addressCountry": "IN" }
+}
+</script>
+<script>document.documentElement.classList.add("js");</script>
 <style>
-  :root { --bg: #F7F4EE; --card: #FFFFFF; --ink: #1F1B16; --soft: #645B52; --line: #E4DDD2; --link: #B23A1F; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #16130F; --card: #221D18; --ink: #F3EEE6; --soft: #BFB4A6; --line: #3A322A; --link: #FF8A6E; }
+  @font-face {
+    font-family: "Archivo";
+    src: url("/assets/fonts/archivo.woff2") format("woff2");
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-display: swap;
   }
+
+  :root {
+    --paper: #F3F3F1;
+    --ink: #0B0B0C;
+    --ink-soft: #55565C;
+    --line: #D6D6D2;
+
+    --ck: #0B6B74;
+    --ck-deep: #0C1B1F;
+    --ck-ink: #EDF3F1;
+    --ck-soft: #B9D3D0;
+    --volt: #C6F035;
+
+    --pv: #C2381F;
+    --pv-deep: #3B1F1A;
+    --pv-ink: #FFF1DC;
+    --pv-soft: #F6CDB8;
+    --turmeric: #F5B82E;
+
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --font: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --gutter: clamp(16px, 3.4vw, 48px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0B0B0C; --ink: #EDEDEA; --ink-soft: #A2A3A8; --line: #2A2B2F;
+      --ck: #0A4E55; --ck-soft: #9FC2BE;
+      --pv: #8E2814; --pv-soft: #EBBDA6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0B0B0C; --ink: #EDEDEA; --ink-soft: #A2A3A8; --line: #2A2B2F;
+    --ck: #0A4E55; --ck-soft: #9FC2BE;
+    --pv: #8E2814; --pv-soft: #EBBDA6;
+  }
+
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width: 680px; margin: 0 auto; padding: 48px 16px 64px; }
-  h1 { font-size: 2rem; margin: 0 0 6px; }
-  .lead { color: var(--soft); margin: 0 0 32px; }
-  .app { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 0 0 16px; }
-  .app h2 { margin: 0 0 4px; font-size: 1.25rem; }
-  .app p { margin: 0 0 10px; color: var(--soft); }
-  .links { display: flex; flex-wrap: wrap; gap: 16px; }
-  a { color: var(--link); }
-  footer { margin-top: 40px; color: var(--soft); font-size: .95rem; }
+  html { -webkit-text-size-adjust: 100%; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 1.0625rem/1.55 var(--font); font-stretch: 100%;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 4px; }
+  img { display: block; max-width: 100%; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .skip { position: fixed; left: 16px; top: -80px; z-index: 100; background: var(--ink); color: var(--paper); padding: 10px 14px; border-radius: 999px; }
+  .skip:focus { top: 16px; }
+  .small { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ---------- Intro curtain ---------- */
+  .curtain { display: none; }
+  .js .curtain {
+    display: grid; place-items: center; position: fixed; inset: 0; z-index: 90;
+    background: var(--ink); color: var(--paper);
+    animation: curtain-failsafe 0s 4s forwards;
+  }
+  @keyframes curtain-failsafe { to { visibility: hidden; } }
+  @media (prefers-reduced-motion: reduce) { .js .curtain { display: none; } }
+  .curtain span { font-weight: 800; font-stretch: 62%; font-size: clamp(2rem, 7vw, 5rem); letter-spacing: -.02em; }
+
+  /* ---------- Top bar ---------- */
+  .bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px var(--gutter); color: var(--ink); transition: color .4s var(--ease);
+  }
+  .bar.over-ck { color: var(--ck-ink); }
+  .bar.over-pv { color: var(--pv-ink); }
+  .brand { font-weight: 800; font-size: 1.05rem; text-decoration: none; letter-spacing: -.01em; }
+  .bar nav ul { display: flex; gap: clamp(14px, 2.4vw, 36px); margin: 0; padding: 0; list-style: none; }
+  .bar nav a { text-decoration: none; font-weight: 600; font-size: .95rem; padding: 8px 0; display: inline-block; }
+  .bar nav a:hover { text-decoration: underline; }
+  .bar .where { display: none; }
+  @media (min-width: 900px) { .bar .where { display: block; font-variant-numeric: tabular-nums; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100svh; display: grid; grid-template-rows: 1fr auto;
+    padding: 110px var(--gutter) 28px; position: relative;
+  }
+  .hero h1 {
+    margin: 0; align-self: end;
+    font-weight: 820; font-size: clamp(3.1rem, 11.2vw, 11.5rem); line-height: .9; letter-spacing: -.035em;
+  }
+  .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+  .hero h1 .in { display: inline-block; }
+  .hero h1 .ch { display: inline-block; font-stretch: var(--w, 100%); transition: font-stretch .6s var(--ease); }
+  .hero h1 em { font-style: normal; color: var(--ink-soft); }
+  .icons { display: inline-flex; vertical-align: -.04em; margin-left: .1em; }
+  .icons img { width: .78em; height: .78em; border-radius: 24%; box-shadow: 0 .08em .2em -.06em rgba(0, 0, 0, .35); }
+  .icons img + img { margin-left: -.18em; transform: rotate(8deg); }
+  .icons img:first-child { transform: rotate(-6deg); }
+  .hero-foot {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: end;
+    margin-top: clamp(28px, 5vw, 56px); padding-top: 18px; border-top: 1px solid var(--line);
+  }
+  .hero-foot p { margin: 0; max-width: 34ch; }
+  .hero-foot .c { text-align: center; justify-self: center; }
+  .hero-foot .r { text-align: right; justify-self: end; }
+  .cue { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .cue svg { width: 14px; height: 14px; animation: drift 2.2s var(--ease) infinite; }
+  @keyframes drift { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+  @media (max-width: 720px) {
+    .hero h1 { font-size: 15.4vw; }
+    .hero-foot { grid-template-columns: 1fr; gap: 18px; }
+    .hero-foot .c { display: none; }
+    .hero-foot .r { justify-self: start; }
+  }
+
+  /* ---------- Marquee of real inputs ---------- */
+  .marquee { padding: clamp(36px, 6vw, 72px) 0; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .marquee .label { padding: 0 var(--gutter) 18px; margin: 0; color: var(--ink-soft); }
+  .track { display: flex; width: max-content; will-change: transform; }
+  .track span {
+    flex: none; padding: 0 .55em; white-space: nowrap;
+    font-weight: 300; font-stretch: 75%; font-size: clamp(2rem, 5.4vw, 4.8rem); line-height: 1.08; letter-spacing: -.02em;
+  }
+  .track span::after { content: "/"; margin-left: 1.1em; color: var(--line); font-weight: 200; }
+  .track.b span { font-weight: 700; font-stretch: 112%; }
+
+  /* ---------- Work index ---------- */
+  .work { padding: clamp(70px, 11vw, 150px) var(--gutter) clamp(40px, 6vw, 80px); position: relative; }
+  .work-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+  .work-head h2 { margin: 0; font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.02em; }
+  .work ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .work li { border-bottom: 1px solid var(--ink); }
+  .work-row {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px 24px;
+    padding: clamp(14px, 2vw, 26px) 0; text-decoration: none;
+  }
+  .work-name {
+    font-weight: 820; font-size: clamp(3rem, 10.5vw, 10rem); line-height: .92; letter-spacing: -.04em;
+    font-stretch: 85%; transition: font-stretch .7s var(--ease), letter-spacing .7s var(--ease);
+  }
+  .work-row:hover .work-name, .work-row:focus-visible .work-name { font-stretch: 125%; letter-spacing: -.05em; }
+  .work-meta { display: grid; gap: 4px; text-align: right; color: var(--ink-soft); }
+  .work-meta b { color: var(--ink); font-weight: 700; }
+  .dot { display: inline-block; width: .55em; height: .55em; border-radius: 50%; margin-right: .45em; vertical-align: .05em; }
+  .preview {
+    position: fixed; left: 0; top: 0; z-index: 40; width: min(34vw, 440px); aspect-ratio: 1200 / 630;
+    pointer-events: none; border-radius: 14px; overflow: hidden; opacity: 0;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45);
+  }
+  .preview img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0; transition: opacity .3s; }
+  .preview img.on { opacity: 1; }
+  @media (max-width: 720px) {
+    .work-row { grid-template-columns: 1fr; }
+    .work-meta { text-align: left; grid-auto-flow: column; justify-content: start; gap: 16px; }
+  }
+
+  /* ---------- Chapters ---------- */
+  .sheet {
+    min-height: 100svh;
+    display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: center;
+    padding: clamp(90px, 9vw, 110px) var(--gutter) clamp(50px, 6vw, 80px);
+  }
+  .chapter.calkey .sheet { background: var(--ck); color: var(--ck-ink); }
+  .chapter.palmvani .sheet { background: var(--pv); color: var(--pv-ink); }
+  .chapter-title { display: flex; align-items: center; gap: clamp(14px, 2vw, 24px); margin: 0 0 clamp(22px, 3vw, 36px); }
+  .chapter-title img { width: clamp(56px, 6vw, 84px); height: auto; border-radius: 22%; box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .5); }
+  .chapter h2 { margin: 0; font-weight: 850; font-size: clamp(3.2rem, 7.4vw, 7rem); line-height: .88; letter-spacing: -.045em; }
+  .chapter h2 small { display: block; font-size: max(.2em, 1rem); font-weight: 500; letter-spacing: 0; line-height: 1.3; margin-top: .55em; }
+  .pitch { font-size: clamp(1.25rem, 2.3vw, 1.9rem); line-height: 1.25; letter-spacing: -.012em; font-weight: 500; margin: 0 0 clamp(22px, 3vw, 34px); max-width: 26ch; }
+  .facts { list-style: none; margin: 0 0 clamp(26px, 3.4vw, 40px); padding: 0; max-width: 46ch; }
+  .facts li { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 12px; padding: 11px 0; border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .facts li:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .calkey .facts span:first-child { color: var(--ck-soft); }
+  .palmvani .facts span:first-child { color: var(--pv-soft); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 26px;
+    border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 1.02rem;
+  }
+  .pill svg { width: 16px; height: 16px; transition: transform .5s var(--ease); }
+  .pill:hover svg { transform: translateX(4px); }
+  .calkey .pill { background: var(--volt); color: var(--ck-deep); }
+  .palmvani .pill { background: var(--turmeric); color: var(--pv-deep); }
+  .ctas .text { font-weight: 600; padding: 14px 0; }
+  .stage { margin: 0; display: grid; justify-items: center; gap: 18px; }
+  .note { margin: 0; font-size: .82rem; max-width: 42ch; text-align: center; }
+  .calkey .note { color: var(--ck-soft); }
+  .palmvani .note { color: var(--pv-soft); margin-top: clamp(30px, 4vw, 56px); }
+
+  /* Calkey phone: the journal, redrawn */
+  .phone {
+    width: min(100%, 330px); aspect-ratio: 9 / 18.6; border-radius: 46px; padding: 11px;
+    background: #0C1B1F; box-shadow: 0 50px 90px -40px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(255, 255, 255, .1);
+  }
+  .screen {
+    height: 100%; border-radius: 36px; overflow: hidden; position: relative;
+    background: linear-gradient(#F4F4F1, #E8F1EE); color: #0C1B1F; padding: 46px 18px 18px;
+    font-size: 13.5px; line-height: 1.35; font-stretch: 100%;
+  }
+  .screen-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .chip { background: #fff; border-radius: 999px; padding: 6px 12px; font-weight: 600; font-size: 12px; }
+  .streak { background: var(--volt); border-radius: 999px; padding: 5px 12px; font-weight: 800; font-size: 13px; }
+  .meal { padding: 10px 0 9px; }
+  .meal + .meal { border-top: 1px solid rgba(12, 27, 31, .08); }
+  .meal-slot { font-size: 10px; font-weight: 700; letter-spacing: .1em; color: #3F5257; text-transform: uppercase; margin-bottom: 4px; }
+  .meal-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: start; min-height: 1.35em; }
+  .typed::after { content: ""; display: inline-block; width: 1.5px; height: 1.05em; background: #0B6B74; vertical-align: -.15em; margin-left: 1px; opacity: 0; }
+  .meal.typing .typed::after { opacity: 1; }
+  .kcal { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; transition: opacity .4s var(--ease), transform .6s var(--ease), color 1.2s; }
+  .kcal small { font-weight: 400; color: #3F5257; font-size: 11px; margin-left: 2px; }
+  .anim .meal:not(.done) .kcal { opacity: 0; transform: translateY(6px); }
+  .meal.fresh .kcal { color: #0B6B74; }
+  .capsule {
+    position: absolute; left: 14px; right: 14px; bottom: 14px; height: 50px; border-radius: 999px;
+    background: #0F1D21; color: #EDF3F1; display: flex; align-items: center; justify-content: space-between; padding: 0 18px;
+    font-size: 13px;
+  }
+  .capsule b { font-size: 17px; font-variant-numeric: tabular-nums; }
+  .capsule .macros { color: #A79BFF; font-weight: 600; }
+
+  /* PalmVani: four store screens that open like a hand */
+  .hand { position: relative; width: min(100%, 470px); aspect-ratio: 1 / 1.02; }
+  .hand figure {
+    position: absolute; left: 50%; bottom: 0; width: 44%; margin: 0 0 0 -22%; transform-origin: 50% 120%;
+    border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -25px rgba(0, 0, 0, .6);
+    transform: rotate(var(--r));
+  }
+  .hand figure:nth-child(1) { --r: -24deg; }
+  .hand figure:nth-child(2) { --r: -8deg; }
+  .hand figure:nth-child(3) { --r: 8deg; }
+  .hand figure:nth-child(4) { --r: 24deg; }
+  .hand img { width: 100%; height: auto; }
+
+  @media (max-width: 900px) {
+    .sheet { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+    .hand { width: min(84%, 400px); }
+  }
+
+  /* ---------- Studio ---------- */
+  .studio { padding: clamp(90px, 14vw, 200px) var(--gutter); }
+  .studio h2 { color: var(--ink-soft); margin: 0 0 22px; }
+  .manifesto { margin: 0; font-weight: 600; font-size: clamp(1.7rem, 4.4vw, 4.2rem); line-height: 1.08; letter-spacing: -.028em; max-width: 22ch; }
+  .pledges { list-style: none; padding: 0; margin: clamp(48px, 7vw, 90px) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(16px, 3vw, 40px); }
+  .pledges li { border-top: 1px solid var(--ink); padding-top: 16px; }
+  .pledges b { display: block; font-size: 1.15rem; margin-bottom: 6px; letter-spacing: -.01em; }
+  .pledges span { color: var(--ink-soft); }
+  @media (max-width: 760px) { .pledges { grid-template-columns: 1fr; gap: 26px; } }
+
+  /* ---------- Contact ---------- */
+  .contact { padding: 0 var(--gutter) clamp(60px, 9vw, 120px); }
+  .contact h2 { color: var(--ink-soft); margin: 0 0 14px; }
+  .mail {
+    display: inline-block; text-decoration: none; font-weight: 800; letter-spacing: -.045em; line-height: .95;
+    font-size: clamp(1.6rem, 6.6vw, 7rem); font-stretch: 80%; transition: font-stretch .8s var(--ease);
+    overflow-wrap: anywhere; border-bottom: 3px solid currentColor; padding-bottom: .04em; max-width: 100%;
+  }
+  .mail:hover, .mail:focus-visible { font-stretch: 96%; }
+  .contact p { margin: 22px 0 0; color: var(--ink-soft); }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 26px var(--gutter) 34px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; font-size: .92rem; color: var(--ink-soft); }
+  footer h2 { margin: 0 0 8px; color: var(--ink); }
+  footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  footer a { color: var(--ink); overflow-wrap: anywhere; }
+  @media (max-width: 760px) { footer { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- Cursor ---------- */
+  .cursor { display: none; }
+  @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .js .cursor {
+      display: block; position: fixed; left: 0; top: 0; z-index: 80; pointer-events: none;
+      width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: #F3F3F1; mix-blend-mode: difference;
+      transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease);
+    }
+    .js .cursor.big { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cue svg { animation: none; }
+    .work-name, .mail, .hero h1 .ch { transition: none; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>Interlude Apps</h1>
-  <p class="lead">Small, honest Android apps. No trials, no surprise charges.</p>
+<a class="skip" href="#main">Skip to content</a>
+<div class="curtain" aria-hidden="true"><span>Interludeapps</span></div>
+<div class="cursor" aria-hidden="true"></div>
 
-  <section class="app">
-    <h2>PalmVani</h2>
-    <p>Free AI palm reading, daily rashifal and couple palm match, in Hindi and English.</p>
-    <div class="links">
-      <a href="/privacypolicy/">Privacy policy</a>
-      <a href="/privacypolicy/#hi">गोपनीयता नीति</a>
+<header class="bar">
+  <a class="brand" href="/">Interludeapps</a>
+  <span class="where small" id="clock">Navi Mumbai, India</span>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="title">
+    <h1 id="title">
+      <span class="line"><span class="in" data-stretch>Apps that speak</span></span>
+      <span class="line"><span class="in" data-stretch>the way people</span></span>
+      <span class="line"><span class="in"><span data-stretch><em>really talk.</em></span> <span class="icons" aria-hidden="true"><img src="/assets/calkey.webp" alt="" width="72" height="72"><img src="/assets/palmvani.webp" alt="" width="72" height="72"></span></span></span>
+    </h1>
+    <div class="hero-foot">
+      <p>Interludeapps is an independent studio in Navi Mumbai, India, making Android apps in more than one language.</p>
+      <p class="c small">Calkey · PalmVani</p>
+      <p class="r"><a class="cue small" href="#work">See the work <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 2v12M3 9l5 5 5-5"/></svg></a></p>
     </div>
   </section>
 
-  <footer>Contact: <a href="mailto:interludeapp.official@gmail.com">interludeapp.official@gmail.com</a></footer>
+  <section class="marquee" aria-label="Things people type into Calkey">
+    <p class="label small">Typed into Calkey, the way people say it</p>
+    <div class="track a" aria-hidden="true">
+      <span>2 roti aur dal makhani</span><span>1 katori sprouts chaat</span><span>dos tacos al pastor</span><span>um copo de água</span><span>poha with peanuts</span><span>segelas air</span><span>paneer tikka aur 2 roti</span><span>1 concha de feijão</span>
+    </div>
+    <div class="track b" aria-hidden="true">
+      <span>katori</span><span>concha</span><span>centong</span><span>cup</span><span>हिन्दी</span><span>Português</span><span>Bahasa</span><span>Español</span><span>Deutsch</span><span>English</span>
+    </div>
+    <p class="sr">Examples: 2 roti aur dal makhani, dos tacos al pastor, um copo de água, segelas air. Calkey understands household measures like a katori, a concha, a centong and a cup.</p>
+  </section>
+
+  <section class="work" id="work" aria-labelledby="work-title">
+    <div class="work-head">
+      <h2 id="work-title">Work</h2>
+      <span class="small">Two apps, both on Android</span>
+    </div>
+    <ol>
+      <li>
+        <a class="work-row" href="#calkey" data-preview="ck">
+          <span class="work-name">Calkey</span>
+          <span class="work-meta"><b>Calorie and macro tracker</b><span><i class="dot" style="background:#C6F035" aria-hidden="true"></i>Waitlist open</span></span>
+        </a>
+      </li>
+      <li>
+        <a class="work-row" href="#palmvani" data-preview="pv">
+          <span class="work-name">PalmVani</span>
+          <span class="work-meta"><b>Palm reading and rashifal</b><span><i class="dot" style="background:#F5B82E" aria-hidden="true"></i>In testing</span></span>
+        </a>
+      </li>
+    </ol>
+    <div class="preview" aria-hidden="true">
+      <img data-k="ck" src="/assets/calkey-preview.webp" alt="" width="1200" height="630" loading="lazy">
+      <img data-k="pv" src="/assets/pv-feature.webp" alt="" width="1024" height="500" loading="lazy">
+    </div>
+  </section>
+
+  <section class="chapter calkey" id="calkey" aria-labelledby="calkey-title">
+    <div class="sheet">
+      <div class="copy">
+        <div class="chapter-title">
+          <img src="/assets/calkey.webp" width="72" height="72" alt="">
+          <h2 id="calkey-title">Calkey<small>Calories and macros, from one sentence</small></h2>
+        </div>
+        <p class="pitch">Type what you ate like a note, in your own language, with the measures your kitchen uses.</p>
+        <ul class="facts">
+          <li><span>Runs on</span><span>Android phones</span></li>
+          <li><span>Status</span><span>Before launch. Waitlist open; on Product Hunt on Sunday 8 November 2026.</span></li>
+          <li><span>Speaks</span><span>Meals typed in any language. App in English, Hindi, Portuguese, Spanish, Indonesian and German.</span></li>
+        </ul>
+        <div class="ctas">
+          <a class="pill" href="https://calkey.app/">Join the waitlist <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="text" href="https://calkey.app/privacy.html">Privacy policy</a>
+        </div>
+      </div>
+      <figure class="stage">
+        <div class="phone" aria-hidden="true">
+          <div class="screen">
+            <div class="screen-top"><span class="chip">Sun, Oct 25</span><span class="streak">12</span></div>
+            <div class="meal"><div class="meal-slot">Breakfast 8:20 am</div><div class="meal-line"><span class="typed">poha with peanuts and a cup of chai</span><span class="kcal">520<small>cal</small></span></div></div>
+            <div class="meal"><div class="meal-slot">Lunch 1:10 pm</div><div class="meal-line"><span class="typed">2 roti aur dal makhani, 1 katori dahi</span><span class="kcal">520<small>cal</small></span></div></div>
+            <div class="meal"><div class="meal-slot">Snack 4:45 pm</div><div class="meal-line"><span class="typed">1 katori sprouts chaat</span><span class="kcal">110<small>cal</small></span></div></div>
+            <div class="meal"><div class="meal-slot">Dinner 8:15 pm</div><div class="meal-line"><span class="typed">paneer tikka aur 2 roti</span><span class="kcal">460<small>cal</small></span></div></div>
+            <div class="capsule"><span><b id="ck-total">1,610</b> cal today</span></div>
+          </div>
+        </div>
+        <figcaption class="note">A Calkey journal, redrawn from the app. Each calorie figure is a real answer the app gave for that exact line.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="chapter palmvani" id="palmvani" aria-labelledby="palmvani-title">
+    <div class="sheet">
+      <div class="copy">
+        <div class="chapter-title">
+          <img src="/assets/palmvani.webp" width="72" height="72" alt="">
+          <h2 id="palmvani-title">PalmVani<small lang="hi">पामवाणी · Palm reading and rashifal</small></h2>
+        </div>
+        <p class="pitch">Photograph your palm and read what its lines say about love, career and money.</p>
+        <ul class="facts">
+          <li><span>Runs on</span><span>Android phones</span></li>
+          <li><span>Status</span><span>In closed testing on Google Play. Not yet public.</span></li>
+          <li><span>Speaks</span><span>Hindi and English</span></li>
+          <li><span>Also</span><span>A daily rashifal and a couple palm match. Free with ads, no account, and your palm photo is never stored.</span></li>
+        </ul>
+        <div class="ctas">
+          <a class="pill" href="/privacypolicy/">Privacy policy <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="text" href="/privacypolicy/#hi" lang="hi">गोपनीयता नीति</a>
+        </div>
+      </div>
+      <figure class="stage">
+        <div class="hand">
+          <figure><img src="/assets/pv-shot-1.webp" width="540" height="960" alt="PalmVani store screen: read your palm with AI, in Hindi or English."></figure>
+          <figure><img src="/assets/pv-shot-2.webp" width="540" height="960" alt="PalmVani store screen."></figure>
+          <figure><img src="/assets/pv-shot-3.webp" width="540" height="960" alt="PalmVani store screen."></figure>
+          <figure><img src="/assets/pv-shot-4.webp" width="540" height="960" alt="PalmVani store screen."></figure>
+        </div>
+        <figcaption class="note">PalmVani's Play Store screens. Readings are for entertainment and never predict health or lifespan.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="studio" id="studio" aria-labelledby="studio-title">
+    <h2 id="studio-title" class="small">The studio</h2>
+    <p class="manifesto" data-words>Most people do not live in English alone. So every Interludeapps app speaks more than one language from its very first version, on the Android phones people actually carry.</p>
+    <ul class="pledges">
+      <li><b>More than one language</b><span>From the first version, not as an afterthought.</span></li>
+      <li><b>Your data, your call</b><span>Every app has its own privacy policy and a way to delete your data.</span></li>
+      <li><b>Its own home</b><span>Each app has its own site or policy page and its own support address. This page is where they meet.</span></li>
+    </ul>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title" class="small">Write to us</h2>
+    <a class="mail" href="mailto:interludeapps@gmail.com">interludeapps@gmail.com</a>
+    <p>For help with Calkey, write to <a href="mailto:support@calkey.app">support@calkey.app</a>.</p>
+  </section>
 </main>
+
+<footer>
+  <div>
+    <h2 class="small">Interludeapps</h2>
+    Navi Mumbai, India<br>© 2026 Interludeapps
+  </div>
+  <div>
+    <h2 class="small">Calkey</h2>
+    <ul><li><a href="https://calkey.app/">calkey.app</a></li><li><a href="https://calkey.app/privacy.html">Privacy policy</a></li><li><a href="https://calkey.app/delete-account.html">Delete your account</a></li></ul>
+  </div>
+  <div>
+    <h2 class="small">PalmVani</h2>
+    <ul><li><a href="/privacypolicy/">Privacy policy</a></li><li><a href="/privacypolicy/#hi" lang="hi">गोपनीयता नीति</a></li></ul>
+  </div>
+  <div>
+    <h2 class="small">Contact</h2>
+    <ul><li><a href="mailto:interludeapps@gmail.com">interludeapps@gmail.com</a></li></ul>
+  </div>
+</footer>
+
+<script src="/assets/js/gsap.min.js" defer></script>
+<script src="/assets/js/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/lenis.min.js" defer></script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
