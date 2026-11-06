@@ -42,7 +42,7 @@
 <body>
 <main>
   <h1>PalmVani</h1>
-  <p class="meta">Privacy Policy · गोपनीयता नीति · Last updated 28 October 2026</p>
+  <p class="meta">Privacy Policy · गोपनीयता नीति · Last updated 6 November 2026</p>
 
   <div class="switch" role="group" aria-label="Language">
     <button type="button" data-show="en" aria-pressed="true">English</button>
@@ -70,6 +70,7 @@
 
     <h2>3. Anonymous session</h2>
     <p>The first time the app opens, our server gives it a random anonymous ID. It lets us apply the daily reading limit and stop abuse. It is not linked to your name, email, phone number or photos.</p>
+    <p>To stop scripts from using up the free readings, the app also asks Google Play, about once every five days, to confirm that it is the real PalmVani installed from Google Play on a genuine Android phone (Google Play Integrity). Our server keeps Google's result and when it was checked, with your anonymous ID. It contains no name, email, phone number or photos, and it is deleted along with your anonymous ID.</p>
 
     <h2>4. Ads (Google AdMob)</h2>
     <p>PalmVani is free because it shows ads from Google AdMob. Ads appear only after your first reading and never block the app. To show ads, measure them and prevent fraud, Google may collect your device's advertising ID, IP address, approximate location from the IP address, and information about your device and how you interact with ads. Where the law requires it (for example in the EEA and the UK), the app asks for your consent first using Google's consent form. You can reset or delete your advertising ID, or opt out of personalised ads, in your phone's Settings → Google → Ads. See <a href="https://policies.google.com/technologies/partner-sites">how Google uses data from apps that use its services</a>.</p>
@@ -84,8 +85,9 @@
     <div class="scroll">
     <table>
       <tr><th>Service</th><th>What it receives</th><th>Why</th></tr>
-      <tr><td>Supabase (our server, India)</td><td>Anonymous ID; the palm photo only while a reading is written</td><td>Readings, daily limit, abuse prevention</td></tr>
+      <tr><td>Supabase (our server, India)</td><td>Anonymous ID; the Play Integrity result; the palm photo only while a reading is written</td><td>Readings, daily limit, abuse prevention</td></tr>
       <tr><td>Google Gemini API</td><td>The palm photo and your chosen topics, only while a reading is written</td><td>Writing the reading</td></tr>
+      <tr><td>Google Play Integrity</td><td>A check of this app and phone, made by Google Play on your phone</td><td>Stopping abuse of the free readings</td></tr>
       <tr><td>Google AdMob</td><td>Advertising ID, IP address, device information, ad interactions</td><td>Showing and measuring ads</td></tr>
       <tr><td>Firebase Crashlytics and Analytics</td><td>Installation ID, device model, Android version, crash details, app events</td><td>Fixing crashes, improving the app</td></tr>
       <tr><td>Firebase Cloud Messaging</td><td>Push token</td><td>Your daily rashifal notification</td></tr>
@@ -94,7 +96,7 @@
     <p>All data travels encrypted. We never sell or rent data to anyone.</p>
 
     <h2>8. Deleting your data</h2>
-    <p>Uninstalling PalmVani deletes everything stored on your phone. A "Delete all my data" button in the app's Profile screen (arriving in an update before our public launch) also removes your anonymous ID from our server. Until then, or for any other request, email us at the address below and we will reply within 30 days.</p>
+    <p>Uninstalling PalmVani deletes everything stored on your phone. The "Delete all my data" button in the app's Profile screen also removes your anonymous ID, and everything kept with it, from our server. For any other request, email us at the address below and we will reply within 30 days.</p>
 
     <h2>9. For entertainment</h2>
     <p>Palm readings and rashifal are for entertainment and reflection. PalmVani never makes predictions about health, illness, death or lifespan, and its readings are not medical, legal or financial advice.</p>
@@ -127,6 +129,7 @@
 
     <h2>3. बिना नाम का सेशन</h2>
     <p>ऐप पहली बार खुलने पर हमारा सर्वर उसे एक रैंडम, बिना नाम की ID देता है। इससे हम रोज़ की रीडिंग की सीमा लागू करते हैं और दुरुपयोग रोकते हैं। यह ID आपके नाम, ईमेल, फ़ोन नंबर या फ़ोटो से जुड़ी नहीं है।</p>
+    <p>मुफ़्त रीडिंग को स्क्रिप्ट से खर्च होने से रोकने के लिए, ऐप लगभग हर पाँच दिन में Google Play से यह पुष्टि भी करवाता है कि यह Google Play से इंस्टॉल किया गया असली पामवाणी ऐप है और असली Android फ़ोन पर चल रहा है (Google Play Integrity)। हमारा सर्वर Google का नतीजा और जाँच का समय आपकी बिना नाम की ID के साथ रखता है। इसमें कोई नाम, ईमेल, फ़ोन नंबर या फ़ोटो नहीं होता, और यह आपकी बिना नाम की ID के साथ ही मिट जाता है।</p>
 
     <h2>4. विज्ञापन (Google AdMob)</h2>
     <p>पामवाणी मुफ़्त है क्योंकि इसमें Google AdMob के विज्ञापन आते हैं। विज्ञापन सिर्फ़ आपकी पहली रीडिंग के बाद दिखते हैं और ऐप को कभी नहीं रोकते। विज्ञापन दिखाने, उन्हें मापने और धोखाधड़ी रोकने के लिए Google आपके डिवाइस की विज्ञापन ID, IP पता, IP से अंदाज़न जगह, और आपके डिवाइस व विज्ञापनों पर आपकी गतिविधि की जानकारी ले सकता है। जहाँ क़ानून ज़रूरी बनाता है (जैसे EEA और UK), वहाँ ऐप पहले Google के सहमति फ़ॉर्म से आपकी अनुमति लेता है। आप अपने फ़ोन की Settings → Google → Ads में विज्ञापन ID रीसेट या डिलीट कर सकते हैं, या पर्सनलाइज़्ड विज्ञापन बंद कर सकते हैं। देखें <a href="https://policies.google.com/technologies/partner-sites?hl=hi">Google उसकी सेवाएँ इस्तेमाल करने वाले ऐप्स के डेटा का कैसे इस्तेमाल करता है</a>।</p>
@@ -141,8 +144,9 @@
     <div class="scroll">
     <table>
       <tr><th>सेवा</th><th>उसे क्या मिलता है</th><th>क्यों</th></tr>
-      <tr><td>Supabase (हमारा सर्वर, भारत)</td><td>बिना नाम की ID; हथेली की फ़ोटो सिर्फ़ रीडिंग लिखे जाने तक</td><td>रीडिंग, रोज़ की सीमा, दुरुपयोग रोकना</td></tr>
+      <tr><td>Supabase (हमारा सर्वर, भारत)</td><td>बिना नाम की ID; Play Integrity का नतीजा; हथेली की फ़ोटो सिर्फ़ रीडिंग लिखे जाने तक</td><td>रीडिंग, रोज़ की सीमा, दुरुपयोग रोकना</td></tr>
       <tr><td>Google Gemini API</td><td>हथेली की फ़ोटो और आपके चुने विषय, सिर्फ़ रीडिंग लिखे जाने तक</td><td>रीडिंग लिखना</td></tr>
+      <tr><td>Google Play Integrity</td><td>इस ऐप और फ़ोन की जाँच, जो Google Play आपके फ़ोन पर करता है</td><td>मुफ़्त रीडिंग का दुरुपयोग रोकना</td></tr>
       <tr><td>Google AdMob</td><td>विज्ञापन ID, IP पता, डिवाइस की जानकारी, विज्ञापनों पर गतिविधि</td><td>विज्ञापन दिखाना और मापना</td></tr>
       <tr><td>Firebase Crashlytics और Analytics</td><td>इंस्टॉलेशन ID, डिवाइस मॉडल, Android वर्ज़न, क्रैश की जानकारी, ऐप इवेंट</td><td>क्रैश ठीक करना, ऐप बेहतर बनाना</td></tr>
       <tr><td>Firebase Cloud Messaging</td><td>पुश टोकन</td><td>आपका रोज़ का राशिफल नोटिफ़िकेशन</td></tr>
@@ -151,7 +155,7 @@
     <p>सारा डेटा एन्क्रिप्टेड होकर जाता है। हम किसी को भी डेटा बेचते या किराए पर नहीं देते।</p>
 
     <h2>8. अपना डेटा मिटाना</h2>
-    <p>पामवाणी हटाने पर आपके फ़ोन में रखा सब कुछ मिट जाता है। ऐप की प्रोफ़ाइल स्क्रीन में "मेरा सारा डेटा मिटाएँ" बटन (पब्लिक लॉन्च से पहले के अपडेट में आ रहा है) हमारे सर्वर से आपकी बिना नाम की ID भी हटा देगा। तब तक, या किसी और अनुरोध के लिए, नीचे दिए पते पर हमें ईमेल करें, हम 30 दिनों में जवाब देंगे।</p>
+    <p>पामवाणी हटाने पर आपके फ़ोन में रखा सब कुछ मिट जाता है। ऐप की प्रोफ़ाइल स्क्रीन का "मेरा सारा डेटा मिटाएँ" बटन हमारे सर्वर से आपकी बिना नाम की ID और उसके साथ रखा सब कुछ भी हटा देता है। किसी और अनुरोध के लिए, नीचे दिए पते पर हमें ईमेल करें, हम 30 दिनों में जवाब देंगे।</p>
 
     <h2>9. मनोरंजन के लिए</h2>
     <p>हस्तरेखा रीडिंग और राशिफल मनोरंजन और सोच-विचार के लिए हैं। पामवाणी स्वास्थ्य, बीमारी, मृत्यु या उम्र के बारे में कभी कोई भविष्यवाणी नहीं करता, और इसकी रीडिंग डॉक्टरी, क़ानूनी या आर्थिक सलाह नहीं है।</p>
